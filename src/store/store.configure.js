@@ -11,6 +11,9 @@ export default function configureStore (initialState)  {
             applyMiddleware(reduxThunk)
         )
     );
-    // store.dispath(Actions.handleAuthStateChanged());
+    
+    // middleware
+    store.dispatch(Actions.handleAuthStateChanged());
+
     return store;
 }

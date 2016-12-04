@@ -1,6 +1,6 @@
 import firebase from 'firebase';
-import { browserHistory } from 'react-router';
 import firebaseConfig from '../constants/firebase.config';
+import { browserHistory } from 'react-router';
 
 firebase.initializeApp(firebaseConfig);
 
@@ -22,20 +22,20 @@ export const signOut = () => {
     firebase.auth().signOut();
     browserHistory.push('/sign-in');
     return {
-        action: 'AUTH_SIGNOUT'
+        type: 'AUTH_SIGNOUT'
     }
 }
 
 export const authUser = (user) => {
     return {
-        action: 'AUTH_USER',
+        type: 'AUTH_USER',
         payload: user
     }
 }
 
 export const handleError = (error) => {
     return {
-        action: 'AUTH_ERROR',
+        type: 'AUTH_ERROR',
         payload: error
     }
 }
@@ -49,5 +49,19 @@ export const handleAuthStateChanged = () => {
                 dispatch(signOut());
             }
         });
+    }
+}
+
+export const handleEmailChange = (loginFormData) => {
+    return {
+        type: 'AUTH_FORM_EMAIL_CHANGE',
+        payload: loginFormData
+    }
+}
+
+export const handlePasswordChange = (loginFormData) => {
+    return {
+        type: 'AUTH_FORM_PASSWORD_CHANGE',
+        payload: loginFormData
     }
 }

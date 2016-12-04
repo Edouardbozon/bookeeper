@@ -1,43 +1,45 @@
 import React, { Component } from 'react';
-import firebase from 'firebase';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as Actions from '../actions/app.actions';
 
-export default class SignInForm extends Component {
+class SignInForm extends Component {
 
     constructor (props) {
         super(props);
-        this.state = {
-            email: '',
-            password: '',
-            error: null
-        };
     }
 
-    handleChange(name, event) {
-        const formData = {
-            [name]: event.target.value
-        };
-        this.setState(formData);
+    handleEmailChange(event) {
+        console.log(this.props);
+        this.props.actions.handleEmailChange(event.target.value);
+    }
+
+    handlePasswordChange(event) {
+        console.log(this.props);
+        this.props.actions.handlePasswordChange(event.target.value);
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        console.log(this.state);
+        this.props.actions.signIn(this.props.loginFormData);
     }
 
     render() {
+        const { email, password } = this.props.loginFormData;
+
         return (
             <div>
-                { this.state.error ?
+                { email }
+                { this.props.error ?
                     <div>
-                        { this.state.error }
+                        { this.props.error.message }
                     </div> :
                     null }
                 <form name="signInForm" onSubmit={this.handleSubmit.bind(this)}>
                     <div>
                         <label>Email</label>
                         <input
-                            value={this.state.email}
-                            onChange={this.handleChange.bind(this, 'email')}
+                            onChange={this.handleEmailChange.bind(this)}
                             name="email"
                             type="email"
                             required/>
@@ -45,8 +47,7 @@ export default class SignInForm extends Component {
                     <div>
                         <label>Password</label>
                         <input
-                            value={this.state.password}
-                            onChange={this.handleChange.bind(this, 'password')}
+                            onChange={this.handlePasswordChange.bind(this)}
                             name="password"
                             type="password"
                             required/>
@@ -60,3 +61,20 @@ export default class SignInForm extends Component {
     }
 
 };
+
+function mapStateToProps(state) {
+    return {
+        authenticated: state.authReducer.authenticated,
+        user: state.authReducer.user,
+        error: state.authReducer.error,
+        loginFormData: state.authReducer.loginFormData
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators(Actions, dispatch)
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignInForm);

@@ -8,7 +8,6 @@ class Bookkeeper extends Component {
 
     constructor (props) {
         super(props);
-        console.log(props);
     }
 
     componentWillMount() {
@@ -23,7 +22,6 @@ class Bookkeeper extends Component {
         return (
             <div>
                 <Navbar navlinks={'hey'}></Navbar>
-                { this.props.authenticated ? 'lol' : 'paslol'}
                 { this.props.children }
             </div>
         );
@@ -32,7 +30,9 @@ class Bookkeeper extends Component {
 
 function mapStateToProps(state) {
     return {
-        authenticated: state.authenticated
+        authenticated: state.authenticated,
+        error: state.error,
+        user: state.user
     };
 }
 

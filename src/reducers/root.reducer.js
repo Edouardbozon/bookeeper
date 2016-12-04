@@ -1,33 +1,10 @@
-const initialState = {
-    authenticated: false,
-    error: null
-};
+import { combineReducers } from 'redux';
+import authReducer from './auth.reducer';
+import transactionsReducer from './transactions.reducer';
 
-const RootReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case 'AUTH_USER':
-            return {
-                ...state,
-                authenticated: true,
-                user: action.payload.user,
-                error: null
-            };
-        case 'AUTH_SIGNOUT':
-            return {
-                ...state,
-                authenticated: false,
-                user: null,
-                error: null
-            };
-        case 'AUTH_ERROR':
-            return {
-                ...state,
-                error: action.payload.message
-            };
-        default:
-            return state;
-
-    }
-}
+const RootReducer = combineReducers({
+    authReducer,
+    transactionsReducer    
+});
 
 export default RootReducer;

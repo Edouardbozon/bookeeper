@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
-import firebase from 'firebase';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as Actions from '../actions/app.actions';
 import TransactionForm from './form.component';
 import TransactionList from './list.component';
 
-export default class Dashboard extends Component {
+class Dashboard extends Component {
 
     constructor(props) {
         super(props);
-        this.firebaseRef = firebase.database().ref('transactions/');
+        // this.firebaseRef = firebase.database().ref('transactions/');
     }
 
     componentWillMount() {
-        this.listenTransactions(this.firebaseRef, this.state.transactions);
+        console.log(this.props);
+        // this.listenTransactions(this.firebaseRef, this.props.transactions);
     }
 
     componentWillUnmount() {
-        this.firebaseRef.off();
+        // this.firebaseRef.off();
     }
 
     listenTransactions(firebaseRef, state) {
@@ -36,25 +39,31 @@ export default class Dashboard extends Component {
     }
 
     addTransaction (value) {
-        const price = parseInt(value, 0);
-        if (price <= 0) return;
-        const transaction = {
-            date: Date.now(),
-            price: price,
-            author: {
-                uid: this.state.user.uid,
-                email: this.state.user.email
-            }
-        };
-        this.firebaseRef.push(transaction);
+        this.props.actions.addTransaction(value);
     }
 
     render(){
         return (
             <div>
-                <TransactionList transactions={this.state.transactions}/>
+                <TransactionList transactions={this.props.transactions}/>
                 <TransactionForm addTransaction={this.addTransaction.bind(this)}/>
             </div>
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        authenticated: state.authenticated,
+        user: state.user,
+        transactions: state.transactions
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators(Actions, dispatch)
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
