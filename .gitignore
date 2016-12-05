@@ -1,6 +1,6 @@
 #
 
-constants/firebase.config.js
+src/constants/firebase.config.js
 
 # dependencies
 node_modules

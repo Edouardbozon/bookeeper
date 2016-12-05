@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as Actions from '../actions/app.actions';
+import * as Actions from '../actions/transactions.actions';
 import TransactionForm from './form.component';
 import TransactionList from './list.component';
 
@@ -14,29 +14,14 @@ class Dashboard extends Component {
 
     componentWillMount() {
         console.log(this.props);
-        // this.listenTransactions(this.firebaseRef, this.props.transactions);
+        this.props.actions.listenExpenses();
+        console.log(this.props.expenses);
     }
 
     componentWillUnmount() {
         // this.firebaseRef.off();
     }
 
-    listenTransactions(firebaseRef, state) {
-        firebaseRef.on('value', (snapshot) => {
-            const transactions = [];
-            snapshot.forEach((data) => {
-                transactions.push({
-                    date: data.val().date,
-                    price: data.val().price,
-                    author: data.val().author,
-                    _key: data.key
-                });
-            });
-            const updatedState = state.concat(transactions);
-            this.setState({ transactions: updatedState });
-            console.log();
-        });
-    }
 
     addTransaction (value) {
         this.props.actions.addTransaction(value);
@@ -45,7 +30,7 @@ class Dashboard extends Component {
     render(){
         return (
             <div>
-                <TransactionList transactions={this.props.transactions}/>
+                <TransactionList transactions={this.props.expenses}/>
                 <TransactionForm addTransaction={this.addTransaction.bind(this)}/>
             </div>
         );
@@ -53,10 +38,11 @@ class Dashboard extends Component {
 }
 
 function mapStateToProps(state) {
+    console.log(state);
     return {
-        authenticated: state.authenticated,
-        user: state.user,
-        transactions: state.transactions
+        authenticated: state.authReducer.authenticated,
+        user: state.authReducer.user,
+        expenses: state.transactionsReducer.expenses
     };
 }
 

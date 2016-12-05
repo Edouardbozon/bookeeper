@@ -2,6 +2,9 @@ import React from 'react';
 import { render } from 'react-dom'
 import { Router, Route, Link, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
+import 'semantic-ui-css/semantic.min.css';
+import 'semantic-ui-react';
+
 
 import configureStore from './store/store.configure.js';
 import Bookkeeper from './components/app.component';

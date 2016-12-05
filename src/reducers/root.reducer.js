@@ -4,7 +4,7 @@ import transactionsReducer from './transactions.reducer';
 
 const RootReducer = combineReducers({
     authReducer,
-    transactionsReducer    
+    transactionsReducer
 });
 
 export default RootReducer;
