@@ -32,16 +32,9 @@ export const handleExpenses = (expenses) => {
 export const listenExpenses = () => {
     return function (dispatch) {
         expensesFirebaseRef.on('value', (snapshot) => {
-            console.log(snapshot.val());
             const expenses = [];
             snapshot.forEach((data) => {
-                console.log(data.val());
-                expenses.push({
-                    date: data.val().date,
-                    price: data.val().price,
-                    author: data.val().author,
-                    _key: data.key
-                });
+                expenses.push({ ...data.val(), _key: data.key });
             });
             dispatch(handleExpenses(expenses));
         });

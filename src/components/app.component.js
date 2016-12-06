@@ -21,7 +21,7 @@ class Bookkeeper extends Component {
     render() {
         return (
             <div>
-                <Navbar navlinks={'hey'}></Navbar>
+                <Navbar authenticated={this.props.authenticated} routes={'hey'}></Navbar>
                 { this.props.children }
             </div>
         );
