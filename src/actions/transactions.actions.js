@@ -4,23 +4,25 @@ import { browserHistory } from 'react-router';
 
 const expensesFirebaseRef = firebase.database().ref('transactions/');
 
-// export const addTransaction = (transaction) => {
-//     const price = parseInt(value, 0);
-//     if (price <= 0) return;
-//     const transaction = {
-//         date: Date.now(),
-//         price: price,
-//         author: {
-//             uid: this.state.user.uid,
-//             email: this.state.user.email
-//         }
-//     };
-//     // this.firebaseRef.push(transaction);
-//     return {
-//         type: 'ADD_TRANSACTION',
-//         payload: transaction
-//     }
-// }
+export const addExpense = (value) => {
+    const amount = parseInt(value, 0);
+    if (amount <= 0) return;
+    const currentUser = firebase.auth().currentUser;
+    const expense = {
+        date: Date.now(),
+        amount: amount,
+        user: {
+            uid: currentUser.uid,
+            email: currentUser.email
+        },
+        group: null
+    };
+    expensesFirebaseRef.push(expense);
+    return {
+        type: 'ADD_EXPENSE',
+        payload: expense
+    };
+}
 
 export const handleExpenses = (expenses) => {
     return {
@@ -32,11 +34,20 @@ export const handleExpenses = (expenses) => {
 export const listenExpenses = () => {
     return function (dispatch) {
         expensesFirebaseRef.on('value', (snapshot) => {
-            const expenses = [];
+            const expenses = {};
             snapshot.forEach((data) => {
-                expenses.push({ ...data.val(), _key: data.key });
+                // console.log(data.val());
+                expenses[data.key] = data.val();
+                // expenses.push({ ...data.val(), _key: data.key });
             });
             dispatch(handleExpenses(expenses));
         });
     }
+}
+
+export const modfiyExpense = (expense) => {
+    // return fonction (dispatch) {
+    //     expensesFirebaseRef.update(expense._key)
+    //         .
+    // }
 }
