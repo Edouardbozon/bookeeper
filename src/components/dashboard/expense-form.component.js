@@ -1,5 +1,4 @@
 import React from 'react';
-import { Input } from 'semantic-ui-react'
 
 const TransactionForm = ({addTransaction}) => {
     let inputVal;

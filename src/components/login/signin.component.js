@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Button, Checkbox, Form, Input, Message, Radio, Select, TextArea } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Actions from '../actions/auth.actions';

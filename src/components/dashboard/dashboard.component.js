@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as Actions from '../actions/transactions.actions';
-import TransactionForm from './form.component';
+import * as Actions from '../../actions/expenses.actions';
+import TransactionForm from './expense-form.component';
 import ExpenseList from './expense-list.component';
 
 class Dashboard extends Component {

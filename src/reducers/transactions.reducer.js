@@ -8,7 +8,7 @@ const transactionsReducer = (state = {
                 expenses: action.payload
             };
         case 'ADD_EXPENSE':
-            return state
+            return state;
         default:
             return state;
     }

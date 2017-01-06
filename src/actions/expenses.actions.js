@@ -2,7 +2,7 @@ import firebase from 'firebase';
 import firebaseConfig from '../constants/firebase.config';
 import { browserHistory } from 'react-router';
 
-const expensesFirebaseRef = firebase.database().ref('transactions/');
+const expensesFirebaseRef = firebase.database().ref('expenses/');
 
 
 export const addExpense = (value) => {
