@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom'
-import { Router, Route, Link, browserHistory } from 'react-router';
+import { Router, Route, Link, browserHistory, IndexRoute, IndexRedirect } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux'
 import { Provider } from 'react-redux';
 import 'semantic-ui-css/semantic.min.css';
@@ -17,9 +17,10 @@ const history = syncHistoryWithStore(browserHistory, store);
 
 render((
     <Provider store={store}>
-        <Router history={browserHistory}>
+        <Router history={history}>
             <Route path="/" component={Bookkeeper}>
-                <Route path="sign-in" component={SignInForm}/>
+                <IndexRedirect to="/login"/>
+                <Route path="login" component={SignInForm}/>
                 <Route path="dashboard" component={Dashboard}/>
             </Route>
         </Router>

@@ -4,24 +4,23 @@ import { browserHistory } from 'react-router';
 
 const expensesFirebaseRef = firebase.database().ref('transactions/');
 
+
 export const addExpense = (value) => {
-    const amount = parseInt(value, 0);
-    if (amount <= 0) return;
-    const currentUser = firebase.auth().currentUser;
-    const expense = {
-        date: Date.now(),
-        amount: amount,
-        user: {
-            uid: currentUser.uid,
-            email: currentUser.email
-        },
-        group: null
-    };
-    expensesFirebaseRef.push(expense);
-    return {
-        type: 'ADD_EXPENSE',
-        payload: expense
-    };
+    return (dispatch) => {
+        const amount = parseInt(value, 0);
+        if (amount <= 0) return;
+        const currentUser = firebase.auth().currentUser;
+        const expense = {
+            date: Date.now(),
+            amount: amount,
+            user: {
+                email: currentUser.email,
+                uid: currentUser.uid
+            },
+            group: null
+        };
+        expensesFirebaseRef.push(expense);
+    }
 }
 
 export const handleExpenses = (expenses) => {
@@ -45,9 +44,8 @@ export const listenExpenses = () => {
     }
 }
 
-export const modfiyExpense = (expense) => {
-    // return fonction (dispatch) {
-    //     expensesFirebaseRef.update(expense._key)
-    //         .
-    // }
+export const deleteExpense = (key) => {
+    return (dispatch) => {
+        expensesFirebaseRef.child(key).remove();
+    }
 }

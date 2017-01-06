@@ -13,7 +13,7 @@ const authReducer = (state = initialState, action) => {
         case 'AUTH_USER':
             return {
                 ...state,
-                authenticated: true,
+                authenticated: false,
                 user: action.payload,
                 error: null
             };

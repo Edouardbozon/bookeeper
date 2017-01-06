@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as Actions from '../actions/app.actions';
+import * as Actions from '../actions/auth.actions';
+
 import Navbar from './navbar.component';
+import { Container } from 'semantic-ui-react';
+
 
 class Bookkeeper extends Component {
 
@@ -22,7 +25,7 @@ class Bookkeeper extends Component {
         return (
             <div>
                 <Navbar authenticated={this.props.authenticated} routes={'hey'}></Navbar>
-                { this.props.children }
+                <Container>{ this.props.children }</Container>
             </div>
         );
     }

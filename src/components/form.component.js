@@ -1,19 +1,25 @@
 import React from 'react';
+import { Input } from 'semantic-ui-react'
 
 const TransactionForm = ({addTransaction}) => {
-    let input;
-
+    let inputVal;
     return (
         <div>
-            <input type="number" ref={ node => {
-                input = node
-            }}/>
-            <button onClick={() => {
-                addTransaction(input.value);
-                input.value = null;
-            }}>
-            +
-            </button>
+            <Input
+                fluid={true}
+                actionPosition='left'
+                placeholder='Amount eg: 32'
+                onChange={(node) => { inputVal = node.target.value;  }}
+                action={{
+                    color: 'teal',
+                    labelPosition: 'left',
+                    icon: 'cart',
+                    content: 'Add',
+                    onClick: (event) => {
+                        console.log(inputVal);
+                        addTransaction(inputVal);
+                    }
+                }}></Input>
         </div>
     );
 

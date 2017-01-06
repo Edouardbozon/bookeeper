@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { Button, Checkbox, Form, Input, Message, Radio, Select, TextArea } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as Actions from '../actions/app.actions';
+import * as Actions from '../actions/auth.actions';
+
+
 
 class SignInForm extends Component {
 
@@ -10,12 +13,10 @@ class SignInForm extends Component {
     }
 
     handleEmailChange(event) {
-        console.log(this.props);
         this.props.actions.handleEmailChange(event.target.value);
     }
 
     handlePasswordChange(event) {
-        console.log(this.props);
         this.props.actions.handlePasswordChange(event.target.value);
     }
 
@@ -29,33 +30,30 @@ class SignInForm extends Component {
 
         return (
             <div>
-                { email }
                 { this.props.error ?
                     <div>
                         { this.props.error.message }
                     </div> :
                     null }
-                <form name="signInForm" onSubmit={this.handleSubmit.bind(this)}>
-                    <div>
-                        <label>Email</label>
-                        <input
-                            onChange={this.handleEmailChange.bind(this)}
-                            name="email"
-                            type="email"
-                            required/>
-                    </div>
-                    <div>
-                        <label>Password</label>
-                        <input
-                            onChange={this.handlePasswordChange.bind(this)}
-                            name="password"
-                            type="password"
-                            required/>
-                    </div>
-                    <button type="submit">
+                <Form onSubmit={this.handleSubmit.bind(this)}>
+                    <Form.Input
+                        onChange={this.handleEmailChange.bind(this)}
+                        placeholder="email"
+                        type="email"
+                        label="Email"
+                        name="email"
+                        required/>
+                    <Form.Input
+                        onChange={this.handlePasswordChange.bind(this)}
+                        placeholder="password"
+                        type="password"
+                        label="Password"
+                        name="password"
+                        required/>
+                    <Button primary type="submit">
                          Sign in
-                    </button>
-                </form>
+                    </Button>
+                </Form>
             </div>
         );
     }

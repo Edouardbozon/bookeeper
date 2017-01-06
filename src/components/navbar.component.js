@@ -3,8 +3,7 @@ import { Menu } from 'semantic-ui-react';
 import { Router, Route, Link, browserHistory } from 'react-router';
 
 const Navbar = ({authenticated, routes}) => {
-    const activeItem = 'sign-in';
-    console.log(Router);
+    const activeItem = 'login';
     return (
         <Menu inverted>
             <Menu.Item>

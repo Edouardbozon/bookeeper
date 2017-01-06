@@ -20,7 +20,7 @@ export const signIn = (credentials) => {
 
 export const signOut = () => {
     firebase.auth().signOut();
-    browserHistory.push('/sign-in');
+    browserHistory.push('/login');
     return {
         type: 'AUTH_SIGNOUT'
     }
