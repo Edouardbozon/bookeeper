@@ -4,20 +4,6 @@ import { browserHistory } from 'react-router';
 
 firebase.initializeApp(firebaseConfig);
 
-export const signIn = (credentials) => {
-    return function (dispatch) {
-        firebase.auth().signInWithEmailAndPassword(credentials.email, credentials.password)
-            .then((user) => {
-                dispatch(authUser(user));
-                browserHistory.push('/dashboard');
-            })
-            .catch((error) => {
-                dispatch(handleError(error));
-            })
-        ;
-    }
-}
-
 export const signOut = () => {
     firebase.auth().signOut();
     browserHistory.push('/login');
@@ -40,6 +26,20 @@ export const handleError = (error) => {
     }
 }
 
+export const signIn = (credentials) => {
+    return function (dispatch) {
+        firebase.auth().signInWithEmailAndPassword(credentials.email, credentials.password)
+            .then((user) => {
+                dispatch(authUser(user));
+                browserHistory.push('/dashboard');
+            })
+            .catch((error) => {
+                dispatch(handleError(error));
+            })
+        ;
+    }
+}
+
 export const handleAuthStateChanged = () => {
     return function (dispatch) {
         firebase.auth().onAuthStateChanged((user) => {
@@ -54,14 +54,21 @@ export const handleAuthStateChanged = () => {
 
 export const handleEmailChange = (loginFormData) => {
     return {
-        type: 'AUTH_FORM_EMAIL_CHANGE',
+        type: 'LOGIN:HANDLE_FORM_EMAIL_CHANGE',
         payload: loginFormData
     }
 }
 
 export const handlePasswordChange = (loginFormData) => {
     return {
-        type: 'AUTH_FORM_PASSWORD_CHANGE',
+        type: 'LOGIN:HANDLE_FORM_PASSWORD_CHANGE',
         payload: loginFormData
+    }
+}
+
+export const handleSignupFormChange = (signupFormData) => {
+    return {
+        type: 'SIGNUP:HANDLE_FORM_CHANGE',
+        payload: signupFormData
     }
 }

@@ -5,23 +5,19 @@ import * as Actions from '../../actions/auth.actions';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import { Card, CardActions, CardTitle, CardText } from 'material-ui/Card';
+import { Link } from 'react-router';
 
+class LoginForm extends Component {
 
-class SignInForm extends Component {
-
-    constructor (props) {
-        super(props);
-    }
-
-    handleEmailChange(event) {
+    _handleEmailChange(event) {
         this.props.actions.handleEmailChange(event.target.value);
     }
 
-    handlePasswordChange(event) {
+    _handlePasswordChange(event) {
         this.props.actions.handlePasswordChange(event.target.value);
     }
 
-    handleSubmit(event) {
+    _handleSubmit(event) {
         event.preventDefault();
         this.props.actions.signIn(this.props.loginFormData);
     }
@@ -31,36 +27,42 @@ class SignInForm extends Component {
 
         return (
             <Card>
-                { this.props.error ?
-                    <div>
-                        { this.props.error.message }
-                    </div> :
-                    null }
-                <form onSubmit={this.handleSubmit.bind(this)}>
+                {
+                    this.props.error ?
+                        <div>
+                            { this.props.error.message }
+                        </div> :
+                        null
+                }
+                <form onSubmit={this._handleSubmit.bind(this)}>
                     <CardTitle
-                        title="Login to start tracking all your roomates expenses"
-                        subtitle="Or sig nup if you doesn't have account anymore">
+                        title="Track your roommate expenses"
+                        subtitle="Sign up to create an account">
                     </CardTitle>
                     <CardText>
                         <TextField
-                            onChange={this.handleEmailChange.bind(this)}
-                            placeholder="email"
+                            onChange={this._handleEmailChange.bind(this)}
+                            placeholder="edouard@gmail.com"
                             type="email"
                             label="Email"
                             name="email"
+                            fullWidth={true}
                             required/>
                         <br/>
                         <TextField
-                            onChange={this.handlePasswordChange.bind(this)}
-                            placeholder="password"
+                            onChange={this._handlePasswordChange.bind(this)}
+                            placeholder="******"
                             type="password"
                             label="Password"
                             name="password"
+                            fullWidth={true}
                             required/>
                     </CardText>
                     <CardActions>
+                        <Link to='/signup'>
+                            <RaisedButton label="Sign up" primary={false} type="button"/>
+                        </Link>
                         <RaisedButton label="Login" primary={true} type="submit"/>
-                        <RaisedButton label="Sign up" primary={false} type="button"/>
                     </CardActions>
                 </form>
             </Card>
@@ -84,4 +86,4 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignInForm);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

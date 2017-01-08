@@ -29,7 +29,7 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 error: action.payload
             };
-        case 'AUTH_FORM_EMAIL_CHANGE':
+        case 'LOGIN:HANDLE_FORM_EMAIL_CHANGE':
             return {
                 ...state,
                 loginFormData: {
@@ -37,13 +37,18 @@ const authReducer = (state = initialState, action) => {
                     email: action.payload
                 }
             };
-        case 'AUTH_FORM_PASSWORD_CHANGE':
+        case 'LOGIN:HANDLE_FORM_PASSWORD_CHANGE':
             return {
                 ...state,
                 loginFormData: {
                     ...state.loginFormData,
                     password: action.payload
                 }
+            };
+        case 'SIGNUP:HANDLE_FORM_CHANGE':
+            return {
+                ...state,
+                signupFormData: action.payload
             };
         default:
             return state;

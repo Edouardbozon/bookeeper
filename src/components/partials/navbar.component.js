@@ -1,28 +1,36 @@
 import React from 'react';
-import { Router, Route, Link, browserHistory } from 'react-router';
 import AppBar from 'material-ui/AppBar';
 
-const Navbar = ({authenticated, routes}) => {
-    const activeItem = 'login';
-    return (
-        <AppBar/>
-    );
-};
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as Actions from '../../actions/app.actions';
 
-export default Navbar;
+class Appbar extends React.Component {
 
+    handleToggleBar () {
+        this.props.actions.handleDrawerToggle();
+    }
 
-// <Menu.Item>
-//
-// </Menu.Item>
-// { authenticated ?
-//     <Menu.Item
-//     name='logout'
-//     active={activeItem === 'logout'}>
-//     Logout
-//     </Menu.Item> :
-//     <Menu.Item
-//     name='login'
-//     active={activeItem === ''}>
-//     Login
-//     </Menu.Item> }
+    render() {
+        return (
+            <AppBar
+                title="Bookkeeper"
+                onLeftIconButtonTouchTap={this.handleToggleBar.bind(this)}
+            />
+        );
+    }
+}
+
+function mapStateToProps(state) {
+    return {
+        isDrawerOpen: state.app.isDrawerOpen
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators(Actions, dispatch)
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Appbar);

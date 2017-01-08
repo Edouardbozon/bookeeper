@@ -27,7 +27,7 @@ class Dashboard extends Component {
         return (
             <div>
                 <ExpenseList expenses={this.props.expenses}/>
-                <TransactionForm addTransaction={this.addTransaction.bind(this)}/>
+                <TransactionForm addExpense={this.addTransaction.bind(this)}/>
             </div>
         );
     }

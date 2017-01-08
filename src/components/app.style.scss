@@ -7,3 +7,17 @@ html {
 body {
     font-family: 'Roboto', sans-serif;
 }
+
+* {
+    box-sizing: border-box;
+}
+
+main {
+    padding: 4%;
+    background-color: darken(#fff, 6%);
+    min-height: calc(100vh - 64px);
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
