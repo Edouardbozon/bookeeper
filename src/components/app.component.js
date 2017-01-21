@@ -12,7 +12,11 @@ class Bookkeeper extends Component {
             <div>
                 <Navbar/>
                 <MenuDrawer/>
-                <main>{ this.props.children }</main>
+                {
+                    this.props.isMobile ?
+                    <main>{ this.props.children }</main> :
+                    <main>This app is only for mobile</main>
+                }
             </div>
         );
     }
@@ -20,7 +24,8 @@ class Bookkeeper extends Component {
 
 function mapStateToProps(state) {
     return {
-        authenticated: state.authReducer.authenticated
+        authenticated: state.authReducer.authenticated,
+        isMobile: state.app.isMobile
     };
 }
 
