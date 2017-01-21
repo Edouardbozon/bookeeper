@@ -2,6 +2,32 @@ import firebase from 'firebase';
 
 const expensesFirebaseRef = firebase.database().ref('expenses/');
 
+export const handleInputExpenseChange = (expense) => {
+    return {
+        type: '@@dashboard:HANDLE_INPUT_EXPENSE_CHANGE',
+        payload: expense
+    };
+}
+
+export const handleExpenses = (expenses) => {
+    return {
+        type: '@@dashboard:HANDLE_EXPENSES',
+        payload: expenses
+    }
+}
+
+export const handleAddExpense = () => {
+    return {
+        type: '@@dashboard:ADD_EXPENSE'
+    }
+}
+
+export const handleRemoveExpense = () => {
+    return {
+        type: '@@dashboard:REMOVE_EXPENSE'
+    }
+}
+
 export const addExpense = (value) => {
     return (dispatch) => {
         const amount = parseInt(value, 0);
@@ -17,13 +43,7 @@ export const addExpense = (value) => {
             group: null
         };
         expensesFirebaseRef.push(expense);
-    }
-}
-
-export const handleExpenses = (expenses) => {
-    return {
-        type: 'HANDLE_EXPENSES',
-        payload: expenses
+        dispatch(handleAddExpense());
     }
 }
 
@@ -32,17 +52,16 @@ export const listenExpenses = () => {
         expensesFirebaseRef.on('value', (snapshot) => {
             const expenses = {};
             snapshot.forEach((data) => {
-                // console.log(data.val());
                 expenses[data.key] = data.val();
-                // expenses.push({ ...data.val(), _key: data.key });
             });
             dispatch(handleExpenses(expenses));
         });
     }
 }
 
-export const deleteExpense = (key) => {
+export const removeExpense = (key) => {
     return (dispatch) => {
         expensesFirebaseRef.child(key).remove();
+        dispatch(handleRemoveExpense());
     }
 }

@@ -1,8 +1,7 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
 
-const ExpenseBar = ({addTransaction}) => {
-    let inputVal;
+const ExpenseBar = () => {
     return (
         <div>
             <TextField

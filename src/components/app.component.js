@@ -7,7 +7,6 @@ import Navbar from './partials/navbar.component';
 import './app.style.scss';
 
 class Bookkeeper extends Component {
-
     render() {
         return (
             <div>

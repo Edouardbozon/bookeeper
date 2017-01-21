@@ -10,26 +10,26 @@ const initialState = {
 
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'AUTH_USER':
+        case '@@auth:AUTH_USER':
             return {
                 ...state,
                 authenticated: false,
                 user: action.payload,
                 error: null
             };
-        case 'AUTH_SIGNOUT':
+        case '@@auth:AUTH_LOGOUT':
             return {
                 ...state,
                 authenticated: false,
                 user: null,
                 error: null
             };
-        case 'AUTH_ERROR':
+        case '@@auth:AUTH_ERROR':
             return {
                 ...state,
                 error: action.payload
             };
-        case 'LOGIN:HANDLE_FORM_EMAIL_CHANGE':
+        case '@@login:HANDLE_FORM_EMAIL_CHANGE':
             return {
                 ...state,
                 loginFormData: {
@@ -37,7 +37,7 @@ const authReducer = (state = initialState, action) => {
                     email: action.payload
                 }
             };
-        case 'LOGIN:HANDLE_FORM_PASSWORD_CHANGE':
+        case '@@login:HANDLE_FORM_PASSWORD_CHANGE':
             return {
                 ...state,
                 loginFormData: {
@@ -45,7 +45,7 @@ const authReducer = (state = initialState, action) => {
                     password: action.payload
                 }
             };
-        case 'SIGNUP:HANDLE_FORM_CHANGE':
+        case '@@signup:HANDLE_FORM_CHANGE': // @TODO bind with redux form
             return {
                 ...state,
                 signupFormData: action.payload

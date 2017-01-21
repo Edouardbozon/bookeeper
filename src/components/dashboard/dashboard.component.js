@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Actions from '../../actions/expenses.actions';
-import TransactionForm from './expense-form.component';
+import ExpenseForm from './expense-form.component';
 import ExpenseList from './expense-list.component';
 
 class Dashboard extends Component {
@@ -24,10 +24,15 @@ class Dashboard extends Component {
     }
 
     render(){
+
+        const wrapperStyle = {
+            position: 'relative'
+        };
+
         return (
-            <div>
+            <div style={wrapperStyle}>
                 <ExpenseList expenses={this.props.expenses}/>
-                <TransactionForm addExpense={this.addTransaction.bind(this)}/>
+                <ExpenseForm />
             </div>
         );
     }
@@ -36,8 +41,7 @@ class Dashboard extends Component {
 function mapStateToProps(state) {
     return {
         authenticated: state.authReducer.authenticated,
-        user: state.authReducer.user,
-        expenses: state.transactionsReducer.expenses
+        expenses: state.expenseReducer.expenses
     };
 }
 

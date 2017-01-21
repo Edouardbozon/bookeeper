@@ -1,5 +1,5 @@
 export const handleDrawerToggle = () => {
     return {
-        type: 'DRAWER:HANDLE_TOGGLE'
+        type: '@@drawer:HANDLE_TOGGLE'
     }
 }

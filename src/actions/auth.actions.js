@@ -4,25 +4,52 @@ import { browserHistory } from 'react-router';
 
 firebase.initializeApp(firebaseConfig);
 
-export const signOut = () => {
-    firebase.auth().signOut();
-    browserHistory.push('/login');
-    return {
-        type: 'AUTH_SIGNOUT'
-    }
-}
-
 export const authUser = (user) => {
     return {
-        type: 'AUTH_USER',
+        type: '@@auth:AUTH_USER',
         payload: user
-    }
+    };
 }
 
 export const handleError = (error) => {
     return {
-        type: 'AUTH_ERROR',
+        type: '@@auth:AUTH_ERROR',
         payload: error
+    };
+}
+
+export const handleLogout = (error) => {
+    return {
+        type: '@@auth:AUTH_LOGOUT'
+    };
+}
+
+export const handleLoginEmailChange = (loginFormData) => {
+    return {
+        type: '@@login:HANDLE_FORM_EMAIL_CHANGE',
+        payload: loginFormData
+    };
+}
+
+export const handleLoginPasswordChange = (loginFormData) => {
+    return {
+        type: '@@login:HANDLE_FORM_PASSWORD_CHANGE',
+        payload: loginFormData
+    };
+}
+
+export const signup = (signupFormData) => {
+    return {
+        type: '@@signup:SIGN_UP_FORM_SUBMIT',
+        payload: signupFormData
+    };
+}
+
+export const logout = () => {
+    return (dispatch) => {
+        firebase.auth().signOut();
+        browserHistory.push('/login');
+        dispatch(handleLogout());
     }
 }
 
@@ -37,7 +64,7 @@ export const signIn = (credentials) => {
                 dispatch(handleError(error));
             })
         ;
-    }
+    };
 }
 
 export const handleAuthStateChanged = () => {
@@ -46,29 +73,8 @@ export const handleAuthStateChanged = () => {
             if (user) {
                 dispatch(authUser(user));
             } else {
-                dispatch(signOut());
+                dispatch(logout());
             }
         });
-    }
-}
-
-export const handleEmailChange = (loginFormData) => {
-    return {
-        type: 'LOGIN:HANDLE_FORM_EMAIL_CHANGE',
-        payload: loginFormData
-    }
-}
-
-export const handlePasswordChange = (loginFormData) => {
-    return {
-        type: 'LOGIN:HANDLE_FORM_PASSWORD_CHANGE',
-        payload: loginFormData
-    }
-}
-
-export const handleSignupFormChange = (signupFormData) => {
-    return {
-        type: 'SIGNUP:HANDLE_FORM_CHANGE',
-        payload: signupFormData
-    }
+    };
 }

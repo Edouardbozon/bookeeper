@@ -10,11 +10,11 @@ import { Link } from 'react-router';
 class LoginForm extends Component {
 
     _handleEmailChange(event) {
-        this.props.actions.handleEmailChange(event.target.value);
+        this.props.actions.handleLoginEmailChange(event.target.value);
     }
 
     _handlePasswordChange(event) {
-        this.props.actions.handlePasswordChange(event.target.value);
+        this.props.actions.handleLoginPasswordChange(event.target.value);
     }
 
     _handleSubmit(event) {
@@ -23,8 +23,6 @@ class LoginForm extends Component {
     }
 
     render() {
-        const { email, password } = this.props.loginFormData;
-
         return (
             <Card>
                 {
