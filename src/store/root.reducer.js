@@ -7,10 +7,10 @@ import appReducer from '../reducers/app.reducer';
 
 const RootReducer = combineReducers({
     routing: routerReducer,
-    authReducer,
-    formReducer,
+    auth: authReducer,
+    form: formReducer,
     app: appReducer,
-    expenseReducer
+    expense: expenseReducer
 });
 
 export default RootReducer;

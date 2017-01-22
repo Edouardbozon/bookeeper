@@ -8,7 +8,7 @@ import { render } from 'react-dom';
 import configureStore from './store/store.configure.js';
 import Bookkeeper from './components/app.component';
 import LoginForm from './components/login/login.component';
-import SignupForm from './components/login/register.component';
+import Signup from './components/login/signup.component';
 import Dashboard from './components/dashboard/dashboard.component';
 
 // redux store sync with react router
@@ -25,7 +25,7 @@ render((
                     <IndexRoute/>
                     <IndexRedirect to="/login"/>
                     <Route path="login" component={LoginForm}/>
-                    <Route path="signup" component={SignupForm}/>
+                    <Route path="signup" component={Signup}/>
                     <Route path="dashboard" component={Dashboard}/>
                 </Route>
             </Router>

@@ -1,16 +1,12 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import { Card, CardActions, CardText } from 'material-ui/Card';
+import { Card, CardText } from 'material-ui/Card';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Actions from '../../actions/expenses.actions';
 
 class ExpenseForm extends React.Component {
-
-    constructor (props) {
-        super(props);
-    }
 
     _handleAddExpense () {
         this.props.actions.addExpense(this.props.expenseInputValue);
@@ -59,7 +55,7 @@ class ExpenseForm extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        expenseInputValue: state.expenseReducer.expenseInputValue
+        expenseInputValue: state.expense.expenseInputValue
     };
 }
 

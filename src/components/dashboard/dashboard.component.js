@@ -7,16 +7,8 @@ import ExpenseList from './expense-list.component';
 
 class Dashboard extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     componentWillMount() {
         this.props.actions.listenExpenses();
-    }
-
-    componentWillUnmount() {
-
     }
 
     addTransaction (value) {
@@ -40,8 +32,8 @@ class Dashboard extends Component {
 
 function mapStateToProps(state) {
     return {
-        authenticated: state.authReducer.authenticated,
-        expenses: state.expenseReducer.expenses
+        authenticated: state.auth.authenticated,
+        expenses: state.expense.expenses
     };
 }
 

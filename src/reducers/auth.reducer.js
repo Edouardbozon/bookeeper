@@ -13,7 +13,7 @@ const authReducer = (state = initialState, action) => {
         case '@@auth:AUTH_USER':
             return {
                 ...state,
-                authenticated: false,
+                authenticated: true,
                 user: action.payload,
                 error: null
             };
@@ -45,10 +45,16 @@ const authReducer = (state = initialState, action) => {
                     password: action.payload
                 }
             };
-        case '@@signup:HANDLE_FORM_CHANGE': // @TODO bind with redux form
+        case '@@signup:HANDLE_FIREBASE_SIGNUP_SUCCESS':
             return {
                 ...state,
-                signupFormData: action.payload
+                authenticated: true
+            };
+        case '@@signup:HANDLE_FIREBASE_SIGNUP_FAIL':
+            return {
+                ...state,
+                authenticated: false,
+                error: action.payload
             };
         default:
             return state;

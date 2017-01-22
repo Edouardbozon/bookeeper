@@ -3,24 +3,31 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as Actions from '../../actions/app.actions';
+import * as AppActions from '../../actions/app.actions';
+import * as AuthActions from '../../actions/auth.actions';
 
 class MenuDrawer extends React.Component {
 
     _handleRequestChange (event) {
-        this.props.actions.handleDrawerToggle();
+        this.props.appActions.handleDrawerToggle();
+    }
+
+    _handleDisconnect () {
+        this.props.authActions.logout();
+        this.props.appActions.handleDrawerToggle();
     }
 
     render() {
+        const { authenticated, isDrawerOpen } = this.props;
         return (
             <div>
                 <Drawer
-                    open={this.props.isDrawerOpen}
+                    open={isDrawerOpen}
                     onRequestChange={this._handleRequestChange.bind(this)}
                     disableSwipeToOpen={false}
                     docked={false}>
-                    <MenuItem>Menu Item</MenuItem>
-                    <MenuItem>Menu Item 2</MenuItem>
+                    { authenticated ?
+                    <MenuItem onClick={this._handleDisconnect.bind(this)}>Disconnect</MenuItem> : null }
                 </Drawer>
             </div>
         );
@@ -29,13 +36,15 @@ class MenuDrawer extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        isDrawerOpen: state.app.isDrawerOpen
+        isDrawerOpen: state.app.isDrawerOpen,
+        authenticated: state.auth.authenticated
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(Actions, dispatch)
+        appActions: bindActionCreators(AppActions, dispatch),
+        authActions: bindActionCreators(AuthActions, dispatch)
     };
 }
 

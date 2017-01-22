@@ -24,7 +24,7 @@ class Bookkeeper extends Component {
 
 function mapStateToProps(state) {
     return {
-        authenticated: state.authReducer.authenticated,
+        authenticated: state.auth.authenticated,
         isMobile: state.app.isMobile
     };
 }

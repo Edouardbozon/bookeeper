@@ -71,10 +71,10 @@ class LoginForm extends Component {
 
 function mapStateToProps(state) {
     return {
-        authenticated: state.authReducer.authenticated,
-        user: state.authReducer.user,
-        error: state.authReducer.error,
-        loginFormData: state.authReducer.loginFormData
+        authenticated: state.auth.authenticated,
+        user: state.auth.user,
+        error: state.auth.error,
+        loginFormData: state.auth.loginFormData
     };
 }
 

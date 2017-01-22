@@ -1,51 +1,54 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as Actions from '../../actions/auth.actions';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Field, reduxForm } from 'redux-form';
 import { Card, CardActions, CardTitle, CardText } from 'material-ui/Card';
 import { Link } from 'react-router';
 import {
-  Checkbox,
-  RadioButtonGroup,
-  SelectField,
-  TextField,
-  Toggle
+  // Checkbox,
+  // RadioButtonGroup,
+  // SelectField,
+  TextField
+  // Toggle
 } from 'redux-form-material-ui';
-import MenuItem from 'material-ui/MenuItem';
-import { RadioButton } from 'material-ui/RadioButton';
+// import MenuItem from 'material-ui/MenuItem';
+// import { RadioButton } from 'material-ui/RadioButton';
+
+const required = (value) => {
+    if (value == null) {
+        return 'Required'
+    }
+    return undefined;
+};
 
 const validate = (values) => {
-    const errors = {}
-    const requiredFields = ['firstName', 'lastName', 'email', 'favoriteColor', 'notes'];
-    requiredFields.forEach(field => {
-        if (!values[field]) {
-            errors[field] = 'Required';
-        }
-    });
-    if (values.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Invalid email address';
+    const errors = {};
+    if (values.password !== values.repeatPassword) {
+        errors.password = 'Invalid passwords, they are not similar.'
+        errors.repeatPassword = 'Invalid passwords, they are not similar.'
+    }
+    if (values.password && values.password.length < 6) {
+        errors.password = 'Invalid password, minimun 6 characters.'
+    }
+    if (!values.email || !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        errors.email = `Invalid email, please don't lie to me.`
     }
     return errors;
-}
+};
 
 class SignupForm extends Component {
 
-    _handleSubmit(event) {
-        event.preventDefault();
-        this.props.actions.signup(this.props.signupFormData);
+    componentDidMount() {
+        this.refs.username
+            .getRenderedComponent() // return Field
+            .getRenderedComponent() // return TextField
+            .focus();
     }
 
     render() {
+        const { pristine, submitting, handleSubmit } = this.props;
         return (
             <Card>
-                { this.props.error ?
-                    <div>
-                        { this.props.error.message }
-                    </div> :
-                    null }
-                <form onSubmit={this._handleSubmit.bind(this)}>
+                <form onSubmit={handleSubmit}>
                     <CardTitle
                         title="Create an account"
                         subtitle="and start to track your roomates common expenses">
@@ -58,10 +61,10 @@ class SignupForm extends Component {
                             type="text"
                             label="username"
                             withRef
-                            ref="firstField"
+                            ref="username"
                             name="username"
                             fullWidth={true}
-                            required/>
+                            validate={required}/>
                         <br/>
                         <Field
                             component={TextField}
@@ -71,7 +74,7 @@ class SignupForm extends Component {
                             label="Email"
                             name="email"
                             fullWidth={true}
-                            required/>
+                            validate={required}/>
                         <br/>
                         <Field
                             component={TextField}
@@ -81,7 +84,7 @@ class SignupForm extends Component {
                             label="Password"
                             name="password"
                             fullWidth={true}
-                            required/>
+                            validate={required}/>
                         <br/>
                         <Field
                             component={TextField}
@@ -89,9 +92,9 @@ class SignupForm extends Component {
                             hintText="e.g. Jfdh54"
                             type="password"
                             label="Password"
-                            name="password"
+                            name="repeatPassword"
                             fullWidth={true}
-                            required/>
+                            validate={required}/>
                         <br/>
                         <Field
                             component={TextField}
@@ -101,15 +104,13 @@ class SignupForm extends Component {
                             label="country"
                             name="country"
                             fullWidth={true}
-                            required/>
+                            validate={required}/>
                     </CardText>
-
-
                     <CardActions>
                         <Link to='/login'>
                             <RaisedButton label="Login" primary={false} type="button"/>
                         </Link>
-                        <RaisedButton label="Sign up" primary={true} type="submit"/>
+                        <RaisedButton label="Sign up" primary={true} disabled={pristine || submitting} type="submit"/>
                     </CardActions>
                 </form>
             </Card>
@@ -119,8 +120,7 @@ class SignupForm extends Component {
 };
 
 // Decorate the form component
-SignupForm = reduxForm({
-  form: 'signupForm'
+export default reduxForm({
+    form: 'signupForm',
+    validate
 })(SignupForm);
-
-export default SignupForm;

@@ -18,7 +18,7 @@ export const handleError = (error) => {
     };
 }
 
-export const handleLogout = (error) => {
+export const handleLogout = () => {
     return {
         type: '@@auth:AUTH_LOGOUT'
     };
@@ -38,19 +38,18 @@ export const handleLoginPasswordChange = (loginFormData) => {
     };
 }
 
-export const signup = (signupFormData) => {
+export const handleSignupSuccess = (credentials) => {
     return {
-        type: '@@signup:SIGN_UP_FORM_SUBMIT',
-        payload: signupFormData
+        type: '@@signup:HANDLE_FIREBASE_SIGNUP_SUCCESS',
+        payload: credentials
     };
 }
 
-export const logout = () => {
-    return (dispatch) => {
-        firebase.auth().signOut();
-        browserHistory.push('/login');
-        dispatch(handleLogout());
-    }
+export const handleSignupFail = (error) => {
+    return {
+        type: '@@signup:HANDLE_FIREBASE_SIGNUP_FAIL',
+        payload: error
+    };
 }
 
 export const signIn = (credentials) => {
@@ -67,6 +66,22 @@ export const signIn = (credentials) => {
     };
 }
 
+export const logout = () => {
+    return function (dispatch) {
+        firebase.auth()
+            .signOut()
+            .then(() => {
+                dispatch(handleLogout());
+                browserHistory.push('/login');
+            })
+            .catch((error) => {
+                dispatch(handleError(error));
+            })
+        ;
+
+    }
+}
+
 export const handleAuthStateChanged = () => {
     return function (dispatch) {
         firebase.auth().onAuthStateChanged((user) => {
@@ -77,4 +92,22 @@ export const handleAuthStateChanged = () => {
             }
         });
     };
+}
+
+export const signup = (credentials) => {
+    return function (dispatch) {
+        firebase.auth()
+            .createUserWithEmailAndPassword(credentials.email, credentials.password)
+            .then((response) => {
+                console.log(response);
+                dispatch(handleSignupSuccess(response));
+                browserHistory.push('/dashboard');
+            })
+            .catch((error) => {
+                console.log(error);
+                dispatch(handleSignupFail(error));
+            })
+        ;
+
+    }
 }
