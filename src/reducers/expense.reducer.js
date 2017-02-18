@@ -1,5 +1,5 @@
 const expenseReducer = (state = {
-    expenses: [],
+    expenses: {},
     expenseInput: ''
 }, action) => {
     switch (action.type) {

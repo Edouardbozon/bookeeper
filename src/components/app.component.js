@@ -15,7 +15,7 @@ class Bookkeeper extends Component {
                 {
                     this.props.isMobile ?
                     <main>{ this.props.children }</main> :
-                    <main>This app is only for mobile</main>
+                    <main>Sorry, this app support only mobile devices.</main>
                 }
             </div>
         );

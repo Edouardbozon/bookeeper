@@ -10,6 +10,7 @@ import Bookkeeper from './components/app.component';
 import LoginForm from './components/login/login.component';
 import Signup from './components/login/signup.component';
 import Dashboard from './components/dashboard/dashboard.component';
+import SharedFlat from './components/shared-flat/shared-flat.component';
 
 // redux store sync with react router
 const store = configureStore();
@@ -22,11 +23,11 @@ render((
         <MuiThemeProvider>
             <Router history={history}>
                 <Route path="/" component={Bookkeeper}>
-                    <IndexRoute/>
                     <IndexRedirect to="/login"/>
                     <Route path="login" component={LoginForm}/>
                     <Route path="signup" component={Signup}/>
                     <Route path="dashboard" component={Dashboard}/>
+                    <Route path="shared-flat" component={SharedFlat}/>
                 </Route>
             </Router>
         </MuiThemeProvider>

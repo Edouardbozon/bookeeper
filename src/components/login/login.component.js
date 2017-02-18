@@ -23,47 +23,58 @@ class LoginForm extends Component {
     }
 
     render() {
+        const style = { marginTop: '16px'};
         return (
-            <Card>
-                {
-                    this.props.error ?
-                        <div>
-                            { this.props.error.message }
-                        </div> :
-                        null
-                }
-                <form onSubmit={this._handleSubmit.bind(this)}>
+            <div>
+                <Card>
+                    {
+                        this.props.error ?
+                            <div>
+                                { this.props.error.message }
+                            </div> :
+                            null
+                    }
+                    <form onSubmit={this._handleSubmit.bind(this)}>
+                        <CardTitle
+                            title="Login"
+                            subtitle="Welcome home">
+                        </CardTitle>
+                        <CardText>
+                            <TextField
+                                onChange={this._handleEmailChange.bind(this)}
+                                placeholder="edouard@gmail.com"
+                                type="email"
+                                label="Email"
+                                name="email"
+                                fullWidth={true}
+                                required/>
+                            <br/>
+                            <TextField
+                                onChange={this._handlePasswordChange.bind(this)}
+                                placeholder="******"
+                                type="password"
+                                label="Password"
+                                name="password"
+                                fullWidth={true}
+                                required/>
+                        </CardText>
+                        <CardActions>
+                            <RaisedButton label="Login" primary={true} type="submit"/>
+                        </CardActions>
+                    </form>
+                </Card>
+                <Card style={style}>
                     <CardTitle
-                        title="Track your roommate expenses"
-                        subtitle="Sign up to create an account">
+                        title="Create an account"
+                        subtitle="Track your roomates common expenses">
                     </CardTitle>
-                    <CardText>
-                        <TextField
-                            onChange={this._handleEmailChange.bind(this)}
-                            placeholder="edouard@gmail.com"
-                            type="email"
-                            label="Email"
-                            name="email"
-                            fullWidth={true}
-                            required/>
-                        <br/>
-                        <TextField
-                            onChange={this._handlePasswordChange.bind(this)}
-                            placeholder="******"
-                            type="password"
-                            label="Password"
-                            name="password"
-                            fullWidth={true}
-                            required/>
-                    </CardText>
                     <CardActions>
                         <Link to='/signup'>
                             <RaisedButton label="Sign up" primary={false} type="button"/>
                         </Link>
-                        <RaisedButton label="Login" primary={true} type="submit"/>
                     </CardActions>
-                </form>
-            </Card>
+                </Card>
+            </div>
         );
     }
 

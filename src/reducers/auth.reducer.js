@@ -56,6 +56,13 @@ const authReducer = (state = initialState, action) => {
                 authenticated: false,
                 error: action.payload
             };
+        case '@@signup:INTELLIGENT_REDIRECTION':
+
+            return {
+                ...state,
+                authenticated: false,
+                error: action.payload
+            };
         default:
             return state;
     }

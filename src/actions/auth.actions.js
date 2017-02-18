@@ -52,6 +52,12 @@ export const handleSignupFail = (error) => {
     };
 }
 
+export const redirectToPage = () => {
+    return {
+        type: '@@login:INTELLIGENT_REDIRECTION'
+    };
+}
+
 export const signIn = (credentials) => {
     return function (dispatch) {
         firebase.auth().signInWithEmailAndPassword(credentials.email, credentials.password)
@@ -99,15 +105,12 @@ export const signup = (credentials) => {
         firebase.auth()
             .createUserWithEmailAndPassword(credentials.email, credentials.password)
             .then((response) => {
-                console.log(response);
                 dispatch(handleSignupSuccess(response));
-                browserHistory.push('/dashboard');
+                dispatch(redirectToPage());
             })
             .catch((error) => {
-                console.log(error);
                 dispatch(handleSignupFail(error));
             })
         ;
-
     }
 }
