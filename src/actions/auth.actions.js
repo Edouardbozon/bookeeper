@@ -1,8 +1,4 @@
-import firebase from 'firebase';
-import firebaseConfig from '../constants/firebase.config';
 import { browserHistory } from 'react-router';
-
-firebase.initializeApp(firebaseConfig);
 
 export const authUser = (user) => {
     return {
@@ -59,58 +55,82 @@ export const redirectToPage = () => {
 }
 
 export const signIn = (credentials) => {
-    return function (dispatch) {
-        firebase.auth().signInWithEmailAndPassword(credentials.email, credentials.password)
-            .then((user) => {
-                dispatch(authUser(user));
-                browserHistory.push('/dashboard');
-            })
-            .catch((error) => {
-                dispatch(handleError(error));
-            })
-        ;
+    return function(dispatch) {
+        fetch(
+            'http://localhost:3000/login', 
+            { 
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: credentials.email, 
+                    password: credentials.password,
+                })
+            }
+        )
+        .then((response) => {
+            if (response.status === 200) {
+                return response.json();
+            }
+            dispatch(handleError(response));
+        }, (err) => {
+            console.log(err);
+            dispatch(handleError(err));
+        })
+        .then((user) => {
+            console.log(user)
+            dispatch(authUser(user));
+            browserHistory.push('/dashboard');
+        });
     };
 }
 
 export const logout = () => {
     return function (dispatch) {
-        firebase.auth()
-            .signOut()
-            .then(() => {
-                dispatch(handleLogout());
-                browserHistory.push('/login');
-            })
-            .catch((error) => {
-                dispatch(handleError(error));
-            })
-        ;
+        fetch(
+            'http://localhost:3000/logout',
+            { method: 'POST' }
+        )
+        .then(() => {
+            dispatch(handleLogout());
+            browserHistory.push('/login');
+        })
+        .catch((error) => {
+            dispatch(handleError(error));
+        });
 
     }
 }
 
-export const handleAuthStateChanged = () => {
-    return function (dispatch) {
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                dispatch(authUser(user));
-            } else {
-                dispatch(logout());
-            }
-        });
-    };
-}
+// export const handleAuthStateChanged = () => {
+//     return function (dispatch) {
+//         firebase.auth().onAuthStateChanged((user) => {
+//             if (user) {
+//                 dispatch(authUser(user));
+//             } else {
+//                 dispatch(logout());
+//             }
+//         });
+//     };
+// }
 
 export const signup = (credentials) => {
     return function (dispatch) {
-        firebase.auth()
-            .createUserWithEmailAndPassword(credentials.email, credentials.password)
-            .then((response) => {
-                dispatch(handleSignupSuccess(response));
-                dispatch(redirectToPage());
-            })
-            .catch((error) => {
-                dispatch(handleSignupFail(error));
-            })
-        ;
+        fetch(
+            'http://localhost:3000/signup',
+            {
+                method: 'POST',
+                body: {
+                    email: credentials.email,
+                    password: credentials.password
+                }
+            }
+        )
+        .then((response) => {
+            dispatch(handleSignupSuccess(response));
+            dispatch(redirectToPage());
+        })
+        .catch((error) => {
+            dispatch(handleSignupFail(error));
+        });
     }
 }

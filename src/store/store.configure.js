@@ -15,7 +15,7 @@ export default function configureStore (initialState)  {
     );
 
     // middleware
-    store.dispatch(AuthActions.handleAuthStateChanged());
+    // store.dispatch(AuthActions.handleAuthStateChanged());
     store.dispatch(AppActions.detectMobile());
 
     return store;

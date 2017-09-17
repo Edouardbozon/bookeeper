@@ -1,7 +1,5 @@
 import firebase from 'firebase';
 
-const expensesFirebaseRef = firebase.database().ref('expenses/');
-
 export const handleInputExpenseChange = (expense) => {
     return {
         type: '@@dashboard:HANDLE_INPUT_EXPENSE_CHANGE',
@@ -42,26 +40,26 @@ export const addExpense = (value) => {
             },
             group: null
         };
-        expensesFirebaseRef.push(expense);
+        // expensesFirebaseRef.push(expense);
         dispatch(handleAddExpense());
     }
 }
 
 export const listenExpenses = () => {
     return function (dispatch) {
-        expensesFirebaseRef.on('value', (snapshot) => {
-            const expenses = {};
-            snapshot.forEach((data) => {
-                expenses[data.key] = data.val();
-            });
-            dispatch(handleExpenses(expenses));
-        });
+        // expensesFirebaseRef.on('value', (snapshot) => {
+        //     const expenses = {};
+        //     snapshot.forEach((data) => {
+        //         expenses[data.key] = data.val();
+        //     });
+        //     dispatch(handleExpenses(expenses));
+        // });
     }
 }
 
 export const removeExpense = (key) => {
     return (dispatch) => {
-        expensesFirebaseRef.child(key).remove();
+        // expensesFirebaseRef.child(key).remove();
         dispatch(handleRemoveExpense());
     }
 }

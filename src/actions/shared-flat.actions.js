@@ -1,8 +1,6 @@
-import firebase from 'firebase';
 import generateSharedFlatModel from '../models/shared-flat.model';
 
 const sharedFlatPattern = 'shared-flat/';
-const sharedFlatRef = firebase.database().ref(sharedFlatPattern);
 
 export const handleList = (sharedFlatData) => {
     return {
@@ -31,25 +29,25 @@ export const handleJoinSharedFlat = () => {
 
 export const createSharedFlat = (formData) => {
     return function (dispatch) {
-        const sharedFlatModel = generateSharedFlatModel({
-            name: formData.name,
-            location: formData.location,
-            userId: firebase.auth().currentUser.uid
-        });
-        sharedFlatRef.push(sharedFlatModel);
+        // const sharedFlatModel = generateSharedFlatModel({
+        //     name: formData.name,
+        //     location: formData.location,
+        //     userId: firebase.auth().currentUser.uid
+        // });
+        // sharedFlatRef.push(sharedFlatModel);
         dispatch(handleCreate());
     }
 };
 
 export const getSharedFlats = () => {
     return function (dispatch) {
-        sharedFlatRef.on('value', (snapshot) => {
-            const sharedFlats = {};
-            snapshot.forEach((data) => {
-                sharedFlats[data.key] = data.val();
-            });
-            dispatch(handleList(sharedFlats));
-        });
+        // sharedFlatRef.on('value', (snapshot) => {
+        //     const sharedFlats = {};
+        //     snapshot.forEach((data) => {
+        //         sharedFlats[data.key] = data.val();
+        //     });
+        //     dispatch(handleList(sharedFlats));
+        // });
     }
 };
 
@@ -57,12 +55,12 @@ export const joinSharedFlat = (sharedFlat, uid) => {
     return function (dispatch) {
         console.log(sharedFlat);
         console.log(uid);
-        firebase.database().ref()
-            .child(sharedFlatPattern + uid)
-            .update({
-                countRoomMates: ++sharedFlat.countRoomMates,
-                roomMates: sharedFlat.roomMates.concat(['me'])
-            });
+        // firebase.database().ref()
+        //     .child(sharedFlatPattern + uid)
+        //     .update({
+        //         countRoomMates: ++sharedFlat.countRoomMates,
+        //         roomMates: sharedFlat.roomMates.concat(['me'])
+        //     });
         dispatch(handleJoinSharedFlat());
     }
 };
