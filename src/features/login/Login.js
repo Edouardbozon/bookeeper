@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Card, WingBlank, WhiteSpace, Button, InputItem, Flex } from 'antd-mobile';
+import { Card, WingBlank, WhiteSpace, Button, InputItem } from 'antd-mobile';
 import MdAccountCircle from 'react-icons/lib/md/account-circle';
 import MdLock from 'react-icons/lib/md/lock';
-import MdEmail from 'react-icons/lib/md/email';
 import MdFavorite from 'react-icons/lib/md/favorite';
 import { createForm } from 'rc-form';
+import history from '../../common/history';
 import * as actions from './redux/actions';
 
 export class LoginForm extends Component {
@@ -34,8 +34,7 @@ export class LoginForm extends Component {
       formData = this.props.form.getFieldsValue(props);
 
       this.props.actions.login(formData)
-        .then((resp) => { console.log(resp); })
-        .catch((err) => { console.log(err); });
+        .then(() => { console.log(this.props) });
     } else {
       props = ['r-email', 'r-password', 'name', 'age', 'repeat-password'];
       formData = this.props.form.getFieldsValue(props);
@@ -46,8 +45,7 @@ export class LoginForm extends Component {
       delete formData['r-password'];
 
       this.props.actions.signup(formData)
-        .then((resp) => { console.log(resp); })
-        .catch((err) => { console.log(err); });
+        .then(() => {  });
     }
   }
 

@@ -14,6 +14,7 @@ const initialState = {
   credentials: {},
   signupPending: false,
   signupError: null,
+  user: undefined,
 };
 
 export default initialState;

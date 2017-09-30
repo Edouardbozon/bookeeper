@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { api } from '../../../common/env';
+import history from '../../../common/history';
 import {
   LOGIN_LOGIN_BEGIN,
   LOGIN_LOGIN_SUCCESS,
@@ -20,6 +21,8 @@ export function login(credentials = {}) {
             type: LOGIN_LOGIN_SUCCESS,
             data: res,
           });
+          // dispatch();
+          history.push('shared-flat/list')
           resolve(res);
         },
         (err) => {

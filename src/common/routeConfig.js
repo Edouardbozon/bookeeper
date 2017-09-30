@@ -1,8 +1,6 @@
 import { PageNotFound } from '../features/common';
-import { Login } from '../features/login';
 import commonRoute from '../features/common/route';
 import loginRoute from '../features/login/route';
-import profileRoute from '../features/profile/route';
 import sharedFlatRoute from '../features/shared-flat/route';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
@@ -10,13 +8,11 @@ import sharedFlatRoute from '../features/shared-flat/route';
 const childRoutes = [
   commonRoute,
   loginRoute,
-  profileRoute,
   sharedFlatRoute,
 ];
 
 const routes = [{
   path: '/',
-  component: Login,
   childRoutes: [
     ...childRoutes,
     { path: '*', name: 'Page not found', component: PageNotFound },

@@ -1,8 +1,14 @@
+import { merge } from 'ramda';
 import initialState from './initialState';
 import { reducer as loginReducer } from './login';
 import { reducer as logoutReducer } from './logout';
 import { reducer as toggleSignupReducer } from './toggleSignup';
 import { reducer as signupReducer } from './signup';
+
+import {
+  LOGIN_LOGIN_SUCCESS,
+  LOGIN_SIGNUP_SUCCESS,
+} from './constants';
 
 const reducers = [
   loginReducer,
@@ -14,7 +20,11 @@ const reducers = [
 export default function reducer(state = initialState, action) {
   let newState;
   switch (action.type) {
-    // Handle cross-topic actions here
+    case LOGIN_LOGIN_SUCCESS:
+    case LOGIN_SIGNUP_SUCCESS:
+      newState = merge(action.data.data, state);
+      break;
+
     default:
       newState = state;
       break;

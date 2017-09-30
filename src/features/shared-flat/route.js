@@ -1,5 +1,4 @@
 import {
-  DefaultPage,
   SharedFlatList,
 } from './';
 
