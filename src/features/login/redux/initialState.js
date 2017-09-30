@@ -10,6 +10,8 @@ const initialState = {
   loginError: null,
   logoutPending: false,
   logoutError: null,
+  showLoginForm: true,
+  credentials: {},
 };
 
 export default initialState;

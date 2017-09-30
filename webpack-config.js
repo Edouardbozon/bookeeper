@@ -16,7 +16,7 @@ module.exports = (type) => { // eslint-disable-line
   const isDev = type === 'dev';
   const isDist = type === 'dist';
 
-  return {
+  const config = {
     devtool: {
       dev: 'eval',
       dll: false,
@@ -24,6 +24,9 @@ module.exports = (type) => { // eslint-disable-line
       dist: false,
     }[type],
     cache: true,
+    resolve: {
+      extensions: ['.web.js', '.js', '.json', '.jsx', '.css'],
+    },
     context: path.join(__dirname, 'src'),
     entry: {
       dev: {
@@ -82,7 +85,7 @@ module.exports = (type) => { // eslint-disable-line
         'process.env': {
           NODE_ENV: JSON.stringify(type === 'dist' ? 'production' : type),
         }
-      })
+      }),
     ]),
 
     module: {
@@ -90,7 +93,15 @@ module.exports = (type) => { // eslint-disable-line
         {
           test: /\.jsx?$/,
           exclude: /node_modules|build/,
-          loader: 'babel-loader?cacheDirectory=true'
+          use: {
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory: true,
+              plugins: [
+                ['import', { libraryName: 'antd-mobile', style: 'css' }]
+              ]
+            }
+          }
         }, {
           test: /\.(ttf|eot|svg|woff)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
           loader: 'file-loader'
@@ -111,4 +122,6 @@ module.exports = (type) => { // eslint-disable-line
       ]
     }
   };
+
+  return config;
 };

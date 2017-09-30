@@ -1,4 +1,5 @@
 import { PageNotFound } from '../features/common';
+import { Login } from '../features/login';
 import commonRoute from '../features/common/route';
 import loginRoute from '../features/login/route';
 import profileRoute from '../features/profile/route';
@@ -15,7 +16,7 @@ const childRoutes = [
 
 const routes = [{
   path: '/',
-  component: App,
+  component: Login,
   childRoutes: [
     ...childRoutes,
     { path: '*', name: 'Page not found', component: PageNotFound },
