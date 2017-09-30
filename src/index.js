@@ -1,35 +1,34 @@
+// Summary:
+//   This is the entry of the application, works together with index.html.
+
+import 'babel-polyfill';
 import React from 'react';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { Router, Route, browserHistory, IndexRoute, IndexRedirect } from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux'
-import { Provider } from 'react-redux';
+import { AppContainer } from 'react-hot-loader';
 import { render } from 'react-dom';
-import configureStore from './store/store.configure.js';
-import Bookkeeper from './components/app.component';
-import LoginForm from './components/login/login.component';
-import Signup from './components/login/signup.component';
-import Dashboard from './components/dashboard/dashboard.component';
-import SharedFlat from './components/shared-flat/shared-flat.component';
+import configStore from './common/configStore';
+import routeConfig from './common/routeConfig';
 
-// redux store sync with react router
-const store = configureStore();
-const history = syncHistoryWithStore(browserHistory, store);
+import Root from './Root';
 
-injectTapEventPlugin(); // provides onTouchTap() to all React Components
+const store = configStore();
 
-render((
-    <Provider store={store}>
-        <MuiThemeProvider>
-            <Router history={history}>
-                <Route path="/" component={Bookkeeper}>
-                    <IndexRedirect to="/login"/>
-                    <Route path="login" component={LoginForm}/>
-                    <Route path="signup" component={Signup}/>
-                    <Route path="dashboard" component={Dashboard}/>
-                    <Route path="shared-flat" component={SharedFlat}/>
-                </Route>
-            </Router>
-        </MuiThemeProvider>
-    </Provider>
-), document.getElementById('bookkeeper'));
+function renderApp(app) {
+  render(
+    <AppContainer>
+      {app}
+    </AppContainer>,
+    document.getElementById('react-root')
+  );
+}
+
+renderApp(<Root store={store} routeConfig={routeConfig} />);
+
+// Hot Module Replacement API
+/* istanbul ignore if  */
+if (module.hot) {
+  module.hot.accept('./common/routeConfig', () => {
+    // const nextRoot = require('./Root').default; // eslint-disable-line
+    const nextRouteConfig = require('./common/routeConfig').default; // eslint-disable-line
+    renderApp(<Root store={store} routeConfig={nextRouteConfig} />);
+  });
+}
