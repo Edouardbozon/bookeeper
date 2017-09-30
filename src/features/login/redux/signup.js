@@ -1,29 +1,29 @@
 import axios from 'axios';
 import { api } from '../../../common/env';
 import {
-  LOGIN_LOGOUT_BEGIN,
-  LOGIN_LOGOUT_SUCCESS,
-  LOGIN_LOGOUT_FAILURE,
-  LOGIN_LOGOUT_DISMISS_ERROR,
+  LOGIN_SIGNUP_BEGIN,
+  LOGIN_SIGNUP_SUCCESS,
+  LOGIN_SIGNUP_FAILURE,
+  LOGIN_SIGNUP_DISMISS_ERROR,
 } from './constants';
 
-export function logout(formData = {}) {
+export function signup(formData = {}) {
   return (dispatch) => {
     dispatch({
-      type: LOGIN_LOGOUT_BEGIN,
+      type: LOGIN_SIGNUP_BEGIN,
     });
     const promise = new Promise((resolve, reject) => {
-      axios.post(`${api}logout`, formData).then(
+      axios.post(`${api}signup`, formData).then(
         (res) => {
           dispatch({
-            type: LOGIN_LOGOUT_SUCCESS,
+            type: LOGIN_SIGNUP_SUCCESS,
             data: res,
           });
           resolve(res);
         },
         (err) => {
           dispatch({
-            type: LOGIN_LOGOUT_FAILURE,
+            type: LOGIN_SIGNUP_FAILURE,
             data: { error: err },
           });
           reject(err);
@@ -35,43 +35,45 @@ export function logout(formData = {}) {
   };
 }
 
-export function dismissLogoutError() {
+// Async action saves request error by default, this method is used to dismiss the error info.
+// If you don't want errors to be saved in Redux store, just ignore this method.
+export function dismissSignupError() {
   return {
-    type: LOGIN_LOGOUT_DISMISS_ERROR,
+    type: LOGIN_SIGNUP_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case LOGIN_LOGOUT_BEGIN:
+    case LOGIN_SIGNUP_BEGIN:
       // Just after a request is sent
       return {
         ...state,
-        logoutPending: true,
-        logoutError: null,
+        signupPending: true,
+        signupError: null,
       };
 
-    case LOGIN_LOGOUT_SUCCESS:
+    case LOGIN_SIGNUP_SUCCESS:
       // The request is success
       return {
         ...state,
-        logoutPending: false,
-        logoutError: null,
+        signupPending: false,
+        signupError: null,
       };
 
-    case LOGIN_LOGOUT_FAILURE:
+    case LOGIN_SIGNUP_FAILURE:
       // The request is failed
       return {
         ...state,
-        logoutPending: false,
-        logoutError: action.data.error,
+        signupPending: false,
+        signupError: action.data.error,
       };
 
-    case LOGIN_LOGOUT_DISMISS_ERROR:
+    case LOGIN_SIGNUP_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,
-        logoutError: null,
+        signupError: null,
       };
 
     default:

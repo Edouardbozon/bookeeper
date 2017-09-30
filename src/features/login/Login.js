@@ -87,13 +87,13 @@ export class LoginForm extends Component {
           {...getFieldProps('name')}
           type="text"
           required
-          placeholder="name or pseudonym"
+          placeholder="fullname"
         />
         <InputItem
           {...getFieldProps('age')}
           type="number"
           required
-          placeholder="Age"
+          placeholder="age"
         />
         <InputItem
           {...getFieldProps('r-email')}
@@ -111,7 +111,7 @@ export class LoginForm extends Component {
           {...getFieldProps('repeat-password')}
           type="password"
           required
-          placeholder="repeat the password"
+          placeholder="repeat password"
         />
         <WhiteSpace size="lg" />
         <Button className="btn" type="primary" onClick={() => this.handleSubmit()}>Register me</Button>
@@ -122,15 +122,16 @@ export class LoginForm extends Component {
   }
 
   render() {
+    const { showLoginForm } = this.props.login;
     return (
       <WingBlank>
         <Card className="welcome" />
         <Card className="login-form">
           <Card.Body>
-            {this.props.login.showLoginForm ? this.renderLoginForm() : this.renderSignupForm()}
+            {showLoginForm ? this.renderLoginForm() : this.renderSignupForm()}
           </Card.Body>
           <WhiteSpace size="lg" />
-          <Card.Footer extra={LoginForm.getBaseline()} />
+          <Card.Footer content={LoginForm.getBaseline()} />
         </Card>
       </WingBlank>
     );

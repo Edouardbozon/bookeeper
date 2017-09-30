@@ -12,6 +12,8 @@ const initialState = {
   logoutError: null,
   showLoginForm: true,
   credentials: {},
+  signupPending: false,
+  signupError: null,
 };
 
 export default initialState;
