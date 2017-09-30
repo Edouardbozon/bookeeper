@@ -1,17 +1,13 @@
-#
-
-src/constants/firebase.config.js
-
-# dependencies
-node_modules
-
-# testing
-coverage
-
-# production
 build
-
-# misc
-.DS_Store
-.env
+node_modules
 npm-debug.log
+yarn-error.log
+target
+node
+src/_tmp
+static
+dist
+coverage
+.nyc_output
+.tmp
+.DS_Store
