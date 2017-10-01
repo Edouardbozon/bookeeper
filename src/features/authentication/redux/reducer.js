@@ -1,4 +1,4 @@
-import { merge } from 'ramda';
+import { set, lensProp } from 'ramda';
 import initialState from './initialState';
 import { reducer as loginReducer } from './login';
 import { reducer as logoutReducer } from './logout';
@@ -22,7 +22,7 @@ export default function reducer(state = initialState, action) {
   switch (action.type) {
     case AUTHENTICATION_LOGIN_SUCCESS:
     case AUTHENTICATION_SIGNUP_SUCCESS:
-      newState = merge(action.data.data, state);
+      newState = set(lensProp('user'), action.data.data, state);
       break;
 
     default:

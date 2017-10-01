@@ -34,7 +34,8 @@ export class LoginForm extends Component {
       formData = this.props.form.getFieldsValue(props);
 
       this.props.actions.login(formData)
-        .then(() => { console.log(this.props) });
+        .then(() => { })
+        .catch(err => { });
     } else {
       props = ['r-email', 'r-password', 'name', 'age', 'repeat-password'];
       formData = this.props.form.getFieldsValue(props);
@@ -45,7 +46,8 @@ export class LoginForm extends Component {
       delete formData['r-password'];
 
       this.props.actions.signup(formData)
-        .then(() => {  });
+        .then(() => { })
+        .catch(err => { });
     }
   }
 
