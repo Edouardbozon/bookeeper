@@ -4,22 +4,22 @@ import nock from 'nock';
 import { expect } from 'chai';
 
 import {
-  LOGIN_LOGIN_BEGIN,
-  LOGIN_LOGIN_SUCCESS,
-  LOGIN_LOGIN_FAILURE,
-  LOGIN_LOGIN_DISMISS_ERROR,
-} from 'src/features/login/redux/constants';
+  AUTHENTICATION_LOGIN_BEGIN,
+  AUTHENTICATION_LOGIN_SUCCESS,
+  AUTHENTICATION_LOGIN_FAILURE,
+  AUTHENTICATION_LOGIN_DISMISS_ERROR,
+} from 'src/features/authentication/redux/constants';
 
 import {
   login,
   dismissLoginError,
   reducer,
-} from 'src/features/login/redux/login';
+} from 'src/features/authentication/redux/login';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('login/redux/login', () => {
+describe('authentication/redux/login', () => {
   afterEach(() => {
     nock.cleanAll();
   });
@@ -30,8 +30,8 @@ describe('login/redux/login', () => {
     return store.dispatch(login())
       .then(() => {
         const actions = store.getActions();
-        expect(actions[0]).to.have.property('type', LOGIN_LOGIN_BEGIN);
-        expect(actions[1]).to.have.property('type', LOGIN_LOGIN_SUCCESS);
+        expect(actions[0]).to.have.property('type', AUTHENTICATION_LOGIN_BEGIN);
+        expect(actions[1]).to.have.property('type', AUTHENTICATION_LOGIN_SUCCESS);
       });
   });
 
@@ -41,15 +41,15 @@ describe('login/redux/login', () => {
     return store.dispatch(login({ error: true }))
       .catch(() => {
         const actions = store.getActions();
-        expect(actions[0]).to.have.property('type', LOGIN_LOGIN_BEGIN);
-        expect(actions[1]).to.have.property('type', LOGIN_LOGIN_FAILURE);
+        expect(actions[0]).to.have.property('type', AUTHENTICATION_LOGIN_BEGIN);
+        expect(actions[1]).to.have.property('type', AUTHENTICATION_LOGIN_FAILURE);
         expect(actions[1]).to.have.deep.property('data.error').that.exist;
       });
   });
 
   it('returns correct action by dismissLoginError', () => {
     const expectedAction = {
-      type: LOGIN_LOGIN_DISMISS_ERROR,
+      type: AUTHENTICATION_LOGIN_DISMISS_ERROR,
     };
     expect(dismissLoginError()).to.deep.equal(expectedAction);
   });
@@ -58,7 +58,7 @@ describe('login/redux/login', () => {
     const prevState = { loginPending: false };
     const state = reducer(
       prevState,
-      { type: LOGIN_LOGIN_BEGIN }
+      { type: AUTHENTICATION_LOGIN_BEGIN }
     );
     expect(state).to.not.equal(prevState); // should be immutable
     expect(state.loginPending).to.be.true;
@@ -68,7 +68,7 @@ describe('login/redux/login', () => {
     const prevState = { loginPending: true };
     const state = reducer(
       prevState,
-      { type: LOGIN_LOGIN_SUCCESS, data: {} }
+      { type: AUTHENTICATION_LOGIN_SUCCESS, data: {} }
     );
     expect(state).to.not.equal(prevState); // should be immutable
     expect(state.loginPending).to.be.false;
@@ -78,7 +78,7 @@ describe('login/redux/login', () => {
     const prevState = { loginPending: true };
     const state = reducer(
       prevState,
-      { type: LOGIN_LOGIN_FAILURE, data: { error: new Error('some error') } }
+      { type: AUTHENTICATION_LOGIN_FAILURE, data: { error: new Error('some error') } }
     );
     expect(state).to.not.equal(prevState); // should be immutable
     expect(state.loginPending).to.be.false;
@@ -89,7 +89,7 @@ describe('login/redux/login', () => {
     const prevState = { loginError: new Error('some error') };
     const state = reducer(
       prevState,
-      { type: LOGIN_LOGIN_DISMISS_ERROR }
+      { type: AUTHENTICATION_LOGIN_DISMISS_ERROR }
     );
     expect(state).to.not.equal(prevState); // should be immutable
     expect(state.loginError).to.be.null;

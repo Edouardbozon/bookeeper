@@ -12,7 +12,7 @@ import * as actions from './redux/actions';
 
 export class LoginForm extends Component {
   static propTypes = {
-    login: PropTypes.object.isRequired,
+    authentication: PropTypes.object.isRequired,
     form: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
@@ -25,7 +25,7 @@ export class LoginForm extends Component {
 
   handleSubmit() {
     this.props.form.validateFields();
-    const isLogin = this.props.login.showLoginForm;
+    const isLogin = this.props.authentication.showLoginForm;
 
     let props;
     let formData;
@@ -120,7 +120,7 @@ export class LoginForm extends Component {
   }
 
   render() {
-    const { showLoginForm } = this.props.login;
+    const { showLoginForm } = this.props.authentication;
     return (
       <WingBlank>
         <Card className="welcome" />
@@ -139,7 +139,7 @@ export class LoginForm extends Component {
 /* istanbul ignore next */
 function mapStateToProps(state) {
   return {
-    login: state.login,
+    authentication: state.authentication,
   };
 }
 

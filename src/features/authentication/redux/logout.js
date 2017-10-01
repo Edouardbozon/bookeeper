@@ -1,29 +1,29 @@
 import axios from 'axios';
 import { api } from '../../../common/env';
 import {
-  LOGIN_LOGOUT_BEGIN,
-  LOGIN_LOGOUT_SUCCESS,
-  LOGIN_LOGOUT_FAILURE,
-  LOGIN_LOGOUT_DISMISS_ERROR,
+  AUTHENTICATION_LOGOUT_BEGIN,
+  AUTHENTICATION_LOGOUT_SUCCESS,
+  AUTHENTICATION_LOGOUT_FAILURE,
+  AUTHENTICATION_LOGOUT_DISMISS_ERROR,
 } from './constants';
 
 export function logout(formData = {}) {
   return (dispatch) => {
     dispatch({
-      type: LOGIN_LOGOUT_BEGIN,
+      type: AUTHENTICATION_LOGOUT_BEGIN,
     });
     const promise = new Promise((resolve, reject) => {
       axios.post(`${api}logout`, formData).then(
         (res) => {
           dispatch({
-            type: LOGIN_LOGOUT_SUCCESS,
+            type: AUTHENTICATION_LOGOUT_SUCCESS,
             data: res,
           });
           resolve(res);
         },
         (err) => {
           dispatch({
-            type: LOGIN_LOGOUT_FAILURE,
+            type: AUTHENTICATION_LOGOUT_FAILURE,
             data: { error: err },
           });
           reject(err);
@@ -37,13 +37,13 @@ export function logout(formData = {}) {
 
 export function dismissLogoutError() {
   return {
-    type: LOGIN_LOGOUT_DISMISS_ERROR,
+    type: AUTHENTICATION_LOGOUT_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case LOGIN_LOGOUT_BEGIN:
+    case AUTHENTICATION_LOGOUT_BEGIN:
       // Just after a request is sent
       return {
         ...state,
@@ -51,7 +51,7 @@ export function reducer(state, action) {
         logoutError: null,
       };
 
-    case LOGIN_LOGOUT_SUCCESS:
+    case AUTHENTICATION_LOGOUT_SUCCESS:
       // The request is success
       return {
         ...state,
@@ -59,7 +59,7 @@ export function reducer(state, action) {
         logoutError: null,
       };
 
-    case LOGIN_LOGOUT_FAILURE:
+    case AUTHENTICATION_LOGOUT_FAILURE:
       // The request is failed
       return {
         ...state,
@@ -67,7 +67,7 @@ export function reducer(state, action) {
         logoutError: action.data.error,
       };
 
-    case LOGIN_LOGOUT_DISMISS_ERROR:
+    case AUTHENTICATION_LOGOUT_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,

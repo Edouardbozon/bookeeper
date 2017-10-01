@@ -6,8 +6,8 @@ import { reducer as toggleSignupReducer } from './toggleSignup';
 import { reducer as signupReducer } from './signup';
 
 import {
-  LOGIN_LOGIN_SUCCESS,
-  LOGIN_SIGNUP_SUCCESS,
+  AUTHENTICATION_LOGIN_SUCCESS,
+  AUTHENTICATION_SIGNUP_SUCCESS,
 } from './constants';
 
 const reducers = [
@@ -20,8 +20,8 @@ const reducers = [
 export default function reducer(state = initialState, action) {
   let newState;
   switch (action.type) {
-    case LOGIN_LOGIN_SUCCESS:
-    case LOGIN_SIGNUP_SUCCESS:
+    case AUTHENTICATION_LOGIN_SUCCESS:
+    case AUTHENTICATION_SIGNUP_SUCCESS:
       newState = merge(action.data.data, state);
       break;
 

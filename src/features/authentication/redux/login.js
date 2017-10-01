@@ -2,23 +2,23 @@ import axios from 'axios';
 import { api } from '../../../common/env';
 import history from '../../../common/history';
 import {
-  LOGIN_LOGIN_BEGIN,
-  LOGIN_LOGIN_SUCCESS,
-  LOGIN_LOGIN_FAILURE,
-  LOGIN_LOGIN_DISMISS_ERROR,
+  AUTHENTICATION_LOGIN_BEGIN,
+  AUTHENTICATION_LOGIN_SUCCESS,
+  AUTHENTICATION_LOGIN_FAILURE,
+  AUTHENTICATION_LOGIN_DISMISS_ERROR,
 } from './constants';
 
 export function login(credentials = {}) {
   return (dispatch) => {
     dispatch({
-      type: LOGIN_LOGIN_BEGIN,
+      type: AUTHENTICATION_LOGIN_BEGIN,
     });
 
     const promise = new Promise((resolve, reject) => {
       axios.post(`${api}login`, credentials).then(
         (res) => {
           dispatch({
-            type: LOGIN_LOGIN_SUCCESS,
+            type: AUTHENTICATION_LOGIN_SUCCESS,
             data: res,
           });
           // dispatch();
@@ -27,7 +27,7 @@ export function login(credentials = {}) {
         },
         (err) => {
           dispatch({
-            type: LOGIN_LOGIN_FAILURE,
+            type: AUTHENTICATION_LOGIN_FAILURE,
             data: { error: err },
           });
           reject(err);
@@ -43,13 +43,13 @@ export function login(credentials = {}) {
 // If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissLoginError() {
   return {
-    type: LOGIN_LOGIN_DISMISS_ERROR,
+    type: AUTHENTICATION_LOGIN_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case LOGIN_LOGIN_BEGIN:
+    case AUTHENTICATION_LOGIN_BEGIN:
       // Just after a request is sent
       return {
         ...state,
@@ -57,7 +57,7 @@ export function reducer(state, action) {
         loginError: null,
       };
 
-    case LOGIN_LOGIN_SUCCESS:
+    case AUTHENTICATION_LOGIN_SUCCESS:
       // The request is success
       return {
         ...state,
@@ -65,7 +65,7 @@ export function reducer(state, action) {
         loginError: null,
       };
 
-    case LOGIN_LOGIN_FAILURE:
+    case AUTHENTICATION_LOGIN_FAILURE:
       // The request is failed
       return {
         ...state,
@@ -73,7 +73,7 @@ export function reducer(state, action) {
         loginError: action.data.error,
       };
 
-    case LOGIN_LOGIN_DISMISS_ERROR:
+    case AUTHENTICATION_LOGIN_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,

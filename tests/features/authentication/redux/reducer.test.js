@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import reducer from 'src/features/login/redux/reducer';
+import reducer from 'src/features/authentication/redux/reducer';
 
-describe('login/redux/reducer', () => {
+describe('authentication/redux/reducer', () => {
   it('does nothing if no matched action', () => {
     const prevState = {};
     const state = reducer(

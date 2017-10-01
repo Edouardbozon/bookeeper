@@ -1,12 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
-import { DefaultPage } from 'src/features/signup/DefaultPage';
+import { DefaultPage } from 'src/features/authentication/DefaultPage';
 
-describe('signup/DefaultPage', () => {
+describe('authentication/DefaultPage', () => {
   it('renders node with correct class name', () => {
     const props = {
-      signup: {},
+      login: {},
       actions: {},
     };
     const renderedComponent = shallow(
@@ -14,7 +14,7 @@ describe('signup/DefaultPage', () => {
     );
 
     expect(
-      renderedComponent.find('.signup-default-page').node
+      renderedComponent.find('.authentication-default-page').node
     ).to.exist;
   });
 });
