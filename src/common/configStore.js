@@ -2,15 +2,18 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { routerMiddleware } from 'react-router-redux';
 import history from './history';
+import { redirectMiddleware } from './redirectMiddleware';
 import rootReducer from './rootReducer';
 
 const router = routerMiddleware(history);
 
-// NOTE: Do not change middleares delaration pattern since rekit plugins may register middlewares to it.
+// NOTE: Do not change middlewares delaration pattern since rekit plugins may register middlewares to it.
 const middlewares = [
   thunk,
   router,
 ];
+
+middlewares.push(redirectMiddleware);
 
 let devToolsExtension = f => f;
 
@@ -40,5 +43,6 @@ export default function configureStore(initialState) {
       store.replaceReducer(nextRootReducer);
     });
   }
+
   return store;
 }

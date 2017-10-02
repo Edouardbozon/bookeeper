@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 import history from './common/history';
+import Layout from './Layout';
 
 function renderRouteConfigV3(Container, routes, contextPath) {
   // Resolve route config object in React Router v3.
@@ -52,7 +53,9 @@ export default class Root extends React.Component {
     return (
       <Provider store={this.props.store}>
         <ConnectedRouter history={history}>
-          {children}
+          <Layout>
+            {children}
+          </Layout>
         </ConnectedRouter>
       </Provider>
     );

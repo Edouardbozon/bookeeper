@@ -1,8 +1,7 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import commonReducer from '../features/common/redux/reducer';
-import loginReducer from '../features/login/redux/reducer';
-import profileReducer from '../features/profile/redux/reducer';
+import authenticationReducer from '../features/authentication/redux/reducer';
 import sharedFlatReducer from '../features/shared-flat/redux/reducer';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
@@ -13,8 +12,7 @@ import sharedFlatReducer from '../features/shared-flat/redux/reducer';
 const reducerMap = {
   router: routerReducer,
   common: commonReducer,
-  login: loginReducer,
-  profile: profileReducer,
+  authentication: authenticationReducer,
   sharedFlat: sharedFlatReducer,
 };
 

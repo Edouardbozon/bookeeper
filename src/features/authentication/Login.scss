@@ -1,0 +1,24 @@
+@import '../../styles/mixins.scss';
+
+.login-form,
+.welcome {
+    margin-top: .75rem;
+}
+
+.welcome {
+    background: url("https://www.toutsurmesfinances.com/assurance/images/stories/16_9/colocation-assurance.jpg");
+    background-position: center;
+    background-size: cover;
+    min-height: 40vh !important;
+}
+
+.login-form {
+    .baseline svg {
+        margin-top: -4px;
+        fill: rgb(197, 35, 35);
+    }
+}
+
+.container {
+    height: 100vh;
+}

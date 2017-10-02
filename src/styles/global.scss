@@ -1,1 +1,10 @@
 @import './mixins.scss';
+
+html, body, button, input, optgroup, select, textarea  {
+    font-family: "Rubik", sans-serif !important;
+}
+
+.subtitle {
+    text-transform: uppercase;
+    color: $darkgray;
+}

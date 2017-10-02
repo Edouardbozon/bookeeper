@@ -1,0 +1,16 @@
+@import '~typi/scss/typi';
+
+$darkgray: lighten(#000000, 10%);
+
+$breakpoints: (
+  small: 600px,
+  large: 1200px
+);
+
+$typi: (
+  base: (
+    null: (16px, 1.4),
+    small: (18px),
+    large: (20px)
+  )
+);
