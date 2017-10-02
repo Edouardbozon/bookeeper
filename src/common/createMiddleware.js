@@ -3,7 +3,7 @@ import { filter, head, any } from 'ramda';
 
 export default function createMiddleware(handlers) {
   return store => next => (action) => {
-    // find handler that match with action
+    // find handler that match actions
     const actionHandler = head(filter(handler => any(
       handlerAction => handlerAction === action.type)(handler.actions), handlers
     ));

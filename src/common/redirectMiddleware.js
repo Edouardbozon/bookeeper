@@ -22,10 +22,10 @@ export const redirectMiddleware = createMiddleware([
     afterHandler: (store) => {
       const state = store.getState();
       const user = path(false, ['authentication', 'user'], state);
-      if (user && !user.hasSharedFlat && history.location.pathname !== '/join-or-create') {
-        history.replace('/join-or-create');
+      if (user && !user.hasSharedFlat && history.location.pathname !== '/shared-flat/list') {
+        history.replace('/common/join-or-create');
       } else if (user && user.hasSharedFlat && history.location.pathname !== '/shared-flat/list') {
-        history.replace('/shared-flat');
+        history.replace('/shared-flat/{id}');
       }
     }
   },
