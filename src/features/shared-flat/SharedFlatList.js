@@ -10,6 +10,15 @@ export class SharedFlatList extends Component {
     actions: PropTypes.object.isRequired,
   };
 
+  componentWillMount() {
+    this.filters = { offset: 0, limit: 10 };
+    this.props.actions.getSharedFlatList(this.filters)
+      .then((response) => {
+        console.log(response)
+      })  
+      .catch((err) => console.log(err))
+  }
+
   render() {
     return (
       <div className="shared-flat-shared-flat-list">

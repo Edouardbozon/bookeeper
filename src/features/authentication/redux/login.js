@@ -20,6 +20,7 @@ export function login(credentials = {}) {
             type: AUTHENTICATION_LOGIN_SUCCESS,
             data: res,
           });
+          console.log(res)
           resolve(res);
         },
         (err) => {
