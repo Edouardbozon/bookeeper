@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { api } from '../../../common/env';
+import { discardToken } from './actions';
 import {
   AUTHENTICATION_LOGOUT_BEGIN,
   AUTHENTICATION_LOGOUT_SUCCESS,
@@ -19,6 +20,7 @@ export function logout(formData = {}) {
             type: AUTHENTICATION_LOGOUT_SUCCESS,
             data: res,
           });
+          dispatch(discardToken());
           resolve(res);
         },
         (err) => {

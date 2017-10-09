@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { api } from '../../../common/env';
+import { setToken } from './actions';
 import {
   AUTHENTICATION_LOGIN_BEGIN,
   AUTHENTICATION_LOGIN_SUCCESS,
@@ -18,9 +19,9 @@ export function login(credentials = {}) {
         (res) => {
           dispatch({
             type: AUTHENTICATION_LOGIN_SUCCESS,
-            data: res,
+            data: res
           });
-          console.log(res)
+          dispatch(setToken(credentials));
           resolve(res);
         },
         (err) => {
