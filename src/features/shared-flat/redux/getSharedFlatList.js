@@ -14,7 +14,7 @@ export function getSharedFlatList(filters) {
     });
 
     const promise = new Promise((resolve, reject) => {
-      axios.get(`${api}api/shared-flat`, filters).then(
+      axios.get(`${api}api/shared-flat`, { withCredentials: true }).then(
         (res) => {
           dispatch({
             type: SHARED_FLAT_GET_SHARED_FLAT_LIST_SUCCESS,

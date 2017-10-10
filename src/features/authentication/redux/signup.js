@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { api } from '../../../common/env';
+import { setToken } from './actions';
 import {
   AUTHENTICATION_SIGNUP_BEGIN,
   AUTHENTICATION_SIGNUP_SUCCESS,
@@ -7,13 +8,15 @@ import {
   AUTHENTICATION_SIGNUP_DISMISS_ERROR,
 } from './constants';
 
-export function signup(formData = {}) {
+export function signup(credentials) {
   return (dispatch) => {
     dispatch({
       type: AUTHENTICATION_SIGNUP_BEGIN,
     });
+
+    dispatch(setToken(credentials));
     const promise = new Promise((resolve, reject) => {
-      axios.post(`${api}signup`, formData).then(
+      axios.post(`${api}signup`, credentials, { withCredentials: true }).then(
         (res) => {
           dispatch({
             type: AUTHENTICATION_SIGNUP_SUCCESS,
