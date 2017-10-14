@@ -8,6 +8,7 @@
 const initialState = {
   getSharedFlatListPending: false,
   getSharedFlatListError: null,
+  list: undefined,
 };
 
 export default initialState;
