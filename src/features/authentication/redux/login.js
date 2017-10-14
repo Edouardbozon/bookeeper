@@ -14,11 +14,11 @@ export function login(credentials = {}) {
     });
 
     const promise = new Promise((resolve, reject) => {
-      axios.post(`${api}login`, credentials).then(
+      axios.post(`${api}login`, credentials, { withCredentials: true }).then(
         (res) => {
           dispatch({
             type: AUTHENTICATION_LOGIN_SUCCESS,
-            data: res,
+            data: res
           });
           resolve(res);
         },
@@ -36,8 +36,6 @@ export function login(credentials = {}) {
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissLoginError() {
   return {
     type: AUTHENTICATION_LOGIN_DISMISS_ERROR,

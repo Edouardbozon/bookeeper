@@ -9,12 +9,16 @@ import {
   AUTHENTICATION_LOGIN_SUCCESS,
   AUTHENTICATION_SIGNUP_SUCCESS,
 } from './constants';
+import { reducer as setTokenReducer } from './setToken';
+import { reducer as discardTokenReducer } from './discardToken';
 
 const reducers = [
   loginReducer,
   logoutReducer,
   toggleSignupReducer,
   signupReducer,
+  setTokenReducer,
+  discardTokenReducer,
 ];
 
 export default function reducer(state = initialState, action) {
