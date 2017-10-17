@@ -11,6 +11,8 @@ const initialState = {
   list: undefined,
   makeJoinRequestPending: false,
   makeJoinRequestError: null,
+  filteredList: undefined,
+  searchQuery: undefined,
 };
 
 export default initialState;

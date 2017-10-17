@@ -7,7 +7,7 @@ import {
   SHARED_FLAT_GET_SHARED_FLAT_LIST_DISMISS_ERROR,
 } from './constants';
 
-export function getSharedFlatList(filters) {
+export function getSharedFlatList() {
   return (dispatch) => {
     dispatch({
       type: SHARED_FLAT_GET_SHARED_FLAT_LIST_BEGIN,
