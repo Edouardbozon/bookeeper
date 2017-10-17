@@ -4,11 +4,14 @@ import { reducer as getSharedFlatListReducer } from './getSharedFlatList';
 import { SHARED_FLAT_GET_SHARED_FLAT_LIST_SUCCESS } from './constants';
 import { reducer as searchReducer } from './search';
 import { reducer as makeJoinRequestReducer } from './makeJoinRequest';
+import { reducer as searchReducer } from './search';
+
 
 const reducers = [
   getSharedFlatListReducer,
   searchReducer,
   makeJoinRequestReducer,
+  searchReducer,
 ];
 
 export default function reducer(state = initialState, action) {
