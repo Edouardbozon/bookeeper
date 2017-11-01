@@ -1,9 +1,11 @@
 import initialState from './initialState';
 import { reducer as getSharedFlatListReducer } from './getSharedFlatList';
 import { SHARED_FLAT_GET_SHARED_FLAT_LIST_SUCCESS } from './constants';
+import { reducer as makeJoinRequestReducer } from './makeJoinRequest';
 
 const reducers = [
   getSharedFlatListReducer,
+  makeJoinRequestReducer,
 ];
 
 export default function reducer(state = initialState, action) {

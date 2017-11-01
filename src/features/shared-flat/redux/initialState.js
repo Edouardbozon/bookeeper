@@ -9,6 +9,8 @@ const initialState = {
   getSharedFlatListPending: false,
   getSharedFlatListError: null,
   list: undefined,
+  makeJoinRequestPending: false,
+  makeJoinRequestError: null,
 };
 
 export default initialState;
