@@ -1,1 +1,16 @@
 @import '../../styles/mixins.scss';
+
+.common-join-or-create {
+  h1 {
+    margin: 6px 0;
+  }
+  > div {
+    color: #108ee9;
+    margin-bottom: 14px;
+  }
+  img {
+    display: block;
+    width: 100%;
+    border-radius: 4px;
+  }
+}

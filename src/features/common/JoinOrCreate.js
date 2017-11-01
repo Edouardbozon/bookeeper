@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
-import { Button, Card, WhiteSpace, List } from 'antd-mobile';
+import { Button, Card, WhiteSpace, List, WingBlank } from 'antd-mobile';
 import { connect } from 'react-redux';
 import history from '../../common/history';
 import * as actions from './redux/actions';
+import MdSentimentDissatisfied from 'react-icons/lib/md/sentiment-dissatisfied';
 
 export class JoinOrCreate extends Component {
   static propTypes = {
@@ -17,12 +18,13 @@ export class JoinOrCreate extends Component {
     return (
       <div>
         <WhiteSpace size="lg" />
-        <Card className="common-join-or-create">
-          <Card.Body>
+        <WingBlank className="common-join-or-create">
+          <div>
             <h1>Hi buddy,</h1>
-            You looks lonely without shared flat.
-          </Card.Body>
-        </Card>
+            <MdSentimentDissatisfied /> You looks lonely without shared flat.
+          </div>
+          <img src="https://media.giphy.com/media/26xBQ6fcMq1ryC4Sc/giphy.gif" alt="Lonely gif" />
+        </WingBlank>
         <WhiteSpace size="lg" />
         <List style={style}>
           <List.Item multipleLine>
