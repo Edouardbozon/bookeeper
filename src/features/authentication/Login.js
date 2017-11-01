@@ -137,7 +137,9 @@ export class LoginForm extends Component {
     const { showLoginForm } = this.props.authentication;
     return (
       <WingBlank>
-        <Card className="welcome" />
+        <Card className="welcome">
+          <img src="https://media.giphy.com/media/3oKIPtOk5fMgievdBK/giphy.gif" alt="Home family gif"/>
+        </Card>
         <Card className="login-form">
           <Card.Body>
             {showLoginForm ? this.renderLoginForm() : this.renderSignupForm()}
