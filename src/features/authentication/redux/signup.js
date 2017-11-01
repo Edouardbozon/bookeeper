@@ -38,8 +38,6 @@ export function signup(credentials) {
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissSignupError() {
   return {
     type: AUTHENTICATION_SIGNUP_DISMISS_ERROR,
@@ -49,7 +47,6 @@ export function dismissSignupError() {
 export function reducer(state, action) {
   switch (action.type) {
     case AUTHENTICATION_SIGNUP_BEGIN:
-      // Just after a request is sent
       return {
         ...state,
         signupPending: true,
@@ -57,23 +54,26 @@ export function reducer(state, action) {
       };
 
     case AUTHENTICATION_SIGNUP_SUCCESS:
-      // The request is success
       return {
         ...state,
         signupPending: false,
         signupError: null,
       };
-
+    // eslint-disable-next-line no-case-declarations
     case AUTHENTICATION_SIGNUP_FAILURE:
-      // The request is failed
+      let error = action.data.error.response.data;
+      if (typeof error === 'object') {
+        error = Object.values(error)[0];
+        error = Object.values(error)[1];
+      }
+
       return {
         ...state,
         signupPending: false,
-        signupError: action.data.error,
+        signupError: error,
       };
 
     case AUTHENTICATION_SIGNUP_DISMISS_ERROR:
-      // Dismiss the request failure error
       return {
         ...state,
         signupError: null,

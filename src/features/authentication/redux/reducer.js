@@ -11,6 +11,7 @@ import {
 } from './constants';
 import { reducer as setTokenReducer } from './setToken';
 import { reducer as discardTokenReducer } from './discardToken';
+import { reducer as showErrorReducer } from './showError';
 
 const reducers = [
   loginReducer,
@@ -19,6 +20,7 @@ const reducers = [
   signupReducer,
   setTokenReducer,
   discardTokenReducer,
+  showErrorReducer,
 ];
 
 export default function reducer(state = initialState, action) {

@@ -24,14 +24,15 @@ export class LoginForm extends Component {
 
   componentDidUpdate() {
     let error;
-    if (this.props.authentication.loginError) {
+    if (this.props.authentication.loginError !== null) {
       error = this.props.authentication.loginError;
     }
-    if (this.props.authentication.signupError) {
+    if (this.props.authentication.signupError !== null) {
       error = this.props.authentication.signupError;
     }
-
-    Toast.fail(error);
+    if (error) {
+      this.props.actions.showError(error);
+    }
   }
 
   handleSubmit() {
