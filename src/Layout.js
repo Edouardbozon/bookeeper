@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NavBar } from 'antd-mobile';
+import { NavBar, Toast } from 'antd-mobile';
 
 class Layout extends React.Component {
   static propTypes = {
@@ -10,6 +10,10 @@ class Layout extends React.Component {
   // eslint-disable-next-line no-useless-constructor
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    Toast.loading('Loading...', 1);
   }
 
   render() {

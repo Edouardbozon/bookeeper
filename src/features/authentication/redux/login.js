@@ -65,7 +65,7 @@ export function reducer(state, action) {
       return {
         ...state,
         loginPending: false,
-        loginError: action.data.error,
+        loginError: action.data.error.response.data,
       };
 
     case AUTHENTICATION_LOGIN_DISMISS_ERROR:

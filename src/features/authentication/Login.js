@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Card, WingBlank, WhiteSpace, Button, InputItem } from 'antd-mobile';
+import { Card, WingBlank, WhiteSpace, Button, InputItem, Toast } from 'antd-mobile';
 import MdAccountCircle from 'react-icons/lib/md/account-circle';
 import MdLock from 'react-icons/lib/md/lock';
 import MdFavorite from 'react-icons/lib/md/favorite';
 import { createForm } from 'rc-form';
-import history from '../../common/history';
 import * as actions from './redux/actions';
 
 export class LoginForm extends Component {
@@ -21,6 +20,18 @@ export class LoginForm extends Component {
     return (
       <span className="baseline">Handcrafted with <MdFavorite /></span>
     );
+  }
+
+  componentDidUpdate() {
+    let error;
+    if (this.props.authentication.loginError) {
+      error = this.props.authentication.loginError;
+    }
+    if (this.props.authentication.signupError) {
+      error = this.props.authentication.signupError;
+    }
+
+    Toast.fail(error);
   }
 
   handleSubmit() {
