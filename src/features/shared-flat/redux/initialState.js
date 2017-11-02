@@ -13,10 +13,7 @@ const initialState = {
   makeJoinRequestError: null,
   filteredList: undefined,
   searchQuery: undefined,
-  makeJoinRequestPending: false,
-  makeJoinRequestError: null,
-  filteredList: undefined,
-  searchQuery: undefined,
+  files: []
 };
 
 export default initialState;

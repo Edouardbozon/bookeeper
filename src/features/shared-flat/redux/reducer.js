@@ -4,6 +4,7 @@ import { reducer as getSharedFlatListReducer } from './getSharedFlatList';
 import { SHARED_FLAT_GET_SHARED_FLAT_LIST_SUCCESS } from './constants';
 import { reducer as makeJoinRequestReducer } from './makeJoinRequest';
 import { reducer as searchReducer } from './search';
+import { reducer as chooseFileReducer } from './chooseFile';
 
 
 const reducers = [
@@ -11,6 +12,7 @@ const reducers = [
   searchReducer,
   makeJoinRequestReducer,
   searchReducer,
+  chooseFileReducer,
 ];
 
 export default function reducer(state = initialState, action) {
