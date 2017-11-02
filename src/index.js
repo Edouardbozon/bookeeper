@@ -7,7 +7,6 @@ import { AppContainer } from 'react-hot-loader';
 import { render } from 'react-dom';
 import configStore from './common/configStore';
 import routeConfig from './common/routeConfig';
-
 import Root from './Root';
 
 const store = configStore();

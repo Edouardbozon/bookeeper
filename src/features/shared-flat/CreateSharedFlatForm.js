@@ -13,43 +13,18 @@ export class CreateSharedFlatForm extends Component {
     form: PropTypes.object.isRequired,
   };
 
-  onChange(files) {
+  onImagePickerChange(files) {
     this.props.actions.chooseFile(files);
   }
 
-  handleSubmit(event) {
-
+  handleSubmit() {
+    const formData = this.props.form.getFieldsValue();
+    this.props.actions.createSharedFlat(formData);
   }
 
-  renderForm() {
-    const { getFieldProps } = this.props.form;
-    const { files } = this.props.sharedFlat;
+  renderFormAddressSection(getFieldProps) {
     return (
-      <WingBlank>
-        <WhiteSpace size="lg" />
-        <WhiteSpace size="lg" />
-        <span>General</span>
-        <WhiteSpace size="lg" />
-        <InputItem
-          {...getFieldProps('name')}
-          type="text"
-          required
-          autoFocus
-          placeholder="name"
-        />
-        <InputItem
-          {...getFieldProps('size')}
-          type="number"
-          required
-          placeholder="size"
-        />
-        <InputItem
-          {...getFieldProps('pricePerMonth')}
-          placeholder="price per month"
-          type="number"
-        />
-        <WhiteSpace size="lg" />
-        <WhiteSpace size="lg" />
+      <div className="address-form-section">
         <span>Address</span>
         <Button
           inline
@@ -73,19 +48,52 @@ export class CreateSharedFlatForm extends Component {
           placeholder="postal code"
         />
         <InputItem
-          {...getFieldProps('postalCode')}
-          type="number"
+          {...getFieldProps('city')}
+          type="text"
           required
           placeholder="city"
         />
         <InputItem
-          {...getFieldProps('postalCode')}
-          type="number"
+          {...getFieldProps('country')}
+          type="text"
           required
           placeholder="country"
         />
+      </div>
+    );
+  }
+
+  renderFormGlobalSection(getFieldProps) {
+    return (
+      <div className="general-form-section">
+        <span>General</span>
         <WhiteSpace size="lg" />
-        <WhiteSpace size="lg" />
+        <InputItem
+          {...getFieldProps('name')}
+          type="text"
+          required
+          autoFocus
+          placeholder="name"
+        />
+        <InputItem
+          {...getFieldProps('size')}
+          type="number"
+          required
+          placeholder="size"
+        />
+        <InputItem
+          {...getFieldProps('pricePerMonth')}
+          placeholder="price per month"
+          type="money"
+          moneyKeyboardAlign="left"
+        />
+      </div>
+    );
+  }
+
+  renderFormCustomizeSection(files) {
+    return (
+      <div className="customize-form-section">
         <span>Customize</span>
         <WhiteSpace size="lg" />
         <WingBlank size="md">
@@ -94,9 +102,21 @@ export class CreateSharedFlatForm extends Component {
         <WhiteSpace />
         <ImagePicker
           files={files}
-          onChange={(file, type) => this.onChange(file, type)}
+          onChange={(file, type) => this.onImagePickerChange(file, type)}
           selectable={files.length < 2}
         />
+      </div>
+    );
+  }
+
+  renderForm() {
+    const { getFieldProps } = this.props.form;
+    const { files } = this.props.sharedFlat;
+    return (
+      <WingBlank>
+        { this.renderFormGlobalSection(getFieldProps) }
+        { this.renderFormAddressSection(getFieldProps) }
+        { this.renderFormCustomizeSection(files) }
       </WingBlank>
     );
   }
@@ -113,9 +133,10 @@ export class CreateSharedFlatForm extends Component {
             </Card.Body>
           </Card>
           <WhiteSpace size="lg" />
-          <Button className="btn" type="primary" onClick={() => this.handleSubmit()}>
-            Create {  }
+          <Button className="btn" type="primary" onClick={event => this.handleSubmit(event)}>
+            Create
           </Button>
+          <WhiteSpace size="lg" />
         </form>
       </WingBlank>
     );

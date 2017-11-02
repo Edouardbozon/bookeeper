@@ -2,3 +2,4 @@ export { getSharedFlatList, dismissGetSharedFlatListError } from './getSharedFla
 export { makeJoinRequest, dismissMakeJoinRequestError } from './makeJoinRequest';
 export { search } from './search';
 export { chooseFile } from './chooseFile';
+export { createSharedFlat, dismissCreateSharedFlatError } from './createSharedFlat';

@@ -45,7 +45,6 @@ export function dismissGetSharedFlatListError() {
 export function reducer(state, action) {
   switch (action.type) {
     case SHARED_FLAT_GET_SHARED_FLAT_LIST_BEGIN:
-      // Just after a request is sent
       return {
         ...state,
         getSharedFlatListPending: true,
@@ -53,7 +52,6 @@ export function reducer(state, action) {
       };
 
     case SHARED_FLAT_GET_SHARED_FLAT_LIST_SUCCESS:
-      // The request is success
       return {
         ...state,
         getSharedFlatListPending: false,
@@ -61,7 +59,6 @@ export function reducer(state, action) {
       };
 
     case SHARED_FLAT_GET_SHARED_FLAT_LIST_FAILURE:
-      // The request is failed
       return {
         ...state,
         getSharedFlatListPending: false,
@@ -69,7 +66,6 @@ export function reducer(state, action) {
       };
 
     case SHARED_FLAT_GET_SHARED_FLAT_LIST_DISMISS_ERROR:
-      // Dismiss the request failure error
       return {
         ...state,
         getSharedFlatListError: null,
