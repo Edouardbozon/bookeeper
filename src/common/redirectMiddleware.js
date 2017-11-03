@@ -6,7 +6,7 @@ import {
   AUTHENTICATION_LOGIN_SUCCESS,
   AUTHENTICATION_SIGNUP_SUCCESS
 } from '../features/authentication/redux/constants';
-import {SHARED_FLAT_CREATE_SHARED_FLAT_SUCCESS} from "../features/shared-flat/redux/constants";
+import { SHARED_FLAT_CREATE_SHARED_FLAT_SUCCESS } from '../features/shared-flat/redux/constants';
 
 export const redirectMiddleware = createMiddleware([
   {
@@ -34,7 +34,8 @@ export const redirectMiddleware = createMiddleware([
     actions: [SHARED_FLAT_CREATE_SHARED_FLAT_SUCCESS],
     afterHandler: (store) => {
       const state = store.getState();
-      history.push('/shared-flat/{id}');
+      // eslint-disable-next-line
+      history.push(`/shared-flat/' ${state.sharedFlat.collection._id}`);
     }
   },
 ]);

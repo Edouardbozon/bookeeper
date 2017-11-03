@@ -4,6 +4,10 @@ import {
 } from './constants';
 
 export function showError(error) {
+  if (typeof error !== 'string') {
+    error = error.error.message;
+  }
+
   Toast.fail(error);
   return {
     type: AUTHENTICATION_SHOW_ERROR,
