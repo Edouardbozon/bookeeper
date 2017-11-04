@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { Card, WhiteSpace } from 'antd-mobile';
-import { connect } from 'react-redux';
-import * as actions from './redux/actions';
 import MdLocationOn from 'react-icons/lib/md/location-on';
 import MdCheck from 'react-icons/lib/md/check';
+import { bindActionCreators } from 'redux';
+import { Card, WhiteSpace, Button, WingBlank, SearchBar } from 'antd-mobile';
+import { connect } from 'react-redux';
+import * as actions from './redux/actions';
 
 export class SharedFlatList extends Component {
   static propTypes = {
@@ -18,36 +18,57 @@ export class SharedFlatList extends Component {
     this.props.actions.getSharedFlatList();
   }
 
+  search(query) {
+    this.props.actions.search(query);
+  }
+
   render() {
-    const sharedFlats = this.props.sharedFlat.list || [];
+    const sharedFlats = this.props.sharedFlat.filteredList || [];
+    const getTitle = sharedFlat => (<div>
+      <div>{sharedFlat.name}</div>
+      {<small>{sharedFlat.countResidents} resident</small>}
+      <small>{ ' - '} years rate {sharedFlat.residentsYearsRate}</small>
+    </div>);
+
     const list = sharedFlats.map(sharedFlat =>
+      // eslint-disable-next-line no-underscore-dangle
       (<div key={sharedFlat._id}>
         <WhiteSpace size="md" />
         <Card full>
           <Card.Header
-            title={<div><div>{sharedFlat.name}</div>  <small>Years rate {sharedFlat.residentsYearsRate}</small></div>}
+            title={getTitle(sharedFlat)}
             thumb="https://cloud.githubusercontent.com/assets/1698185/18039916/f025c090-6dd9-11e6-9d86-a4d48a1bf049.png"
-            extra={<span>{sharedFlat.countResidents } resident</span>}
+            extra={
+              <Button type="ghost" size="small">
+                Join
+              </Button>
+            }
           />
-          <Card.Body>
+          <Card.Footer content={
             <div>
               <MdLocationOn />
-              <strong>{sharedFlat.location.city}</strong>{ ' - ' }
-              {sharedFlat.location.country}
-            </div>
-          </Card.Body>
-          <Card.Footer content="footer content" extra={<div>extra footer content</div>} />
+              <strong>{sharedFlat.location.city}</strong>{' - '}{sharedFlat.location.country}
+            </div>}
+          />
         </Card>
       </div>)
     );
 
     return (<div>
-      <WhiteSpace size="md" />
-      <Card>
-        <Card.Body className="list-success">
-          <MdCheck /> <span>Found {list.length} shared flats</span>
-        </Card.Body>
-      </Card>
+      <WhiteSpace size="lg" />
+      <WingBlank size="md" className="list-success">
+        <SearchBar
+          onChange={(e) => { this.search(e); }}
+          placeholder="Search by locality, name..."
+          cancelText="Cancel"
+          autoFocus
+        />
+      </WingBlank>
+      <WhiteSpace size="sm" />
+      <WingBlank size="lg" className="list-success">
+        <MdCheck /> <span>{list.length} shared flats were found</span>
+      </WingBlank>
+      <WhiteSpace size="sm" />
       {list}
     </div>);
   }

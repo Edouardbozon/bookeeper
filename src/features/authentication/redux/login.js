@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { pathOr } from 'ramda';
 import { api } from '../../../common/env';
 import {
   AUTHENTICATION_LOGIN_BEGIN,
@@ -61,11 +62,12 @@ export function reducer(state, action) {
       };
 
     case AUTHENTICATION_LOGIN_FAILURE:
+      const error = pathOr(action.data, ['data', 'error', 'data'], action);
       // The request is failed
       return {
         ...state,
         loginPending: false,
-        loginError: action.data.error.response.data,
+        loginError: error,
       };
 
     case AUTHENTICATION_LOGIN_DISMISS_ERROR:

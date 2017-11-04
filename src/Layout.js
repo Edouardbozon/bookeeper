@@ -1,26 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavBar, Toast } from 'antd-mobile';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 class Layout extends React.Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
-  }
-
-  // eslint-disable-next-line no-useless-constructor
-  constructor(props) {
-    super(props);
-  }
+    authentication: PropTypes.object.isRequired,
+  };
 
   componentDidMount() {
     Toast.loading('Loading...', 1);
   }
 
   render() {
+    const authenticated = typeof this.props.authentication.user === 'object';
+    const navRight = authenticated ? this.props.authentication.user.profile.name : null;
     return (
       <div>
-        <NavBar>
-          <strong>Bookkeeper</strong>
+        <NavBar rightContent={navRight}>
+          { authenticated ? null : <strong>Bookeeper</strong> }
         </NavBar>
         <main>{this.props.children}</main>
       </div>
@@ -28,4 +28,9 @@ class Layout extends React.Component {
   }
 }
 
-export default Layout;
+/* istanbul ignore next */
+function mapStateToProps(state) {
+  return { ...state };
+}
+
+export default withRouter(connect(mapStateToProps)(Layout));

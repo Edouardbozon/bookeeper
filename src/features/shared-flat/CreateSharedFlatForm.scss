@@ -1,5 +1,8 @@
 @import '../../styles/mixins.scss';
 
-.shared-flat-create-shared-flat-form {
-
+.create-shared-flat-form {
+  .customize-form-section,
+  .address-form-section {
+    margin-top: 14px;
+  }
 }
