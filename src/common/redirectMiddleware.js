@@ -11,22 +11,32 @@ import { SHARED_FLAT_CREATE_SHARED_FLAT_SUCCESS } from '../features/shared-flat/
 export const redirectMiddleware = createMiddleware([
   {
     actions: ['@@router/LOCATION_CHANGE'],
-    beforeHandler: (store) => {
+    afterHandler: (store) => {
       const state = store.getState();
-      if (!state.authentication.user && history.location.pathname !== '/login') {
+      const authenticated = path(['authentication', 'authenticated'], state);
+      if (!authenticated && history.location.pathname !== '/login') {
         history.replace('/login');
       }
     }
   },
   {
-    actions: [AUTHENTICATION_LOGIN_SUCCESS, AUTHENTICATION_SIGNUP_SUCCESS],
+    actions: [
+      AUTHENTICATION_LOGIN_SUCCESS,
+      AUTHENTICATION_SIGNUP_SUCCESS
+    ],
     afterHandler: (store) => {
       const state = store.getState();
+      const authenticated = path(['authentication', 'authenticated'], state);
       const user = path(['authentication', 'user'], state);
-      if (user && !user.hasSharedFlat && history.location.pathname !== '/shared-flat/list') {
-        history.replace('/common/join-or-create');
-      } else if (user && user.hasSharedFlat && history.location.pathname !== '/shared-flat/list') {
-        history.replace('/shared-flat/create');
+      console.log(authenticated)
+      if (authenticated && !user.hasSharedFlat &&
+        history.location.pathname !== '/shared-flat/list'
+      ) {
+        history.push('/common/join-or-create');
+      } else if (authenticated && user.hasSharedFlat &&
+        history.location.pathname !== '/shared-flat/list'
+      ) {
+        history.push('/shared-flat/create');
       }
     }
   },
@@ -35,7 +45,7 @@ export const redirectMiddleware = createMiddleware([
     afterHandler: (store) => {
       const state = store.getState();
       // eslint-disable-next-line
-      history.push(`/shared-flat/' ${state.sharedFlat.collection._id}`);
+      history.push(`/shared-flat/'${state.sharedFlat.collection._id}`);
     }
   },
 ]);
