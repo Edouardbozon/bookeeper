@@ -110,6 +110,7 @@ export class CreateSharedFlatForm extends Component {
   }
 
   renderForm() {
+    console.log(this.props)
     const { getFieldProps } = this.props.form;
     const { files } = this.props.sharedFlat;
     return (

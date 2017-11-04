@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { merge } from 'ramda';
 import { api } from '../../../common/env';
 import {
   SHARED_FLAT_CREATE_SHARED_FLAT_BEGIN,
@@ -53,14 +54,17 @@ export function reducer(state, action) {
       };
 
     case SHARED_FLAT_CREATE_SHARED_FLAT_SUCCESS:
-      return {
-        ...state,
-        createSharedFlatPending: false,
-        createSharedFlatError: null,
-        collection: action.data,
-      };
+      return merge(
+        {
+          createSharedFlatPending: false,
+          createSharedFlatError: null,
+          collection: action.data
+        },
+        { ...state }
+      );
 
     case SHARED_FLAT_CREATE_SHARED_FLAT_FAILURE:
+      console.log(state)
       return {
         ...state,
         createSharedFlatPending: false,

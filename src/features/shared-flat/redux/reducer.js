@@ -26,9 +26,6 @@ export default function reducer(state = initialState, action) {
       const listCp = clone(list);
       newState = merge(state, { list, filteredList: listCp });
       break;
-    case SHARED_FLAT_CREATE_SHARED_FLAT_SUCCESS:
-      // @todo set hasSharedFlat user value to true
-      break;
     default:
       newState = state;
       break;

@@ -22,11 +22,11 @@ export const redirectMiddleware = createMiddleware([
     actions: [AUTHENTICATION_LOGIN_SUCCESS, AUTHENTICATION_SIGNUP_SUCCESS],
     afterHandler: (store) => {
       const state = store.getState();
-      const user = path(false, ['authentication', 'user'], state);
+      const user = path(['authentication', 'user'], state);
       if (user && !user.hasSharedFlat && history.location.pathname !== '/shared-flat/list') {
         history.replace('/common/join-or-create');
       } else if (user && user.hasSharedFlat && history.location.pathname !== '/shared-flat/list') {
-        history.replace('/shared-flat/{id}');
+        history.replace('/shared-flat/create');
       }
     }
   },
