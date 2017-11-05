@@ -7,14 +7,14 @@ import {
   SHARED_FLAT_MAKE_JOIN_REQUEST_DISMISS_ERROR,
 } from './constants';
 
-export function makeJoinRequest(args = {}) {
+export function makeJoinRequest(id) {
   return (dispatch) => {
     dispatch({
       type: SHARED_FLAT_MAKE_JOIN_REQUEST_BEGIN,
     });
 
     const promise = new Promise((resolve, reject) => {
-      doRequest.then(
+      axios.post(`${api}api/shared-flat/${id}/join`, null, { withCredentials: true }).then(
         (res) => {
           dispatch({
             type: SHARED_FLAT_MAKE_JOIN_REQUEST_SUCCESS,
