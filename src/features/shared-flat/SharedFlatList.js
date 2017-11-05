@@ -11,6 +11,7 @@ export class SharedFlatList extends Component {
   static propTypes = {
     sharedFlat: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    authentication: PropTypes.object.isRequired,
   };
 
   componentWillMount() {
@@ -24,12 +25,13 @@ export class SharedFlatList extends Component {
 
   render() {
     const sharedFlats = this.props.sharedFlat.filteredList || [];
+    const { hasSharedFlat } = this.props.authentication.user;
+    const { joinRequestPending } = this.props.authentication.user;
     const getTitle = sharedFlat => (<div>
       <div>{sharedFlat.name}</div>
       {<small>{sharedFlat.countResidents} resident</small>}
-      <small>{ ' - '} years rate {sharedFlat.residentsYearsRate}</small>
+      <small>{' - '} years rate {sharedFlat.residentsYearsRate}</small>
     </div>);
-
     const list = sharedFlats.map(sharedFlat =>
       // eslint-disable-next-line no-underscore-dangle
       (<div key={sharedFlat._id}>
@@ -39,8 +41,15 @@ export class SharedFlatList extends Component {
             title={getTitle(sharedFlat)}
             thumb="https://cloud.githubusercontent.com/assets/1698185/18039916/f025c090-6dd9-11e6-9d86-a4d48a1bf049.png"
             extra={
-              <Button type="ghost" size="small">
-                Join
+              <Button
+                type="ghost"
+                size="small"
+                disabled={hasSharedFlat || joinRequestPending}
+                onClick={() => this.props.actions.makeJoinRequest(sharedFlat._id)}
+              >
+                Join { }
+                { hasSharedFlat ? <span>(already member)</span> : '' }
+                { joinRequestPending ? <span>(already posted)</span> : '' }
               </Button>
             }
           />
@@ -78,6 +87,7 @@ export class SharedFlatList extends Component {
 function mapStateToProps(state) {
   return {
     sharedFlat: state.sharedFlat,
+    authentication: state.authentication,
   };
 }
 

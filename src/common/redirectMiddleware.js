@@ -28,7 +28,7 @@ export const redirectMiddleware = createMiddleware([
       const state = store.getState();
       const authenticated = path(['authentication', 'authenticated'], state);
       const user = path(['authentication', 'user'], state);
-      console.log(authenticated)
+
       if (authenticated && !user.hasSharedFlat &&
         history.location.pathname !== '/shared-flat/list'
       ) {
@@ -36,7 +36,7 @@ export const redirectMiddleware = createMiddleware([
       } else if (authenticated && user.hasSharedFlat &&
         history.location.pathname !== '/shared-flat/list'
       ) {
-        history.push('/shared-flat/create');
+        history.push('/common/join-or-create');
       }
     }
   },
