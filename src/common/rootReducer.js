@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { assocPath } from 'ramda';
+import { assocPath, compose } from 'ramda';
 import { routerReducer } from 'react-router-redux';
 import commonReducer from '../features/common/redux/reducer';
 import authenticationReducer from '../features/authentication/redux/reducer';
@@ -34,7 +34,10 @@ export default reduceReducers(
       case AUTHENTICATION_SIGNUP_SUCCESS:
         return assocPath(['authentication', 'authenticated'], true, state);
       case SHARED_FLAT_CREATE_SHARED_FLAT_SUCCESS:
-        return assocPath(['authentication', 'user', 'hasSharedFlat'], true, state);
+        return compose(
+          assocPath(['authentication', 'user', 'hasSharedFlat'], true),
+          assocPath(['authentication', 'user', 'sharedFlatId'], action.data._id),
+        )(state);
       case SHARED_FLAT_MAKE_JOIN_REQUEST_SUCCESS:
         return assocPath(['authentication', 'user', 'joinRequestPending'], true, state);
       default:

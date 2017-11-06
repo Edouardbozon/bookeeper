@@ -36,7 +36,7 @@ export const redirectMiddleware = createMiddleware([
       } else if (authenticated && user.hasSharedFlat &&
         history.location.pathname !== '/shared-flat/list'
       ) {
-        history.push('/common/join-or-create');
+        history.push(`/shared-flat/${user.sharedFlatId}`);
       }
     }
   },
@@ -45,7 +45,7 @@ export const redirectMiddleware = createMiddleware([
     afterHandler: (store) => {
       const state = store.getState();
       // eslint-disable-next-line
-      history.push(`/shared-flat/'${state.sharedFlat.collection._id}`);
+      history.push(`/shared-flat/'${user.sharedFlatId}`);
     }
   },
 ]);
