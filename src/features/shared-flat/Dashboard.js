@@ -14,7 +14,10 @@ export class Dashboard extends Component {
   };
 
   componentWillMount() {
-    this.props.actions.getDetail();
+    Promise.all([
+      this.props.actions.getDetail(),
+      this.props.actions.getEvents(),
+    ]);
   }
 
   renderTabBar(props) {
