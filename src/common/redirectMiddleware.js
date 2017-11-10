@@ -44,6 +44,7 @@ export const redirectMiddleware = createMiddleware([
     actions: [SHARED_FLAT_CREATE_SHARED_FLAT_SUCCESS],
     afterHandler: (store) => {
       const state = store.getState();
+      const user = path(['authentication', 'user'], state);
       // eslint-disable-next-line
       history.push(`/shared-flat/'${user.sharedFlatId}`);
     }
