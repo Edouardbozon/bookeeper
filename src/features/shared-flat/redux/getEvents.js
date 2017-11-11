@@ -54,10 +54,12 @@ export function reducer(state, action) {
       };
 
     case SHARED_FLAT_GET_EVENTS_SUCCESS:
+    console.log(action.data)
       return {
         ...state,
         getEventsPending: false,
         getEventsError: null,
+        events: action.data.data,
       };
 
     case SHARED_FLAT_GET_EVENTS_FAILURE:
@@ -65,7 +67,6 @@ export function reducer(state, action) {
         ...state,
         getEventsPending: false,
         getEventsError: action.data.error,
-        events: action.data.data,
       };
 
     case SHARED_FLAT_GET_EVENTS_DISMISS_ERROR:

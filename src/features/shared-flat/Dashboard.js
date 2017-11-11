@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { LineChart, Line } from 'recharts';
 import { pathOr, path } from 'ramda';
 import { bindActionCreators } from 'redux';
 import { StickyContainer, Sticky } from 'react-sticky';
@@ -34,9 +35,10 @@ export class Dashboard extends Component {
   renderCharts() {
     const tabs = [
       { title: 'Activity' },
-      { title: 'Second Tab', disabled: true },
-      { title: 'Third Tab' },
+      { title: 'Expenses' },
     ];
+
+    const {events} = this.props.sharedFlat;
 
     return (
       <StickyContainer>
@@ -49,11 +51,18 @@ export class Dashboard extends Component {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            height: '250px',
+            height: '150px',
             backgroundColor: '#fff'
           }}
           >
-            Content of first tab
+          <LineChart width={300} height={100} data={events}>
+            <Line 
+              type='monotone' 
+              dataKey='number' 
+              stroke='#8884d8' 
+              strokeWidth={2} 
+            />
+          </LineChart>
           </div>
           <div style={{
             display: 'flex',
