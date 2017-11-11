@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { NavBar, Toast } from 'antd-mobile';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import React from "react";
+import PropTypes from "prop-types";
+import { NavBar, Toast } from "antd-mobile";
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
 
 class Layout extends React.Component {
   static propTypes = {
@@ -11,11 +11,11 @@ class Layout extends React.Component {
   };
 
   componentDidMount() {
-    Toast.loading('Loading...', 1);
+    Toast.loading("Loading...", 1);
   }
 
   render() {
-    const authenticated = typeof this.props.authentication.user === 'object';
+    const authenticated = typeof this.props.authentication.user === "object";
     const navRight = authenticated ? this.props.authentication.user.profile.name : null;
     return (
       <div>

@@ -65,7 +65,8 @@
   "scripts": {
     "start": "node ./tools/server.js",
     "build": "node ./tools/build.js",
-    "test": "node ./tools/run_test.js"
+    "test": "node ./tools/run_test.js",
+    "lint": "eslint **/*.js --ignore-pattern node_modules/"
   },
   "devDependencies": {
     "argparse": "^1.0.7",

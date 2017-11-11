@@ -21,19 +21,80 @@ export class Dashboard extends Component {
   }
 
   renderTabBar(props) {
-    return (<Sticky>
-      {({ style }) => <div style={{ ...style, zIndex: 1 }}><Tabs.DefaultTabBar {...props} /></div>}
-    </Sticky>);
+    return (
+      <Sticky>
+        { ({ style }) => 
+            <div style={{ ...style, zIndex: 1 }}>
+              <Tabs.DefaultTabBar {...props} />
+            </div> }
+      </Sticky>
+    );
   }
 
-  render() {
-    const name = pathOr('Loading', ['sharedFlat', 'collection', 'name'], this.props);
-    const countResidents = path(['sharedFlat', 'collection', 'countResidents'], this.props);
+  renderCharts() {
     const tabs = [
       { title: 'Activity' },
       { title: 'Second Tab', disabled: true },
       { title: 'Third Tab' },
     ];
+
+    return (
+      <StickyContainer>
+        <Tabs
+          tabs={tabs}
+          initalPage={'t2'}
+          renderTabBar={this.renderTabBar}
+        >
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '250px',
+            backgroundColor: '#fff'
+          }}
+          >
+            Content of first tab
+          </div>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '250px',
+            backgroundColor: '#fff'
+          }}
+          >
+            Content of second tab
+          </div>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '250px',
+            backgroundColor: '#fff'
+          }}
+          >
+            Content of third tab
+          </div>
+        </Tabs>
+      </StickyContainer>
+    );
+  }
+
+  renderEvents() {
+    return this.props.sharedFlat.events.map(event => 
+      (
+        <Card>
+          <Card.Body>
+            { event.createdAt } { event.type }
+          </Card.Body>
+        </Card>
+      )
+    );
+  }
+
+  render() {
+    const name = pathOr('Loading', ['sharedFlat', 'collection', 'name'], this.props);
+    const countResidents = path(['sharedFlat', 'collection', 'countResidents'], this.props);
     return (
       <div className="shared-flat-dashboard">
         <header>
@@ -44,48 +105,11 @@ export class Dashboard extends Component {
         <WingBlank size="md">
           <WhiteSpace size="md" />
           <div className="main">
-            <StickyContainer>
-              <Tabs
-                tabs={tabs}
-                initalPage={'t2'}
-                renderTabBar={this.renderTabBar}
-              >
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  height: '250px',
-                  backgroundColor: '#fff'
-                }}
-                >
-                  Content of first tab
-                </div>
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  height: '250px',
-                  backgroundColor: '#fff'
-                }}
-                >
-                  Content of second tab
-                </div>
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  height: '250px',
-                  backgroundColor: '#fff'
-                }}
-                >
-                  Content of third tab
-                </div>
-              </Tabs>
-            </StickyContainer>
+            { this.renderCharts() }
           </div>
           <WhiteSpace />
           <div>
-            yoo
+            { this.renderEvents() }
           </div>
         </WingBlank>
       </div>
