@@ -10,6 +10,11 @@ const initialState = {
   searchQuery: undefined,
   files: [],
   collection: null,
+  events: [],
+  getDetailPending: false,
+  getDetailError: null,
+  getEventsPending: false,
+  getEventsError: null,
 };
 
 export default initialState;

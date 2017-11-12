@@ -65,7 +65,8 @@
   "scripts": {
     "start": "node ./tools/server.js",
     "build": "node ./tools/build.js",
-    "test": "node ./tools/run_test.js"
+    "test": "node ./tools/run_test.js",
+    "lint": "eslint **/*.js --ignore-pattern node_modules/"
   },
   "devDependencies": {
     "argparse": "^1.0.7",
@@ -134,6 +135,8 @@
     "ramda": "^0.24.1",
     "rc-form": "^1.4.8",
     "react-icons": "^2.2.5",
+    "react-sticky": "^6.0.1",
+    "recharts": "^1.0.0-beta.1",
     "typi": "^3.1.1"
   }
 }

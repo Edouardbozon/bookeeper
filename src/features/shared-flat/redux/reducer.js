@@ -6,6 +6,8 @@ import { reducer as makeJoinRequestReducer } from './makeJoinRequest';
 import { reducer as searchReducer } from './search';
 import { reducer as chooseFileReducer } from './chooseFile';
 import { reducer as createSharedFlatReducer } from './createSharedFlat';
+import { reducer as getDetailReducer } from './getDetail';
+import { reducer as getEventsReducer } from './getEvents';
 
 
 const reducers = [
@@ -15,6 +17,8 @@ const reducers = [
   searchReducer,
   chooseFileReducer,
   createSharedFlatReducer,
+  getDetailReducer,
+  getEventsReducer,
 ];
 
 export default function reducer(state = initialState, action) {
