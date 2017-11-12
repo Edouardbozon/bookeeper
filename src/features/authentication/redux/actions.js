@@ -5,3 +5,4 @@ export { signup, dismissSignupError } from './signup';
 export { setToken } from './setToken';
 export { discardToken } from './discardToken';
 export { showError } from './showError';
+export { getFacebook, dismissGetFacebookError } from './getFacebook';
