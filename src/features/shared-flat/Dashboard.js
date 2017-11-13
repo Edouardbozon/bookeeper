@@ -58,7 +58,7 @@ export class Dashboard extends Component {
           <LineChart width={300} height={100} data={events}>
             <Line 
               type='monotone' 
-              dataKey='number' 
+              dataKey='monthlyActivityAverage' 
               stroke='#8884d8' 
               strokeWidth={2} 
             />
