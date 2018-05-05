@@ -1,21 +1,25 @@
-@import '../../styles/mixins.scss';
+@import "../../styles/mixins.scss";
 
 .login-form,
 .welcome {
-    margin-top: .75rem;
+  margin-top: 0.75rem;
 }
 
 .welcome {
-    padding: 0 !important;
+  padding: 0 !important;
+  overflow: hidden;
 }
 
 .login-form {
-    .baseline svg {
-        margin-top: -4px;
-        fill: rgb(197, 35, 35);
-    }
+  .am-card-body {
+    border-top: none;
+  }
+  .baseline svg {
+    margin-top: -4px;
+    fill: rgb(197, 35, 35);
+  }
 }
 
 .container {
-    height: 100vh;
+  height: 100vh;
 }

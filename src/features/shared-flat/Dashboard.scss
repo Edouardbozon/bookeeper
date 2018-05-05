@@ -1,8 +1,8 @@
-@import '../../styles/mixins.scss';
+@import "../../styles/mixins.scss";
 
 .shared-flat-dashboard {
   height: calc(100vh - 45px);
-  background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
   background-size: 400% 400%;
   animation: Gradient 20s ease infinite;
 
@@ -15,17 +15,30 @@
       float: right;
     }
   }
-}
 
+  .event-list-wrapper {
+    max-height: 74vh;
+    overflow: hidden;
+    overflow-y: auto;
+
+    .am-card {
+      min-height: 0;
+      .am-card-body {
+        border-top: none;
+        min-height: 0;
+      }
+    }
+  }
+}
 
 @keyframes Gradient {
   0% {
-    background-position: 0% 50%
+    background-position: 0% 50%;
   }
   50% {
-    background-position: 100% 50%
+    background-position: 100% 50%;
   }
   100% {
-    background-position: 0% 50%
+    background-position: 0% 50%;
   }
 }

@@ -91,12 +91,15 @@ export class Dashboard extends Component {
   }
 
   renderEvents() {
-    return this.props.sharedFlat.events.map(event => (
-      <Card>
-        <Card.Body>
-          {event.createdAt} {event.type}
-        </Card.Body>
-      </Card>
+    return this.props.sharedFlat.events.map((event, i) => (
+      <div>
+        {i > 0 ? <WhiteSpace /> : null}
+        <Card key={event._id}>
+          <Card.Body>
+            {event.createdAt} {event.type}
+          </Card.Body>
+        </Card>
+      </div>
     ));
   }
 
@@ -135,13 +138,15 @@ export class Dashboard extends Component {
           <WhiteSpace size="md" />
           <div className="main">{this.renderCharts()}</div>
           <WhiteSpace />
+          <section className="event-list-wrapper">
+            {this.renderEvents()}
+          </section>
           <Button
             className="action-button"
             onClick={() => this.renderActionSheet()}>
             Notify
           </Button>
           <WhiteSpace />
-          <div>{this.renderEvents()}</div>
         </WingBlank>
       </div>
     );

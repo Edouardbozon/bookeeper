@@ -4,8 +4,8 @@ import { path } from "ramda";
 import { NavBar, Toast, Button, Badge, WhiteSpace } from "antd-mobile";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import { bindActionCreators } from 'redux';
-import * as actions from './features/authentication/redux/actions';
+import { bindActionCreators } from "redux";
+import * as actions from "./features/authentication/redux/actions";
 
 class Layout extends React.Component {
   static propTypes = {
@@ -19,53 +19,51 @@ class Layout extends React.Component {
 
   render() {
     const authenticated = typeof this.props.authentication.user === "object";
-    const hasFbAuth = authenticated && typeof path(
-      ["authentication", "user", "facebook"],
-      this.props
-    ) === "string";
+    const hasFbAuth =
+      authenticated &&
+      typeof path(["authentication", "user", "facebook"], this.props) ===
+        "string";
 
     return (
       <div>
         <NavBar
           rightContent={
-            hasFbAuth ?
+            hasFbAuth ? (
               <div>
                 <Badge dot>
-                  <span style={{
-                    width: "30px",
-                    height: "30px",
-                    backgroundImage: `url(${this.props.authentication.user.profile.picture})`,
-                    backgroundSize: "cover",
-                    display: "inline-block" }}
+                  <span
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      backgroundImage: `url(${
+                        this.props.authentication.user.profile.picture
+                      })`,
+                      backgroundSize: "cover",
+                      display: "inline-block",
+                    }}
                   />
                 </Badge>
               </div>
-              : null
+            ) : null
           }
           leftContent={
-            authenticated ?
-              <span style={{ marginRight: "8%" }}>{ this.props.authentication.user.profile.name }</span>
-              : null
-          }
-        >
-          {
-            authenticated
-              ? null
-              : <strong>Bookeeper</strong>
-
-          }
-          {
-            authenticated && !hasFbAuth
-              ? <Button
-                inline
-                size="small"
-                href="http://localhost:3000/auth/facebook">
-                Facebook
-              </Button>
-              : null
-          }
+            authenticated ? (
+              <span style={{ marginRight: "8%" }}>
+                {this.props.authentication.user.profile.name}
+              </span>
+            ) : null
+          }>
+          {authenticated ? null : <strong>Bookeeper</strong>}
+          {authenticated && !hasFbAuth ? (
+            <Button
+              inline
+              size="small"
+              href="http://localhost:3000/auth/facebook">
+              Facebook
+            </Button>
+          ) : null}
         </NavBar>
-        <main>{this.props.children}</main>
+        <main className="app-wrapper">{this.props.children}</main>
       </div>
     );
   }
@@ -76,15 +74,11 @@ function mapStateToProps(state) {
   return { ...state };
 }
 
-
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Layout));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Layout));
