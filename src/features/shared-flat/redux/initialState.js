@@ -15,6 +15,20 @@ const initialState = {
   getDetailError: null,
   getEventsPending: false,
   getEventsError: null,
+  actions: [
+    {
+      title: "create event",
+      img: 'https://gw.alipayobjects.com/zos/rmsportal/OpHiXAcYzmPQHcdlLFrc.png',
+    },
+    {
+      title: "create need event",
+      img: 'https://gw.alipayobjects.com/zos/rmsportal/wvEzCMiDZjthhAOcwTOu.png',
+    },
+    {
+      title: "create expense event",
+      img: 'https://gw.alipayobjects.com/zos/rmsportal/cTTayShKtEIdQVEMuiWt.png',
+    }
+  ]
 };
 
 export default initialState;
