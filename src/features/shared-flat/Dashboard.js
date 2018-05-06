@@ -14,6 +14,7 @@ import {
 } from "antd-mobile";
 import { connect } from "react-redux";
 import * as actions from "./redux/actions";
+import moment from "moment";
 
 export class Dashboard extends Component {
   static propTypes = {
@@ -70,20 +71,10 @@ export class Dashboard extends Component {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              height: "250px",
+              height: "150px",
               backgroundColor: "#fff",
             }}>
             Content of second tab
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              height: "250px",
-              backgroundColor: "#fff",
-            }}>
-            Content of third tab
           </div>
         </Tabs>
       </StickyContainer>
@@ -92,11 +83,20 @@ export class Dashboard extends Component {
 
   renderEvents() {
     return this.props.sharedFlat.events.map((event, i) => (
-      <div>
+      <div key={event._id}>
         {i > 0 ? <WhiteSpace /> : null}
-        <Card key={event._id}>
+        <Card>
           <Card.Body>
-            {event.createdAt} {event.type}
+            <div className="event-thumbnail">
+              <img
+                src={event.createdBy.picture}
+                alt={`${event.createdBy.name} event`}
+              />
+            </div>
+            <span>
+              by <strong>{event.createdBy.name}</strong>
+            </span>
+            <small>{moment(event.createdAt).fromNow()}</small>
           </Card.Body>
         </Card>
       </div>
@@ -128,25 +128,30 @@ export class Dashboard extends Component {
       this.props,
     );
     return (
-      <div className="shared-flat-dashboard">
-        <header>
-          <WingBlank>
-            {name} <span>{`${countResidents} resident`}</span>
+      <div>
+        <div className="shared-flat-dashboard">
+          <header>
+            <WingBlank>
+              {name} <span>{`${countResidents} resident`}</span>
+            </WingBlank>
+          </header>
+          <WingBlank size="md" className="main">
+            <WhiteSpace size="md" />
+            <div className="main">{this.renderCharts()}</div>
+            <WhiteSpace />
+            <section className="event-list-wrapper">
+              {this.renderEvents()}
+            </section>
           </WingBlank>
-        </header>
-        <WingBlank size="md">
-          <WhiteSpace size="md" />
-          <div className="main">{this.renderCharts()}</div>
-          <WhiteSpace />
-          <section className="event-list-wrapper">
-            {this.renderEvents()}
-          </section>
+        </div>
+        <WhiteSpace />
+        <WingBlank size="md" className="main">
           <Button
+            type="primary"
             className="action-button"
             onClick={() => this.renderActionSheet()}>
             Notify
           </Button>
-          <WhiteSpace />
         </WingBlank>
       </div>
     );

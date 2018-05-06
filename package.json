@@ -132,6 +132,7 @@
   },
   "dependencies": {
     "antd-mobile": "^2.0.1",
+    "moment": "^2.22.1",
     "ramda": "^0.24.1",
     "rc-form": "^1.4.8",
     "react-icons": "^2.2.5",
