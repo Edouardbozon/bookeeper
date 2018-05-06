@@ -1,13 +1,20 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { Card, WingBlank, WhiteSpace, Button, InputItem, Toast } from 'antd-mobile';
-import MdAccountCircle from 'react-icons/lib/md/account-circle';
-import MdLock from 'react-icons/lib/md/lock';
-import MdFavorite from 'react-icons/lib/md/favorite';
-import { createForm } from 'rc-form';
-import * as actions from './redux/actions';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import {
+  Card,
+  WingBlank,
+  WhiteSpace,
+  Button,
+  InputItem,
+  Toast,
+} from "antd-mobile";
+import MdAccountCircle from "react-icons/lib/md/account-circle";
+import MdLock from "react-icons/lib/md/lock";
+import MdFavorite from "react-icons/lib/md/favorite";
+import { createForm } from "rc-form";
+import * as actions from "./redux/actions";
 
 export class LoginForm extends Component {
   static propTypes = {
@@ -18,7 +25,9 @@ export class LoginForm extends Component {
 
   static getBaseline() {
     return (
-      <span className="baseline">Handcrafted with <MdFavorite /></span>
+      <span className="baseline">
+        Handcrafted with <MdFavorite />
+      </span>
     );
   }
 
@@ -42,24 +51,26 @@ export class LoginForm extends Component {
     let props;
     let formData;
     if (isLogin) {
-      props = ['email', 'password'];
+      props = ["email", "password"];
       formData = this.props.form.getFieldsValue(props);
 
-      this.props.actions.login(formData)
-        .then(() => { })
-        .catch(err => { });
+      this.props.actions
+        .login(formData)
+        .then(() => {})
+        .catch(err => {});
     } else {
-      props = ['r-email', 'r-password', 'name', 'age', 'repeat-password'];
+      props = ["r-email", "r-password", "name", "age", "repeat-password"];
       formData = this.props.form.getFieldsValue(props);
 
-      formData.email = formData['r-email'];
-      formData.password = formData['r-password'];
-      delete formData['r-email'];
-      delete formData['r-password'];
+      formData.email = formData["r-email"];
+      formData.password = formData["r-password"];
+      delete formData["r-email"];
+      delete formData["r-password"];
 
-      this.props.actions.signup(formData)
-        .then(() => { })
-        .catch(err => { });
+      this.props.actions
+        .signup(formData)
+        .then(() => {})
+        .catch(err => {});
     }
   }
 
@@ -68,25 +79,30 @@ export class LoginForm extends Component {
     return (
       <form onSubmit={() => this.handleSubmit()}>
         <InputItem
-          {...getFieldProps('email')}
+          {...getFieldProps("email")}
           required
           placeholder="email"
-          type="email"
-        >
+          type="email">
           <MdAccountCircle />
         </InputItem>
         <InputItem
-          {...getFieldProps('password')}
+          {...getFieldProps("password")}
           required
           type="password"
-          placeholder="password"
-        >
+          placeholder="password">
           <MdLock />
         </InputItem>
         <WhiteSpace size="lg" />
-        <Button className="btn" type="primary" onClick={() => this.handleSubmit()}>Login</Button>
+        <Button
+          className="btn"
+          type="primary"
+          onClick={() => this.handleSubmit()}>
+          Login
+        </Button>
         <WhiteSpace size="sm" />
-        <Button className="btn" onClick={this.props.actions.toggleSignup}>or sign-up</Button>
+        <Button className="btn" onClick={this.props.actions.toggleSignup}>
+          or sign-up
+        </Button>
       </form>
     );
   }
@@ -96,39 +112,46 @@ export class LoginForm extends Component {
     return (
       <div>
         <InputItem
-          {...getFieldProps('name')}
+          {...getFieldProps("name")}
           type="text"
           required
           placeholder="fullname"
         />
         <InputItem
-          {...getFieldProps('age')}
+          {...getFieldProps("age")}
           type="number"
           required
           placeholder="age"
         />
         <InputItem
-          {...getFieldProps('r-email')}
+          {...getFieldProps("r-email")}
           placeholder="email"
           required
           type="email"
         />
         <InputItem
-          {...getFieldProps('r-password')}
+          {...getFieldProps("r-password")}
           type="password"
           required
           placeholder="password"
         />
         <InputItem
-          {...getFieldProps('repeat-password')}
+          {...getFieldProps("repeat-password")}
           type="password"
           required
           placeholder="repeat password"
         />
         <WhiteSpace size="lg" />
-        <Button className="btn" type="primary" onClick={() => this.handleSubmit()}>Register me</Button>
+        <Button
+          className="btn"
+          type="primary"
+          onClick={() => this.handleSubmit()}>
+          Register me
+        </Button>
         <WhiteSpace size="sm" />
-        <Button className="btn" onClick={this.props.actions.toggleSignup}>or login</Button>
+        <Button className="btn" onClick={this.props.actions.toggleSignup}>
+          or login
+        </Button>
       </div>
     );
   }
@@ -138,7 +161,10 @@ export class LoginForm extends Component {
     return (
       <WingBlank>
         <Card className="welcome">
-          <img src="https://media.giphy.com/media/3oKIPtOk5fMgievdBK/giphy.gif" alt="Home family gif"/>
+          <img
+            src="https://media.giphy.com/media/3oKIPtOk5fMgievdBK/giphy.gif"
+            alt="Home family gif"
+          />
         </Card>
         <Card className="login-form">
           <Card.Body>
@@ -162,13 +188,10 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
 const LoginFormWrapper = createForm()(LoginForm);
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LoginFormWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginFormWrapper);
