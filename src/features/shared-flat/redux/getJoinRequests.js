@@ -21,14 +21,14 @@ export function getJoinRequests(args = {}) {
 
     const promise = new Promise((resolve, reject) => {
       axios
-        .get(`${api}/shared-flat/${sharedFlatId}/join`, {
+        .get(`${api}api/shared-flat/${sharedFlatId}/join`, {
           withCredentials: true,
         })
         .then(
           res => {
             dispatch({
               type: SHARED_FLAT_GET_JOIN_REQUESTS_SUCCESS,
-              data: res,
+              data: res.data,
             });
             resolve(res);
           },
@@ -62,9 +62,9 @@ export function reducer(state, action) {
       };
 
     case SHARED_FLAT_GET_JOIN_REQUESTS_SUCCESS:
-      console.log(action.data);
       return {
         ...state,
+        joinRequests: action.data,
         getJoinRequestsPending: false,
         getJoinRequestsError: null,
       };

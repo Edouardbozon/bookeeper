@@ -23,7 +23,6 @@ export class Dashboard extends Component {
   };
 
   componentWillMount() {
-    console.log(this.props.actions);
     Promise.all([
       this.props.actions.getDetail(),
       this.props.actions.getEvents(),
@@ -99,6 +98,7 @@ export class Dashboard extends Component {
 
   renderEvents() {
     return this.props.sharedFlat.events.map((event, i) => (
+      // eslint-disable-next-line no-underscore-dangle
       <div key={event._id}>
         {i > 0 ? <WhiteSpace /> : null}
         <Card>
