@@ -3,7 +3,9 @@
 
 const JSDOM = require("jsdom").JSDOM;
 
-global.window = new JSDOM("<!DOCTYPE html><div id=\"react-root\"></div>").window;
+global.window = new JSDOM('<!DOCTYPE html><div id="react-root"></div>', {
+  url: "http://localhost",
+}).window;
 global.document = window.document;
 global.navigator = window.navigator;
 global.HTMLElement = window.HTMLElement;

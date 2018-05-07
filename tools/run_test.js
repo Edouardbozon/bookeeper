@@ -10,7 +10,6 @@
 "use strict";
 
 const path = require("path");
-// const shell = require('shelljs');
 const npmRun = require("npm-run");
 
 const prjRoot = path.join(__dirname, "../");
@@ -44,9 +43,6 @@ const params = [
 ];
 
 if (needReport) {
-  params.splice(0, 0,
-    "nyc",
-    "--report-dir=coverage"
-  );
+  params.splice(0, 0, "nyc", "--report-dir=coverage");
 }
 npmRun.execSync(params.join(" "), opts);
