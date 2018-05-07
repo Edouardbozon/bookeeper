@@ -5,3 +5,4 @@ export { chooseFile } from './chooseFile';
 export { createSharedFlat, dismissCreateSharedFlatError } from './createSharedFlat';
 export { getDetail, dismissGetDetailError } from './getDetail';
 export { getEvents, dismissGetEventsError } from './getEvents';
+export { getJoinRequests, dismissGetJoinRequestsError } from './getJoinRequests';
