@@ -1,78 +1,77 @@
-'use strict';
+"use strict";
 //  Summary:
 //    Get webpack config for different targets
 
-const path = require('path');
-const _ = require('lodash');
-const webpack = require('webpack');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const path = require("path");
+const _ = require("lodash");
+const webpack = require("webpack");
+const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 
-const pkgJson = require('./package.json');
+const pkgJson = require("./package.json");
 
-module.exports = (type) => { // eslint-disable-line
+module.exports = type => {
+  // eslint-disable-line
   // type is one of [dev, dll, test, dist]
   // NOTE: for test, only module property is used.
 
-  const isDev = type === 'dev';
-  const isDist = type === 'dist';
+  const isDev = type === "dev";
+  const isDist = type === "dist";
 
   const config = {
     devtool: {
-      dev: 'eval',
+      dev: "eval",
       dll: false,
       test: false,
       dist: false,
     }[type],
     cache: true,
     resolve: {
-      extensions: ['.web.js', '.js', '.json', '.jsx', '.css'],
+      extensions: [".web.js", ".js", ".json", ".jsx", ".css"],
     },
-    context: path.join(__dirname, 'src'),
+    context: path.join(__dirname, "src"),
     entry: {
       dev: {
         main: [
-          'react-hot-loader/patch',
-          `webpack-hot-middleware/client?http://0.0.0.0:${pkgJson.rekit.devPort}`,
-          './styles/index.scss',
-          './index',
+          "react-hot-loader/patch",
+          `webpack-hot-middleware/client?http://0.0.0.0:${
+            pkgJson.rekit.devPort
+          }`,
+          "./styles/index.scss",
+          "./index",
         ],
       },
       dll: {
         // Here dll is only used for dev.
-        'dev-vendors': [
-          'react-hot-loader',
-          'react-proxy',
-          'babel-polyfill',
-          'lodash',
-          'react',
-          'react-dom',
-          'react-router',
-          'react-redux',
-          'react-router-redux',
-          'redux',
-          'redux-logger',
-          'redux-thunk',
+        "dev-vendors": [
+          "react-hot-loader",
+          "react-proxy",
+          "babel-polyfill",
+          "lodash",
+          "react",
+          "react-dom",
+          "react-router",
+          "react-redux",
+          "react-router-redux",
+          "redux",
+          "redux-logger",
+          "redux-thunk",
         ],
       },
       dist: {
-        main: [
-          'babel-polyfill',
-          './styles/index.scss',
-          './index'
-        ],
+        main: ["babel-polyfill", "./styles/index.scss", "./index"],
       },
       test: null,
     }[type],
 
     output: {
       // Js bundle name, [name] will be replaced by which is in entry
-      filename: '[name].js',
+      filename: "[name].js",
 
       // Where to save your build result
-      path: path.join(__dirname, 'build/static'),
+      path: path.join(__dirname, "build/static"),
 
       // Exposed asset path. NOTE: the end '/' is necessary
-      publicPath: '/static/'
+      publicPath: "/static/",
     },
 
     plugins: _.compact([
@@ -82,9 +81,9 @@ module.exports = (type) => { // eslint-disable-line
       isDist && new webpack.optimize.UglifyJsPlugin(),
       isDist && new webpack.optimize.AggressiveMergingPlugin(),
       new webpack.DefinePlugin({
-        'process.env': {
-          NODE_ENV: JSON.stringify(type === 'dist' ? 'production' : type),
-        }
+        "process.env": {
+          NODE_ENV: JSON.stringify(type === "dist" ? "production" : type),
+        },
       }),
     ]),
 
@@ -94,33 +93,39 @@ module.exports = (type) => { // eslint-disable-line
           test: /\.jsx?$/,
           exclude: /node_modules|build/,
           use: {
-            loader: 'babel-loader',
+            loader: "babel-loader",
             options: {
               cacheDirectory: true,
               plugins: [
-                ['import', { libraryName: 'antd-mobile', style: 'css' }]
-              ]
-            }
-          }
-        }, {
+                ["import", { libraryName: "antd-mobile", style: "css" }],
+              ],
+            },
+          },
+        },
+        {
           test: /\.(ttf|eot|svg|woff)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-          loader: 'file-loader'
-        }, {
+          loader: "file-loader",
+        },
+        {
           test: /\.scss$/,
-          loader: isDev ? 'style-loader!css-loader?sourceMap!sass-loader?sourceMap'
-            : 'style-loader!css-loader!sass-loader'
-        }, {
+          loader: isDev
+            ? "style-loader!css-loader?sourceMap!sass-loader?sourceMap"
+            : "style-loader!css-loader!sass-loader",
+        },
+        {
           test: /\.css$/,
-          loader: 'style-loader!css-loader'
-        }, {
+          loader: "style-loader!css-loader",
+        },
+        {
           test: /\.json$/,
-          loader: 'json-loader'
-        }, {
+          loader: "json-loader",
+        },
+        {
           test: /\.(png|jpe?g|gif)$/,
-          loader: 'url-loader?limit=8192'
-        }
-      ]
-    }
+          loader: "url-loader?limit=8192",
+        },
+      ],
+    },
   };
 
   return config;
