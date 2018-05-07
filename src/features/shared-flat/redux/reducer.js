@@ -8,6 +8,7 @@ import { reducer as chooseFileReducer } from './chooseFile';
 import { reducer as createSharedFlatReducer } from './createSharedFlat';
 import { reducer as getDetailReducer } from './getDetail';
 import { reducer as getEventsReducer } from './getEvents';
+import { reducer as getJoinRequestsReducer } from './getJoinRequests';
 
 
 const reducers = [
@@ -19,6 +20,7 @@ const reducers = [
   createSharedFlatReducer,
   getDetailReducer,
   getEventsReducer,
+  getJoinRequestsReducer,
 ];
 
 export default function reducer(state = initialState, action) {

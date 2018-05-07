@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { LineChart, Line } from "recharts";
@@ -14,7 +15,6 @@ import {
 } from "antd-mobile";
 import { connect } from "react-redux";
 import * as actions from "./redux/actions";
-import moment from "moment";
 
 export class Dashboard extends Component {
   static propTypes = {
@@ -23,9 +23,11 @@ export class Dashboard extends Component {
   };
 
   componentWillMount() {
+    console.log(this.props.actions);
     Promise.all([
       this.props.actions.getDetail(),
       this.props.actions.getEvents(),
+      this.props.actions.getJoinRequests(),
     ]);
   }
 
@@ -42,7 +44,11 @@ export class Dashboard extends Component {
   }
 
   renderCharts() {
-    const tabs = [{ title: "Activity" }, { title: "Expenses" }];
+    const tabs = [
+      { title: "Activity" },
+      { title: "Expenses" },
+      { title: "Members" },
+    ];
 
     const { events } = this.props.sharedFlat;
 
@@ -75,6 +81,16 @@ export class Dashboard extends Component {
               backgroundColor: "#fff",
             }}>
             Content of second tab
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "150px",
+              backgroundColor: "#fff",
+            }}>
+            Content of thirb tab
           </div>
         </Tabs>
       </StickyContainer>
