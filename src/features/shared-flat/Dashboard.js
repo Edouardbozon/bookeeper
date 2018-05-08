@@ -133,7 +133,10 @@ export class Dashboard extends Component {
       <div key={joinRequest._id}>
         {i > 0 ? <WhiteSpace /> : null}
         <Card>
-          <Card.Body>{JSON.stringify(joinRequest)}</Card.Body>
+          <Card.Body>
+            <strong>En attente</strong>
+            <small>{moment(joinRequest.doAt).fromNow()}</small>
+          </Card.Body>
         </Card>
       </div>
     ));
@@ -145,7 +148,13 @@ export class Dashboard extends Component {
       <div key={resident._id}>
         {i > 0 ? <WhiteSpace /> : null}
         <Card>
-          <Card.Body>{JSON.stringify(resident)}</Card.Body>
+          <Card.Body>
+            <div className="event-thumbnail">
+              <img src={resident.picture} alt={`${resident.name} resident`} />
+            </div>
+            <strong>{resident.name}</strong>
+            <small>{moment(resident.joinAt).fromNow()}</small>
+          </Card.Body>
         </Card>
       </div>
     ));
@@ -179,8 +188,20 @@ export class Dashboard extends Component {
       case 2:
         return (
           <div>
+            <WhiteSpace />
+            <h4>Residents</h4>
+            <WhiteSpace />
             <section>{this.renderResidents()}</section>
-            <section>{this.renderJoinRequests()}</section>
+            {this.props.sharedFlat.joinRequests.length > 0 ? (
+              <div>
+                <WhiteSpace />
+                <h4>Requests</h4>
+                <WhiteSpace />
+                <section className="event-list-wrapper">
+                  {this.renderJoinRequests()}
+                </section>
+              </div>
+            ) : null}
           </div>
         );
 
