@@ -59,7 +59,7 @@ export function reducer(state, action) {
         {
           createSharedFlatPending: false,
           createSharedFlatError: null,
-          collection: action.data,
+          data: action.data,
         },
         { ...state },
       );

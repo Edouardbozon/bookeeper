@@ -139,6 +139,18 @@ export class Dashboard extends Component {
     ));
   }
 
+  renderResidents() {
+    return this.props.sharedFlat.data.residents.map((resident, i) => (
+      // eslint-disable-next-line no-underscore-dangle
+      <div key={resident._id}>
+        {i > 0 ? <WhiteSpace /> : null}
+        <Card>
+          <Card.Body>{JSON.stringify(resident)}</Card.Body>
+        </Card>
+      </div>
+    ));
+  }
+
   renderActionSheet() {
     const renderActions = () =>
       this.props.sharedFlat.actions.map(action => ({
@@ -165,7 +177,12 @@ export class Dashboard extends Component {
       case 1:
         return <section />;
       case 2:
-        return <section>{this.renderJoinRequests()}</section>;
+        return (
+          <div>
+            <section>{this.renderResidents()}</section>
+            <section>{this.renderJoinRequests()}</section>
+          </div>
+        );
 
       default:
         return <section />;
@@ -173,13 +190,9 @@ export class Dashboard extends Component {
   }
 
   render() {
-    const name = pathOr(
-      "Loading",
-      ["sharedFlat", "collection", "name"],
-      this.props,
-    );
+    const name = pathOr("Loading", ["sharedFlat", "data", "name"], this.props);
     const countResidents = path(
-      ["sharedFlat", "collection", "countResidents"],
+      ["sharedFlat", "data", "countResidents"],
       this.props,
     );
     return (
