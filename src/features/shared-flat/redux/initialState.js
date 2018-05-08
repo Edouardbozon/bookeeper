@@ -1,10 +1,18 @@
 const initialState = {
+  // Async requests status
   getSharedFlatListPending: false,
   getSharedFlatListError: null,
   makeJoinRequestPending: false,
   makeJoinRequestError: null,
   createSharedFlatPending: false,
   createSharedFlatError: null,
+  getDetailPending: false,
+  getDetailError: null,
+  getEventsPending: false,
+  getEventsError: null,
+  getJoinRequestsPending: false,
+  getJoinRequestsError: null,
+  activeTabIndex: 0, // Dashboard list tab
   list: undefined,
   filteredList: undefined,
   searchQuery: undefined,
@@ -12,10 +20,6 @@ const initialState = {
   events: [],
   joinRequests: [],
   collection: null,
-  getDetailPending: false,
-  getDetailError: null,
-  getEventsPending: false,
-  getEventsError: null,
   actions: [
     {
       title: "create event",
@@ -33,8 +37,6 @@ const initialState = {
         "https://gw.alipayobjects.com/zos/rmsportal/cTTayShKtEIdQVEMuiWt.png",
     },
   ],
-  getJoinRequestsPending: false,
-  getJoinRequestsError: null,
 };
 
 export default initialState;

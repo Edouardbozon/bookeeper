@@ -30,6 +30,11 @@ export class Dashboard extends Component {
     ]);
   }
 
+  onTabChange = (tab, index) => {
+    console.log(tab, index);
+    this.props.actions.toggleTab(index);
+  };
+
   renderTabBar(props) {
     return (
       <Sticky>
@@ -53,7 +58,10 @@ export class Dashboard extends Component {
 
     return (
       <StickyContainer>
-        <Tabs tabs={tabs} initalPage={"t2"} renderTabBar={this.renderTabBar}>
+        <Tabs
+          tabs={tabs}
+          renderTabBar={this.renderTabBar}
+          onChange={this.onTabChange}>
           <div
             style={{
               display: "flex",
@@ -119,6 +127,18 @@ export class Dashboard extends Component {
     ));
   }
 
+  renderJoinRequests() {
+    return this.props.sharedFlat.joinRequests.map((joinRequest, i) => (
+      // eslint-disable-next-line no-underscore-dangle
+      <div key={joinRequest._id}>
+        {i > 0 ? <WhiteSpace /> : null}
+        <Card>
+          <Card.Body>{JSON.stringify(joinRequest)}</Card.Body>
+        </Card>
+      </div>
+    ));
+  }
+
   renderActionSheet() {
     const renderActions = () =>
       this.props.sharedFlat.actions.map(action => ({
@@ -131,6 +151,25 @@ export class Dashboard extends Component {
       message: "Tell something to your roommates",
       cancelButtonText: "cancel",
     });
+  }
+
+  renderTabs() {
+    const { activeTabIndex } = this.props.sharedFlat;
+    switch (activeTabIndex) {
+      case 0:
+        return (
+          <section className="event-list-wrapper">
+            {this.renderEvents()}
+          </section>
+        );
+      case 1:
+        return <section />;
+      case 2:
+        return <section>{this.renderJoinRequests()}</section>;
+
+      default:
+        return <section />;
+    }
   }
 
   render() {
@@ -155,9 +194,7 @@ export class Dashboard extends Component {
             <WhiteSpace size="md" />
             <div className="main">{this.renderCharts()}</div>
             <WhiteSpace />
-            <section className="event-list-wrapper">
-              {this.renderEvents()}
-            </section>
+            {this.renderTabs()}
           </WingBlank>
         </div>
         <WhiteSpace />

@@ -9,6 +9,7 @@ import { reducer as createSharedFlatReducer } from './createSharedFlat';
 import { reducer as getDetailReducer } from './getDetail';
 import { reducer as getEventsReducer } from './getEvents';
 import { reducer as getJoinRequestsReducer } from './getJoinRequests';
+import { reducer as toggleTabReducer } from './toggleTab';
 
 
 const reducers = [
@@ -21,6 +22,7 @@ const reducers = [
   getDetailReducer,
   getEventsReducer,
   getJoinRequestsReducer,
+  toggleTabReducer,
 ];
 
 export default function reducer(state = initialState, action) {
