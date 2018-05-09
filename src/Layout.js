@@ -5,6 +5,7 @@ import { NavBar, Toast, Button, Badge, WhiteSpace } from "antd-mobile";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { bindActionCreators } from "redux";
+import history from "./common/history";
 import * as actions from "./features/authentication/redux/actions";
 
 class Layout extends React.Component {
@@ -27,9 +28,23 @@ class Layout extends React.Component {
     return (
       <div>
         <NavBar
+          leftContent={
+            authenticated ? (
+              <span style={{ marginRight: "8%" }}>
+                {this.props.authentication.user.profile.name}
+              </span>
+            ) : null
+          }
           rightContent={
             hasFbAuth ? (
               <div>
+                <Button
+                  type="primary"
+                  inline
+                  size="small"
+                  onClick={() => history.goBack()}>
+                  Back
+                </Button>
                 <Badge dot>
                   <span
                     style={{
@@ -44,14 +59,15 @@ class Layout extends React.Component {
                   />
                 </Badge>
               </div>
-            ) : null
-          }
-          leftContent={
-            authenticated ? (
-              <span style={{ marginRight: "8%" }}>
-                {this.props.authentication.user.profile.name}
-              </span>
-            ) : null
+            ) : (
+              <Button
+                type="primary"
+                inline
+                size="small"
+                onClick={() => history.goBack()}>
+                Back
+              </Button>
+            )
           }>
           {authenticated ? null : <strong>Bookeeper</strong>}
           {authenticated && !hasFbAuth ? (

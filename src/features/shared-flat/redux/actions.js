@@ -6,3 +6,4 @@ export { createSharedFlat, dismissCreateSharedFlatError } from './createSharedFl
 export { getDetail, dismissGetDetailError } from './getDetail';
 export { getEvents, dismissGetEventsError } from './getEvents';
 export { getJoinRequests, dismissGetJoinRequestsError } from './getJoinRequests';
+export { toggleTab } from './toggleTab';

@@ -1,10 +1,17 @@
-import React, { Component } from 'react';
-import { createForm } from 'rc-form';
-import { WingBlank, WhiteSpace, Card, InputItem, Button, ImagePicker } from 'antd-mobile';
-import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as actions from './redux/actions';
+import React, { Component } from "react";
+import { createForm } from "rc-form";
+import {
+  WingBlank,
+  WhiteSpace,
+  Card,
+  InputItem,
+  Button,
+  ImagePicker,
+} from "antd-mobile";
+import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import * as actions from "./redux/actions";
 
 export class CreateSharedFlatForm extends Component {
   static propTypes = {
@@ -30,31 +37,30 @@ export class CreateSharedFlatForm extends Component {
           inline
           size="small"
           disabled
-          style={{ float: 'right', marginTop: '-10px' }}
-        >
+          style={{ float: "right", marginTop: "-10px" }}>
           Locate me <small>(disabled cause work in progress)</small>
         </Button>
         <WhiteSpace size="lg" />
         <InputItem
-          {...getFieldProps('street')}
+          {...getFieldProps("street")}
           type="text"
           required
           placeholder="street"
         />
         <InputItem
-          {...getFieldProps('postalCode')}
+          {...getFieldProps("postalCode")}
           type="number"
           required
           placeholder="postal code"
         />
         <InputItem
-          {...getFieldProps('city')}
+          {...getFieldProps("city")}
           type="text"
           required
           placeholder="city"
         />
         <InputItem
-          {...getFieldProps('country')}
+          {...getFieldProps("country")}
           type="text"
           required
           placeholder="country"
@@ -69,20 +75,20 @@ export class CreateSharedFlatForm extends Component {
         <span>General</span>
         <WhiteSpace size="lg" />
         <InputItem
-          {...getFieldProps('name')}
+          {...getFieldProps("name")}
           type="text"
           required
           autoFocus
           placeholder="name"
         />
         <InputItem
-          {...getFieldProps('size')}
+          {...getFieldProps("size")}
           type="number"
           required
           placeholder="size"
         />
         <InputItem
-          {...getFieldProps('pricePerMonth')}
+          {...getFieldProps("pricePerMonth")}
           placeholder="price per month"
           type="money"
           moneyKeyboardAlign="left"
@@ -110,14 +116,13 @@ export class CreateSharedFlatForm extends Component {
   }
 
   renderForm() {
-    console.log(this.props)
     const { getFieldProps } = this.props.form;
     const { files } = this.props.sharedFlat;
     return (
       <WingBlank>
-        { this.renderFormGlobalSection(getFieldProps) }
-        { this.renderFormAddressSection(getFieldProps) }
-        { this.renderFormCustomizeSection(files) }
+        {this.renderFormGlobalSection(getFieldProps)}
+        {this.renderFormAddressSection(getFieldProps)}
+        {this.renderFormCustomizeSection(files)}
       </WingBlank>
     );
   }
@@ -129,12 +134,13 @@ export class CreateSharedFlatForm extends Component {
           <WhiteSpace size="lg" />
           <Card className="create-shared-flat-form">
             <Card.Header title="Home sweet home" />
-            <Card.Body>
-              { this.renderForm() }
-            </Card.Body>
+            <Card.Body>{this.renderForm()}</Card.Body>
           </Card>
           <WhiteSpace size="lg" />
-          <Button className="btn" type="primary" onClick={event => this.handleSubmit(event)}>
+          <Button
+            className="btn"
+            type="primary"
+            onClick={event => this.handleSubmit(event)}>
             Create
           </Button>
           <WhiteSpace size="lg" />
@@ -154,13 +160,12 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
 const CreateSharedFlatFormWrapper = createForm()(CreateSharedFlatForm);
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CreateSharedFlatFormWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  CreateSharedFlatFormWrapper,
+);

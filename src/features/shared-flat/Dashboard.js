@@ -23,13 +23,17 @@ export class Dashboard extends Component {
   };
 
   componentWillMount() {
-    console.log(this.props.actions);
     Promise.all([
       this.props.actions.getDetail(),
       this.props.actions.getEvents(),
       this.props.actions.getJoinRequests(),
     ]);
   }
+
+  onTabChange = (tab, index) => {
+    console.log(tab, index);
+    this.props.actions.toggleTab(index);
+  };
 
   renderTabBar(props) {
     return (
@@ -54,7 +58,10 @@ export class Dashboard extends Component {
 
     return (
       <StickyContainer>
-        <Tabs tabs={tabs} initalPage={"t2"} renderTabBar={this.renderTabBar}>
+        <Tabs
+          tabs={tabs}
+          renderTabBar={this.renderTabBar}
+          onChange={this.onTabChange}>
           <div
             style={{
               display: "flex",
@@ -99,6 +106,7 @@ export class Dashboard extends Component {
 
   renderEvents() {
     return this.props.sharedFlat.events.map((event, i) => (
+      // eslint-disable-next-line no-underscore-dangle
       <div key={event._id}>
         {i > 0 ? <WhiteSpace /> : null}
         <Card>
@@ -119,6 +127,39 @@ export class Dashboard extends Component {
     ));
   }
 
+  renderJoinRequests() {
+    return this.props.sharedFlat.joinRequests.map((joinRequest, i) => (
+      // eslint-disable-next-line no-underscore-dangle
+      <div key={joinRequest._id}>
+        {i > 0 ? <WhiteSpace /> : null}
+        <Card>
+          <Card.Body>
+            <strong>En attente</strong>
+            <small>{moment(joinRequest.doAt).fromNow()}</small>
+          </Card.Body>
+        </Card>
+      </div>
+    ));
+  }
+
+  renderResidents() {
+    return this.props.sharedFlat.data.residents.map((resident, i) => (
+      // eslint-disable-next-line no-underscore-dangle
+      <div key={resident._id}>
+        {i > 0 ? <WhiteSpace /> : null}
+        <Card>
+          <Card.Body>
+            <div className="event-thumbnail">
+              <img src={resident.picture} alt={`${resident.name} resident`} />
+            </div>
+            <strong>{resident.name}</strong>
+            <small>{moment(resident.joinAt).fromNow()}</small>
+          </Card.Body>
+        </Card>
+      </div>
+    ));
+  }
+
   renderActionSheet() {
     const renderActions = () =>
       this.props.sharedFlat.actions.map(action => ({
@@ -133,14 +174,46 @@ export class Dashboard extends Component {
     });
   }
 
+  renderTabs() {
+    const { activeTabIndex } = this.props.sharedFlat;
+    switch (activeTabIndex) {
+      case 0:
+        return (
+          <section className="event-list-wrapper">
+            {this.renderEvents()}
+          </section>
+        );
+      case 1:
+        return <section />;
+      case 2:
+        return (
+          <div>
+            <WhiteSpace />
+            <h4>Residents</h4>
+            <WhiteSpace />
+            <section>{this.renderResidents()}</section>
+            {this.props.sharedFlat.joinRequests.length > 0 ? (
+              <div>
+                <WhiteSpace />
+                <h4>Requests</h4>
+                <WhiteSpace />
+                <section className="event-list-wrapper">
+                  {this.renderJoinRequests()}
+                </section>
+              </div>
+            ) : null}
+          </div>
+        );
+
+      default:
+        return <section />;
+    }
+  }
+
   render() {
-    const name = pathOr(
-      "Loading",
-      ["sharedFlat", "collection", "name"],
-      this.props,
-    );
+    const name = pathOr("Loading", ["sharedFlat", "data", "name"], this.props);
     const countResidents = path(
-      ["sharedFlat", "collection", "countResidents"],
+      ["sharedFlat", "data", "countResidents"],
       this.props,
     );
     return (
@@ -155,9 +228,7 @@ export class Dashboard extends Component {
             <WhiteSpace size="md" />
             <div className="main">{this.renderCharts()}</div>
             <WhiteSpace />
-            <section className="event-list-wrapper">
-              {this.renderEvents()}
-            </section>
+            {this.renderTabs()}
           </WingBlank>
         </div>
         <WhiteSpace />

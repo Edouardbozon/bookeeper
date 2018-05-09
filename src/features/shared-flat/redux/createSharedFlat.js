@@ -1,37 +1,38 @@
-import axios from 'axios';
-import { merge } from 'ramda';
-import { api } from '../../../common/env';
+import axios from "axios";
+import { merge } from "ramda";
+import { api } from "../../../common/env";
 import {
   SHARED_FLAT_CREATE_SHARED_FLAT_BEGIN,
   SHARED_FLAT_CREATE_SHARED_FLAT_SUCCESS,
   SHARED_FLAT_CREATE_SHARED_FLAT_FAILURE,
   SHARED_FLAT_CREATE_SHARED_FLAT_DISMISS_ERROR,
-} from './constants';
+} from "./constants";
 
 export function createSharedFlat(formData = {}) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: SHARED_FLAT_CREATE_SHARED_FLAT_BEGIN,
     });
 
     const promise = new Promise((resolve, reject) => {
-      // eslint-disable-next-line
-      axios.post(api + 'api/shared-flat', formData, { withCredentials: true }).then(
-        (res) => {
-          dispatch({
-            type: SHARED_FLAT_CREATE_SHARED_FLAT_SUCCESS,
-            data: res.data,
-          });
-          resolve(res);
-        },
-        (err) => {
-          dispatch({
-            type: SHARED_FLAT_CREATE_SHARED_FLAT_FAILURE,
-            data: { error: err },
-          });
-          reject(err);
-        },
-      );
+      axios
+        .post(`${api}api/shared-flat`, formData, { withCredentials: true })
+        .then(
+          res => {
+            dispatch({
+              type: SHARED_FLAT_CREATE_SHARED_FLAT_SUCCESS,
+              data: res.data,
+            });
+            resolve(res);
+          },
+          err => {
+            dispatch({
+              type: SHARED_FLAT_CREATE_SHARED_FLAT_FAILURE,
+              data: { error: err },
+            });
+            reject(err);
+          },
+        );
     });
 
     return promise;
@@ -58,13 +59,12 @@ export function reducer(state, action) {
         {
           createSharedFlatPending: false,
           createSharedFlatError: null,
-          collection: action.data
+          data: action.data,
         },
-        { ...state }
+        { ...state },
       );
 
     case SHARED_FLAT_CREATE_SHARED_FLAT_FAILURE:
-      console.log(state)
       return {
         ...state,
         createSharedFlatPending: false,
