@@ -38,6 +38,8 @@ const initialState = {
         "https://gw.alipayobjects.com/zos/rmsportal/cTTayShKtEIdQVEMuiWt.png",
     },
   ],
+  notifyPending: false,
+  notifyError: null,
 };
 
 export default initialState;
