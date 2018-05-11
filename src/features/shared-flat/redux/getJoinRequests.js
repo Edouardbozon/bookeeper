@@ -8,7 +8,7 @@ import {
   SHARED_FLAT_GET_JOIN_REQUESTS_DISMISS_ERROR,
 } from "./constants";
 
-export function getJoinRequests(args = {}) {
+export function getJoinRequests() {
   return (dispatch, getState) => {
     dispatch({
       type: SHARED_FLAT_GET_JOIN_REQUESTS_BEGIN,

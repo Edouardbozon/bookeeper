@@ -1,26 +1,32 @@
+import axios from "axios";
+import { path } from "ramda";
+import { api } from "../../../common/env";
+import { getEvents } from "./getEvents";
 import {
   SHARED_FLAT_NOTIFY_BEGIN,
   SHARED_FLAT_NOTIFY_SUCCESS,
   SHARED_FLAT_NOTIFY_FAILURE,
   SHARED_FLAT_NOTIFY_DISMISS_ERROR,
-} from './constants';
+} from "./constants";
 
-export function notify(args = {}) {
-  return (dispatch) => { 
-    dispatch({
-      type: SHARED_FLAT_NOTIFY_BEGIN,
-    });
+export function notify(
+  args = {
+    type: "event",
+    message: null,
+  },
+) {
+  return (dispatch, getState) => {
+    dispatch({ type: SHARED_FLAT_NOTIFY_BEGIN });
+    const id = path(["authentication", "user", "sharedFlatId"], getState());
     const promise = new Promise((resolve, reject) => {
-      const doRequest = args.error ? Promise.reject(new Error()) : Promise.resolve();
-      doRequest.then(
-        (res) => {
-          dispatch({
-            type: SHARED_FLAT_NOTIFY_SUCCESS,
-            data: res,
-          });
+      axios.get(`${api}api/shared-flat/${id}/notify`, { params: args }).then(
+        res => {
+          dispatch({ type: SHARED_FLAT_NOTIFY_SUCCESS });
           resolve(res);
+
+          return getEvents();
         },
-        (err) => {
+        err => {
           dispatch({
             type: SHARED_FLAT_NOTIFY_FAILURE,
             data: { error: err },
@@ -43,7 +49,6 @@ export function dismissNotifyError() {
 export function reducer(state, action) {
   switch (action.type) {
     case SHARED_FLAT_NOTIFY_BEGIN:
-      // Just after a request is sent
       return {
         ...state,
         notifyPending: true,
@@ -51,7 +56,6 @@ export function reducer(state, action) {
       };
 
     case SHARED_FLAT_NOTIFY_SUCCESS:
-      // The request is success
       return {
         ...state,
         notifyPending: false,
@@ -59,7 +63,6 @@ export function reducer(state, action) {
       };
 
     case SHARED_FLAT_NOTIFY_FAILURE:
-      // The request is failed
       return {
         ...state,
         notifyPending: false,
@@ -67,7 +70,6 @@ export function reducer(state, action) {
       };
 
     case SHARED_FLAT_NOTIFY_DISMISS_ERROR:
-      // Dismiss the request failure error
       return {
         ...state,
         notifyError: null,

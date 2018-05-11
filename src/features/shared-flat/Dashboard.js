@@ -31,7 +31,6 @@ export class Dashboard extends Component {
   }
 
   onTabChange = (tab, index) => {
-    console.log(tab, index);
     this.props.actions.toggleTab(index);
   };
 
@@ -169,7 +168,7 @@ export class Dashboard extends Component {
 
     ActionSheet.showShareActionSheetWithOptions({
       options: renderActions(),
-      message: "Tell something to your roommates",
+      message: "Notify your roommates",
       cancelButtonText: "cancel",
     });
   }
@@ -216,6 +215,7 @@ export class Dashboard extends Component {
       ["sharedFlat", "data", "countResidents"],
       this.props,
     );
+
     return (
       <div>
         <div className="shared-flat-dashboard">
