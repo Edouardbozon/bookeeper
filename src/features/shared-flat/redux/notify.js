@@ -65,6 +65,7 @@ export function reducer(state, action) {
     case SHARED_FLAT_NOTIFY_SUCCESS:
       return {
         ...state,
+        draftMode: true, // Show draft editor on success
         notifyPending: false,
         notifyError: null,
       };

@@ -12,6 +12,7 @@ const initialState = {
   getEventsError: null,
   getJoinRequestsPending: false,
   getJoinRequestsError: null,
+  draftMode: false, // Toggle the event draft mode in the view
   list: undefined, // Complete list of joinable Shared Flat
   filteredList: undefined, // Filtered list of joinable Shared Flat
   activeTabIndex: 0, // Dashboard list tab

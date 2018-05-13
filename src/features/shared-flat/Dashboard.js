@@ -5,22 +5,12 @@ import { LineChart, Line } from "recharts";
 import { pathOr, path } from "ramda";
 import { bindActionCreators } from "redux";
 import { StickyContainer, Sticky } from "react-sticky";
-import {
-  WingBlank,
-  WhiteSpace,
-  Card,
-  Tabs,
-  ActionSheet,
-  Icon,
-  Popover,
-  Button,
-} from "antd-mobile";
+import { WingBlank, WhiteSpace, Card, Tabs, Button } from "antd-mobile";
 import { connect } from "react-redux";
-import MdMoreHoriz from "react-icons/lib/md/more-horiz";
-import MdClear from "react-icons/lib/md/clear";
 import * as actions from "./redux/actions";
+import Draft from "./Draft";
+import Event from "./Event";
 
-const Item = Popover.Item;
 export class Dashboard extends Component {
   static propTypes = {
     sharedFlat: PropTypes.object.isRequired,
@@ -113,47 +103,18 @@ export class Dashboard extends Component {
   }
 
   renderEvents() {
-    return this.props.sharedFlat.events.map((event, i) => (
+    const draftModeActivated = this.props.sharedFlat.draftMode === true;
+    const { events } = this.props.sharedFlat;
+
+    return events.map((event, i) => (
       // eslint-disable-next-line no-underscore-dangle
       <div key={event._id}>
         {i > 0 ? <WhiteSpace /> : null}
-        <Card>
-          <Card.Body>
-            <section>
-              <div className="event-thumbnail">
-                <img
-                  src={event.createdBy.picture}
-                  alt={`${event.createdBy.name} event`}
-                />
-              </div>
-              <div>
-                <Popover
-                  mask
-                  visible={event.popoverVisible}
-                  overlay={[
-                    <Item key="0" value="remove">
-                      <span>
-                        <MdClear /> Remove
-                      </span>
-                    </Item>,
-                  ]}
-                  align={{
-                    overflow: { adjustY: 0, adjustX: 0 },
-                    offset: [-10, 0],
-                  }}
-                  onVisibleChange={this.handleVisibleChange}
-                  onSelect={this.onSelect}>
-                  <MdMoreHoriz />
-                </Popover>
-              </div>
-              <span>
-                by <strong>{event.createdBy.name}</strong>
-              </span>
-              <small>{moment(event.createdAt).fromNow()}</small>
-            </section>
-            <section>{event.message}</section>
-          </Card.Body>
-        </Card>
+        {draftModeActivated && i === 0 ? (
+          <Draft event={event} />
+        ) : (
+          <Event event={event} />
+        )}
       </div>
     ));
   }
