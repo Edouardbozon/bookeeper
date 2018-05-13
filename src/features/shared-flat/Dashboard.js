@@ -222,7 +222,10 @@ export class Dashboard extends Component {
           <Button
             type="primary"
             className="action-button"
-            onClick={() => this.props.actions.buildEvent()}>
+            onClick={() => {
+              this.props.actions.buildEvent();
+              this.props.actions.notify();
+            }}>
             Notify
           </Button>
         </WingBlank>

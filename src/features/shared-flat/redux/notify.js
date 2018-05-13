@@ -17,23 +17,30 @@ export function notify(
 ) {
   return (dispatch, getState) => {
     dispatch({ type: SHARED_FLAT_NOTIFY_BEGIN });
-    const id = path(["authentication", "user", "sharedFlatId"], getState());
+    const state = getState();
+    const id = path(["authentication", "user", "sharedFlatId"], state);
+    const builtEvent = state.sharedFlat.events[state.length - 1];
     const promise = new Promise((resolve, reject) => {
-      axios.get(`${api}api/shared-flat/${id}/notify`, { params: args }).then(
-        res => {
-          dispatch({ type: SHARED_FLAT_NOTIFY_SUCCESS });
-          resolve(res);
+      axios
+        .post(`${api}api/shared-flat/${id}/notify`, builtEvent, {
+          params: args,
+          withCredentials: true,
+        })
+        .then(
+          res => {
+            dispatch({ type: SHARED_FLAT_NOTIFY_SUCCESS });
+            resolve(res);
 
-          return getEvents();
-        },
-        err => {
-          dispatch({
-            type: SHARED_FLAT_NOTIFY_FAILURE,
-            data: { error: err },
-          });
-          reject(err);
-        },
-      );
+            return getEvents();
+          },
+          err => {
+            dispatch({
+              type: SHARED_FLAT_NOTIFY_FAILURE,
+              data: { error: err },
+            });
+            reject(err);
+          },
+        );
     });
 
     return promise;
