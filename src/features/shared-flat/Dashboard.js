@@ -11,11 +11,16 @@ import {
   Card,
   Tabs,
   ActionSheet,
+  Icon,
+  Popover,
   Button,
 } from "antd-mobile";
 import { connect } from "react-redux";
+import MdMoreHoriz from "react-icons/lib/md/more-horiz";
+import MdClear from "react-icons/lib/md/clear";
 import * as actions from "./redux/actions";
 
+const Item = Popover.Item;
 export class Dashboard extends Component {
   static propTypes = {
     sharedFlat: PropTypes.object.isRequired,
@@ -32,6 +37,10 @@ export class Dashboard extends Component {
 
   onTabChange = (tab, index) => {
     this.props.actions.toggleTab(index);
+  };
+
+  onEventSelect = opt => {
+    // dispatch
   };
 
   renderTabBar(props) {
@@ -110,16 +119,39 @@ export class Dashboard extends Component {
         {i > 0 ? <WhiteSpace /> : null}
         <Card>
           <Card.Body>
-            <div className="event-thumbnail">
-              <img
-                src={event.createdBy.picture}
-                alt={`${event.createdBy.name} event`}
-              />
-            </div>
-            <span>
-              by <strong>{event.createdBy.name}</strong>
-            </span>
-            <small>{moment(event.createdAt).fromNow()}</small>
+            <section>
+              <div className="event-thumbnail">
+                <img
+                  src={event.createdBy.picture}
+                  alt={`${event.createdBy.name} event`}
+                />
+              </div>
+              <div>
+                <Popover
+                  mask
+                  visible={event.popoverVisible}
+                  overlay={[
+                    <Item key="0" value="remove">
+                      <span>
+                        <MdClear /> Remove
+                      </span>
+                    </Item>,
+                  ]}
+                  align={{
+                    overflow: { adjustY: 0, adjustX: 0 },
+                    offset: [-10, 0],
+                  }}
+                  onVisibleChange={this.handleVisibleChange}
+                  onSelect={this.onSelect}>
+                  <MdMoreHoriz />
+                </Popover>
+              </div>
+              <span>
+                by <strong>{event.createdBy.name}</strong>
+              </span>
+              <small>{moment(event.createdAt).fromNow()}</small>
+            </section>
+            <section>{event.message}</section>
           </Card.Body>
         </Card>
       </div>
@@ -212,9 +244,11 @@ export class Dashboard extends Component {
           </header>
           <WingBlank size="md" className="main">
             <WhiteSpace size="md" />
-            <div className="main">{this.renderCharts()}</div>
-            <WhiteSpace />
-            {this.renderTabs()}
+            <div className="main">
+              {this.renderCharts()}
+              <WhiteSpace size="md" />
+              {this.renderTabs()}
+            </div>
           </WingBlank>
         </div>
         <WhiteSpace />
