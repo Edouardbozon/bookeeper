@@ -4,9 +4,6 @@
   height: calc(100vh - 108px);
   overflow: hidden;
   overflow-y: auto;
-  // background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-  // background-size: 400% 400%;
-  // animation: Gradient 20s ease infinite;
   background: #eee;
 
   header {
@@ -20,7 +17,6 @@
   }
 
   .event-list-wrapper {
-    // max-height: 57vh;
     overflow: hidden;
     overflow-y: auto;
 

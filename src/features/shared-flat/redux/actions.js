@@ -8,3 +8,4 @@ export { getEvents, dismissGetEventsError } from './getEvents';
 export { getJoinRequests, dismissGetJoinRequestsError } from './getJoinRequests';
 export { toggleTab } from './toggleTab';
 export { notify, dismissNotifyError } from './notify';
+export { buildEvent } from './buildEvent';

@@ -11,6 +11,7 @@ import { reducer as getEventsReducer } from './getEvents';
 import { reducer as getJoinRequestsReducer } from './getJoinRequests';
 import { reducer as toggleTabReducer } from './toggleTab';
 import { reducer as notifyReducer } from './notify';
+import { reducer as buildEventReducer } from './buildEvent';
 
 
 const reducers = [
@@ -25,6 +26,7 @@ const reducers = [
   getJoinRequestsReducer,
   toggleTabReducer,
   notifyReducer,
+  buildEventReducer,
 ];
 
 export default function reducer(state = initialState, action) {

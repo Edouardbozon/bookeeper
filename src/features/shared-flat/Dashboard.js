@@ -159,20 +159,6 @@ export class Dashboard extends Component {
     ));
   }
 
-  renderActionSheet() {
-    const renderActions = () =>
-      this.props.sharedFlat.actions.map(action => ({
-        icon: <img src={action.img} alt={action.title} style={{ width: 36 }} />,
-        title: action.title,
-      }));
-
-    ActionSheet.showShareActionSheetWithOptions({
-      options: renderActions(),
-      message: "Notify your roommates",
-      cancelButtonText: "cancel",
-    });
-  }
-
   renderTabs() {
     const { activeTabIndex } = this.props.sharedFlat;
     switch (activeTabIndex) {
@@ -236,7 +222,7 @@ export class Dashboard extends Component {
           <Button
             type="primary"
             className="action-button"
-            onClick={() => this.renderActionSheet()}>
+            onClick={() => this.props.actions.buildEvent()}>
             Notify
           </Button>
         </WingBlank>
