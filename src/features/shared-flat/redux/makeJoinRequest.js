@@ -1,35 +1,39 @@
-import axios from 'axios';
-import { api } from '../../../common/env';
+import axios from "axios";
+import { api } from "../../../common/env";
 import {
   SHARED_FLAT_MAKE_JOIN_REQUEST_BEGIN,
   SHARED_FLAT_MAKE_JOIN_REQUEST_SUCCESS,
   SHARED_FLAT_MAKE_JOIN_REQUEST_FAILURE,
   SHARED_FLAT_MAKE_JOIN_REQUEST_DISMISS_ERROR,
-} from './constants';
+} from "./constants";
 
 export function makeJoinRequest(id) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: SHARED_FLAT_MAKE_JOIN_REQUEST_BEGIN,
     });
 
     const promise = new Promise((resolve, reject) => {
-      axios.post(`${api}api/shared-flat/${id}/join`, null, { withCredentials: true }).then(
-        (res) => {
-          dispatch({
-            type: SHARED_FLAT_MAKE_JOIN_REQUEST_SUCCESS,
-            data: res,
-          });
-          resolve(res);
-        },
-        (err) => {
-          dispatch({
-            type: SHARED_FLAT_MAKE_JOIN_REQUEST_FAILURE,
-            data: { error: err },
-          });
-          reject(err);
-        },
-      );
+      axios
+        .post(`${api}api/shared-flat/${id}/join`, null, {
+          withCredentials: true,
+        })
+        .then(
+          res => {
+            dispatch({
+              type: SHARED_FLAT_MAKE_JOIN_REQUEST_SUCCESS,
+              data: res,
+            });
+            resolve(res);
+          },
+          err => {
+            dispatch({
+              type: SHARED_FLAT_MAKE_JOIN_REQUEST_FAILURE,
+              data: { error: err },
+            });
+            reject(err);
+          },
+        );
     });
 
     return promise;

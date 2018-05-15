@@ -27,7 +27,7 @@ export function getEvents() {
           res => {
             dispatch({
               type: SHARED_FLAT_GET_EVENTS_SUCCESS,
-              data: res,
+              data: res.data,
             });
             resolve(res);
           },
@@ -65,7 +65,7 @@ export function reducer(state, action) {
         ...state,
         getEventsPending: false,
         getEventsError: null,
-        events: action.data.data,
+        events: action.data.map(event => ({ ...event, popoverVisible: false })),
       };
 
     case SHARED_FLAT_GET_EVENTS_FAILURE:

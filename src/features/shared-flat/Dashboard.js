@@ -5,16 +5,11 @@ import { LineChart, Line } from "recharts";
 import { pathOr, path } from "ramda";
 import { bindActionCreators } from "redux";
 import { StickyContainer, Sticky } from "react-sticky";
-import {
-  WingBlank,
-  WhiteSpace,
-  Card,
-  Tabs,
-  ActionSheet,
-  Button,
-} from "antd-mobile";
+import { WingBlank, WhiteSpace, Card, Tabs, Button } from "antd-mobile";
 import { connect } from "react-redux";
 import * as actions from "./redux/actions";
+import Draft from "./Draft";
+import Event from "./Event";
 
 export class Dashboard extends Component {
   static propTypes = {
@@ -31,8 +26,11 @@ export class Dashboard extends Component {
   }
 
   onTabChange = (tab, index) => {
-    console.log(tab, index);
     this.props.actions.toggleTab(index);
+  };
+
+  onEventSelect = opt => {
+    // dispatch
   };
 
   renderTabBar(props) {
@@ -105,24 +103,18 @@ export class Dashboard extends Component {
   }
 
   renderEvents() {
-    return this.props.sharedFlat.events.map((event, i) => (
+    const draftModeActivated = this.props.sharedFlat.draftMode === true;
+    const { events } = this.props.sharedFlat;
+
+    return events.map((event, i) => (
       // eslint-disable-next-line no-underscore-dangle
       <div key={event._id}>
         {i > 0 ? <WhiteSpace /> : null}
-        <Card>
-          <Card.Body>
-            <div className="event-thumbnail">
-              <img
-                src={event.createdBy.picture}
-                alt={`${event.createdBy.name} event`}
-              />
-            </div>
-            <span>
-              by <strong>{event.createdBy.name}</strong>
-            </span>
-            <small>{moment(event.createdAt).fromNow()}</small>
-          </Card.Body>
-        </Card>
+        {draftModeActivated && i === 0 ? (
+          <Draft event={event} />
+        ) : (
+          <Event event={event} />
+        )}
       </div>
     ));
   }
@@ -158,20 +150,6 @@ export class Dashboard extends Component {
         </Card>
       </div>
     ));
-  }
-
-  renderActionSheet() {
-    const renderActions = () =>
-      this.props.sharedFlat.actions.map(action => ({
-        icon: <img src={action.img} alt={action.title} style={{ width: 36 }} />,
-        title: action.title,
-      }));
-
-    ActionSheet.showShareActionSheetWithOptions({
-      options: renderActions(),
-      message: "Tell something to your roommates",
-      cancelButtonText: "cancel",
-    });
   }
 
   renderTabs() {
@@ -216,6 +194,7 @@ export class Dashboard extends Component {
       ["sharedFlat", "data", "countResidents"],
       this.props,
     );
+
     return (
       <div>
         <div className="shared-flat-dashboard">
@@ -226,9 +205,11 @@ export class Dashboard extends Component {
           </header>
           <WingBlank size="md" className="main">
             <WhiteSpace size="md" />
-            <div className="main">{this.renderCharts()}</div>
-            <WhiteSpace />
-            {this.renderTabs()}
+            <div className="main">
+              {this.renderCharts()}
+              <WhiteSpace size="md" />
+              {this.renderTabs()}
+            </div>
           </WingBlank>
         </div>
         <WhiteSpace />
@@ -236,7 +217,10 @@ export class Dashboard extends Component {
           <Button
             type="primary"
             className="action-button"
-            onClick={() => this.renderActionSheet()}>
+            onClick={() => {
+              this.props.actions.buildEvent();
+              this.props.actions.notify();
+            }}>
             Notify
           </Button>
         </WingBlank>

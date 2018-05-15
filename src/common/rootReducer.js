@@ -1,14 +1,18 @@
-import { combineReducers } from 'redux';
-import { assocPath, compose } from 'ramda';
-import { routerReducer } from 'react-router-redux';
-import commonReducer from '../features/common/redux/reducer';
-import authenticationReducer from '../features/authentication/redux/reducer';
-import sharedFlatReducer from '../features/shared-flat/redux/reducer';
+import { combineReducers } from "redux";
+import { assocPath, compose } from "ramda";
+import { routerReducer } from "react-router-redux";
+import commonReducer from "../features/common/redux/reducer";
+import authenticationReducer from "../features/authentication/redux/reducer";
+import sharedFlatReducer from "../features/shared-flat/redux/reducer";
 import {
-  SHARED_FLAT_CREATE_SHARED_FLAT_SUCCESS, SHARED_FLAT_GET_DETAIL_SUCCESS,
-  SHARED_FLAT_MAKE_JOIN_REQUEST_SUCCESS
-} from '../features/shared-flat/redux/constants';
-import {AUTHENTICATION_LOGIN_SUCCESS, AUTHENTICATION_SIGNUP_SUCCESS} from "../features/authentication/redux/constants";
+  SHARED_FLAT_CREATE_SHARED_FLAT_SUCCESS,
+  SHARED_FLAT_MAKE_JOIN_REQUEST_SUCCESS,
+  SHARED_FLAT_BUILD_EVENT,
+} from "../features/shared-flat/redux/constants";
+import {
+  AUTHENTICATION_LOGIN_SUCCESS,
+  AUTHENTICATION_SIGNUP_SUCCESS,
+} from "../features/authentication/redux/constants";
 
 const reducerMap = {
   router: routerReducer,
@@ -19,10 +23,7 @@ const reducerMap = {
 
 function reduceReducers(...reducers) {
   return (previous, current) =>
-    reducers.reduce(
-      (p, r) => r(p, current),
-      previous
-    );
+    reducers.reduce((p, r) => r(p, current), previous);
 }
 
 export default reduceReducers(
@@ -32,16 +33,38 @@ export default reduceReducers(
     switch (action.type) {
       case AUTHENTICATION_LOGIN_SUCCESS:
       case AUTHENTICATION_SIGNUP_SUCCESS:
-        return assocPath(['authentication', 'authenticated'], true, state);
+        return assocPath(["authentication", "authenticated"], true, state);
       case SHARED_FLAT_CREATE_SHARED_FLAT_SUCCESS:
         return compose(
-          assocPath(['authentication', 'user', 'hasSharedFlat'], true),
-          assocPath(['authentication', 'user', 'sharedFlatId'], action.data._id),
+          assocPath(["authentication", "user", "hasSharedFlat"], true),
+          assocPath(
+            ["authentication", "user", "sharedFlatId"],
+            action.data._id,
+          ),
         )(state);
       case SHARED_FLAT_MAKE_JOIN_REQUEST_SUCCESS:
-        return assocPath(['authentication', 'user', 'joinRequestPending'], true, state);
+        return assocPath(
+          ["authentication", "user", "joinRequestPending"],
+          true,
+          state,
+        );
+      case SHARED_FLAT_BUILD_EVENT:
+        return assocPath(
+          [
+            "sharedFlat",
+            "events",
+            state.sharedFlat.events.length - 1,
+            "createdBy",
+          ],
+          {
+            id: state.authentication.user._id,
+            name: state.authentication.user.profile.name,
+            picture: state.authentication.user.profile.picture,
+          },
+          state,
+        );
       default:
         return state;
     }
-  }
+  },
 );
