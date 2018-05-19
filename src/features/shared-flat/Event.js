@@ -12,6 +12,7 @@ export default class Event extends Component {
 
   render() {
     const { event } = this.props;
+
     return (
       <Card>
         <Card.Body>

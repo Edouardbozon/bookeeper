@@ -106,7 +106,7 @@ export class Dashboard extends Component {
     const draftModeActivated = this.props.sharedFlat.draftMode === true;
     const { events } = this.props.sharedFlat;
 
-    return events.map((event, i) => (
+    return events.sort(event => event.number).map((event, i) => (
       // eslint-disable-next-line no-underscore-dangle
       <div key={event._id}>
         {i > 0 ? <WhiteSpace /> : null}

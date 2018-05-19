@@ -10,10 +10,7 @@ export function buildEvent() {
 export function reducer(state, action) {
   switch (action.type) {
     case SHARED_FLAT_BUILD_EVENT: {
-      const number =
-        state.events.length > 0
-          ? state.events[state.events.length - 1].number
-          : 0;
+      const number = state.events.length > 0 ? state.events.length : 0;
       // eslint-disable-next-line no-underscore-dangle
       const sharedFlatId = state.data._id;
       const events = [

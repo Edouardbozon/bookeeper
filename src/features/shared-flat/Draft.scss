@@ -1,5 +1,8 @@
-@import '../../styles/mixins';
+@import "../../styles/mixins";
 
-.shared-flat-draft {
-
+.my-radio {
+  padding: 2.5px;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  margin-right: 5px;
 }
