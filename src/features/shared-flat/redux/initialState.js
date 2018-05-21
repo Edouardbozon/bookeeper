@@ -41,6 +41,8 @@ const initialState = {
   ],
   notifyPending: false,
   notifyError: null,
+  publishDraftPending: false,
+  publishDraftError: null,
 };
 
 export default initialState;

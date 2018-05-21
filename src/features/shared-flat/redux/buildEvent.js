@@ -20,13 +20,16 @@ export function reducer(state, action) {
           number,
           sharedFlatId,
           createdAt: new Date(),
+          published: false,
           message: null,
           createdBy: null, // <-- provided in the root reducer
           monthlyActivityAverage: 0,
           last: true,
           type: "event",
         },
-      ];
+      ].map((event, i) =>
+        set(lensProp("last"), i === state.events.length)(event),
+      );
 
       return set(lensProp("events"), events)(state);
     }

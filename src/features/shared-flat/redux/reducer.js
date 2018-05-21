@@ -12,6 +12,7 @@ import { reducer as getJoinRequestsReducer } from './getJoinRequests';
 import { reducer as toggleTabReducer } from './toggleTab';
 import { reducer as notifyReducer } from './notify';
 import { reducer as buildEventReducer } from './buildEvent';
+import { reducer as publishDraftReducer } from './publishDraft';
 
 
 const reducers = [
@@ -27,6 +28,7 @@ const reducers = [
   toggleTabReducer,
   notifyReducer,
   buildEventReducer,
+  publishDraftReducer,
 ];
 
 export default function reducer(state = initialState, action) {

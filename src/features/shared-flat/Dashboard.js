@@ -96,6 +96,7 @@ export class Dashboard extends Component {
 
     return events
       .sort((prev, next) => (prev.number > next.number ? -1 : 1))
+      .filter(event => event.published || (draftModeActivated && event.last))
       .map((event, i) => (
         // eslint-disable-next-line no-underscore-dangle
         <div key={event._id}>
@@ -191,7 +192,7 @@ export class Dashboard extends Component {
         type="ghost"
         className="action-button"
         onClick={() => {
-          this.props.actions.saveDraft();
+          this.props.actions.publishDraft();
         }}>
         Publish
       </Button>
