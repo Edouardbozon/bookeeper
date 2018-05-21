@@ -18,7 +18,7 @@ export default class Event extends Component {
     return (
       <Card>
         <Card.Body>
-          <header>
+          <header className="event-header">
             <div>
               <img
                 src={event.createdBy.picture}
@@ -26,34 +26,36 @@ export default class Event extends Component {
               />
             </div>
             <div>
-              <Popover
-                mask
-                visible={event.popoverVisible}
-                overlay={[
-                  <Item key="0" value="remove">
-                    <span>
-                      <MdClear /> Remove
-                    </span>
-                  </Item>,
-                ]}
-                align={{
-                  overflow: { adjustY: 0, adjustX: 0 },
-                  offset: [-10, 0],
-                }}
-                onVisibleChange={this.handleVisibleChange}
-                onSelect={this.onSelect}>
-                <MdMoreHoriz />
-              </Popover>
+              <div>
+                <Popover
+                  mask
+                  visible={event.popoverVisible}
+                  overlay={[
+                    <Item key="0" value="remove">
+                      <span>
+                        <MdClear /> Remove
+                      </span>
+                    </Item>,
+                  ]}
+                  align={{
+                    overflow: { adjustY: 0, adjustX: 0 },
+                    offset: [-10, 0],
+                  }}
+                  onVisibleChange={this.handleVisibleChange}
+                  onSelect={this.onSelect}>
+                  <MdMoreHoriz />
+                </Popover>
+              </div>
+              <span>
+                by <strong>{event.createdBy.name}</strong>
+              </span>
+              <br />
+              <small>
+                {moment(event.createdAt).fromNow()} - n {event.number}
+              </small>
             </div>
-            <span>
-              by <strong>{event.createdBy.name}</strong>
-            </span>
-            <small>{moment(event.createdAt).fromNow()}</small>
           </header>
           {event.message ? <section>{event.message}</section> : null}
-          {this.props.children ? (
-            <section>{this.props.children}</section>
-          ) : null}
         </Card.Body>
       </Card>
     );

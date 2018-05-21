@@ -1,1 +1,20 @@
 @import "../../styles/mixins";
+
+.event-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  // image container on the left
+  > div:first-child {
+    width: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    height: 40px;
+  }
+
+  // text container on the right
+  > div:last-child {
+    text-align: right;
+  }
+}
