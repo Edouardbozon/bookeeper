@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import moment from "moment";
 import MdMoreHoriz from "react-icons/lib/md/more-horiz";
 import MdClear from "react-icons/lib/md/clear";
-import moment from "moment";
 import { Card, Popover } from "antd-mobile";
 
 const Item = Popover.Item;
 
 export default class Event extends Component {
-  static propTypes = { event: PropTypes.object.isRequired };
+  static propTypes = {
+    event: PropTypes.object.isRequired,
+  };
 
   render() {
     const { event } = this.props;
@@ -16,8 +18,8 @@ export default class Event extends Component {
     return (
       <Card>
         <Card.Body>
-          <section>
-            <div className="event-thumbnail">
+          <header>
+            <div>
               <img
                 src={event.createdBy.picture}
                 alt={`${event.createdBy.name} event`}
@@ -47,8 +49,11 @@ export default class Event extends Component {
               by <strong>{event.createdBy.name}</strong>
             </span>
             <small>{moment(event.createdAt).fromNow()}</small>
-          </section>
-          <section>{event.message}</section>
+          </header>
+          {event.message ? <section>{event.message}</section> : null}
+          {this.props.children ? (
+            <section>{this.props.children}</section>
+          ) : null}
         </Card.Body>
       </Card>
     );

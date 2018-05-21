@@ -111,7 +111,9 @@ export class Dashboard extends Component {
       <div key={event._id}>
         {i > 0 ? <WhiteSpace /> : null}
         {draftModeActivated && i === 0 ? (
-          <Draft event={event} />
+          <Draft event={event}>
+            <Event event={event} />
+          </Draft>
         ) : (
           <Event event={event} />
         )}
@@ -154,6 +156,7 @@ export class Dashboard extends Component {
 
   renderTabs() {
     const { activeTabIndex } = this.props.sharedFlat;
+
     switch (activeTabIndex) {
       case 0:
         return (
@@ -198,7 +201,7 @@ export class Dashboard extends Component {
     return (
       <div>
         <div className="shared-flat-dashboard">
-          <header>
+          <header className="shared-flat-header">
             <WingBlank>
               {name} <span>{`${countResidents} resident`}</span>
             </WingBlank>

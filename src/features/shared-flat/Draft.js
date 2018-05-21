@@ -1,53 +1,89 @@
 import React, { Component } from "react";
-import MdMoreHoriz from "react-icons/lib/md/more-horiz";
-import MdClear from "react-icons/lib/md/clear";
-import moment from "moment";
-import { Card, Radio } from "antd-mobile";
 import PropTypes from "prop-types";
+import moment from "moment";
+import { WingBlank, WhiteSpace, Card } from "antd-mobile";
+import { Event } from "./Event";
 
 export default class Draft extends Component {
   static propTypes = { event: PropTypes.object.isRequired };
 
+  constructor() {
+    super();
+
+    this.state = {
+      type: "default",
+    };
+  }
+
+  onRadioChange = e => {
+    this.setState(state => ({
+      ...state,
+      type: e.target.value,
+    }));
+  };
+
   render() {
     const { event } = this.props;
+    const { type } = this.state;
 
     return (
       <Card>
+        {this.props.children}
         <Card.Body>
-          <section>
-            <div className="event-thumbnail">
-              <img
-                src={event.createdBy.picture}
-                alt={`${event.createdBy.name} event`}
+          <div className="type-radio">
+            <span>
+              <input
+                name="type"
+                type="radio"
+                id="type-default"
+                value="default"
+                onChange={this.onRadioChange}
               />
-            </div>
-            <span>by me</span>
-            <small>{moment(event.createdAt).fromNow()}</small>
-          </section>
-          <section>
+              <label htmlFor="type-default">Default</label>
+            </span>
+            <span>
+              <input
+                name="type"
+                type="radio"
+                id="type-expense"
+                value="expense"
+                onChange={this.onRadioChange}
+              />
+              <label htmlFor="type-expense">Expense</label>
+            </span>
+            <span>
+              <input
+                name="type"
+                type="radio"
+                id="type-need"
+                value="need"
+                onChange={this.onRadioChange}
+              />
+              <label htmlFor="type-need">Need</label>
+            </span>
+          </div>
+          <div>
+            <WhiteSpace />
+            <label htmlFor="message">Message</label>
+            <input id="message" placeholder="A bought toilet paper" />
+          </div>
+          {type === "expense" ? (
             <div>
-              <label htmlFor="type">Type</label>
-              <Radio
-                className="my-radio"
-                onChange={e => console.log("checkbox", e)}>
-                Default
-              </Radio>
-              <Radio
-                className="my-radio"
-                onChange={e => console.log("checkbox", e)}>
-                Expense
-              </Radio>
-              <Radio
-                className="my-radio"
-                onChange={e => console.log("checkbox", e)}>
-                Need
-              </Radio>
+              <WhiteSpace />
+              <label htmlFor="expense">Expense*</label>
+              <input type="number" id="expense" required placeholder="30 €" />
             </div>
+          ) : null}
+          {type === "need" ? (
             <div>
-              <label htmlFor="message">Message</label>
-              <input id="message" placeholder="A bought toilet paper" />
+              <WhiteSpace />
+              <label htmlFor="requested">Requested</label>
+              <select id="requested">
+                <option>Resident 1</option>
+                <option>Resident 2</option>
+              </select>
             </div>
-          </section>
+          ) : null}
         </Card.Body>
       </Card>
     );
