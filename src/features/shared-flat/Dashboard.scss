@@ -21,6 +21,14 @@
     overflow-y: auto;
   }
 
+  div {
+    transition: opacity 300ms ease;
+    &.opacify {
+      pointer-events: none;
+      opacity: 0.25;
+    }
+  }
+
   .event-thumbnail {
     display: inline-block;
     width: 40px;

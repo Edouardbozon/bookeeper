@@ -30,15 +30,7 @@ export class Dashboard extends Component {
   };
 
   renderTabBar(props) {
-    return (
-      <Sticky>
-        {({ style }) => (
-          <div style={{ ...style, zIndex: 1 }}>
-            <Tabs.DefaultTabBar {...props} />
-          </div>
-        )}
-      </Sticky>
-    );
+    return <Tabs.DefaultTabBar {...props} />;
   }
 
   renderCharts() {
@@ -47,11 +39,11 @@ export class Dashboard extends Component {
       { title: "Expenses" },
       { title: "Members" },
     ];
-
     const { events } = this.props.sharedFlat;
+    const draftModeActivated = this.props.sharedFlat.draftMode === true;
 
     return (
-      <StickyContainer>
+      <div className={draftModeActivated ? "opacify" : null}>
         <Tabs
           tabs={tabs}
           renderTabBar={this.renderTabBar}
@@ -94,7 +86,7 @@ export class Dashboard extends Component {
             Content of thirb tab
           </div>
         </Tabs>
-      </StickyContainer>
+      </div>
     );
   }
 
@@ -113,7 +105,9 @@ export class Dashboard extends Component {
               <Event event={event} />
             </Draft>
           ) : (
-            <Event event={event} />
+            <div className={draftModeActivated ? "opacify" : null}>
+              <Event event={event} />
+            </div>
           )}
         </div>
       ));
