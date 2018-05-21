@@ -29,20 +29,8 @@ export class Dashboard extends Component {
     this.props.actions.toggleTab(index);
   };
 
-  onEventSelect = opt => {
-    // dispatch
-  };
-
   renderTabBar(props) {
-    return (
-      <Sticky>
-        {({ style }) => (
-          <div style={{ ...style, zIndex: 1 }}>
-            <Tabs.DefaultTabBar {...props} />
-          </div>
-        )}
-      </Sticky>
-    );
+    return <Tabs.DefaultTabBar {...props} />;
   }
 
   renderCharts() {
@@ -51,11 +39,11 @@ export class Dashboard extends Component {
       { title: "Expenses" },
       { title: "Members" },
     ];
-
     const { events } = this.props.sharedFlat;
+    const draftModeActivated = this.props.sharedFlat.draftMode === true;
 
     return (
-      <StickyContainer>
+      <div className={draftModeActivated ? "opacify" : null}>
         <Tabs
           tabs={tabs}
           renderTabBar={this.renderTabBar}
@@ -98,7 +86,7 @@ export class Dashboard extends Component {
             Content of thirb tab
           </div>
         </Tabs>
-      </StickyContainer>
+      </div>
     );
   }
 
@@ -106,17 +94,24 @@ export class Dashboard extends Component {
     const draftModeActivated = this.props.sharedFlat.draftMode === true;
     const { events } = this.props.sharedFlat;
 
-    return events.map((event, i) => (
-      // eslint-disable-next-line no-underscore-dangle
-      <div key={event._id}>
-        {i > 0 ? <WhiteSpace /> : null}
-        {draftModeActivated && i === 0 ? (
-          <Draft event={event} />
-        ) : (
-          <Event event={event} />
-        )}
-      </div>
-    ));
+    return events
+      .sort((prev, next) => (prev.number > next.number ? -1 : 1))
+      .filter(event => event.published || (draftModeActivated && event.last))
+      .map((event, i) => (
+        // eslint-disable-next-line no-underscore-dangle
+        <div key={event._id}>
+          {i > 0 ? <WhiteSpace /> : null}
+          {draftModeActivated && i === 0 ? (
+            <Draft event={event}>
+              <Event event={event} />
+            </Draft>
+          ) : (
+            <div className={draftModeActivated ? "opacify" : null}>
+              <Event event={event} />
+            </div>
+          )}
+        </div>
+      ));
   }
 
   renderJoinRequests() {
@@ -154,6 +149,7 @@ export class Dashboard extends Component {
 
   renderTabs() {
     const { activeTabIndex } = this.props.sharedFlat;
+
     switch (activeTabIndex) {
       case 0:
         return (
@@ -188,6 +184,31 @@ export class Dashboard extends Component {
     }
   }
 
+  renderActionButton() {
+    const draftModeActivated = this.props.sharedFlat.draftMode === true;
+
+    return draftModeActivated ? (
+      <Button
+        type="ghost"
+        className="action-button"
+        onClick={() => {
+          this.props.actions.publishDraft();
+        }}>
+        Publish
+      </Button>
+    ) : (
+      <Button
+        type="primary"
+        className="action-button"
+        onClick={() => {
+          this.props.actions.buildEvent();
+          this.props.actions.notify();
+        }}>
+        Notify
+      </Button>
+    );
+  }
+
   render() {
     const name = pathOr("Loading", ["sharedFlat", "data", "name"], this.props);
     const countResidents = path(
@@ -198,7 +219,7 @@ export class Dashboard extends Component {
     return (
       <div>
         <div className="shared-flat-dashboard">
-          <header>
+          <header className="shared-flat-header">
             <WingBlank>
               {name} <span>{`${countResidents} resident`}</span>
             </WingBlank>
@@ -214,15 +235,7 @@ export class Dashboard extends Component {
         </div>
         <WhiteSpace />
         <WingBlank size="md" className="main">
-          <Button
-            type="primary"
-            className="action-button"
-            onClick={() => {
-              this.props.actions.buildEvent();
-              this.props.actions.notify();
-            }}>
-            Notify
-          </Button>
+          {this.renderActionButton()}
         </WingBlank>
       </div>
     );

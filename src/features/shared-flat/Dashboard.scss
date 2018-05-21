@@ -6,7 +6,7 @@
   overflow-y: auto;
   background: #eee;
 
-  header {
+  .shared-flat-header {
     padding: 10px 0;
     background: #131313;
     color: #fff;
@@ -19,16 +19,13 @@
   .event-list-wrapper {
     overflow: hidden;
     overflow-y: auto;
+  }
 
-    .am-card {
-      min-height: 0;
-      .am-card-body {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border-top: none;
-        min-height: 0;
-      }
+  div {
+    transition: opacity 300ms ease;
+    &.opacify {
+      pointer-events: none;
+      opacity: 0.25;
     }
   }
 
