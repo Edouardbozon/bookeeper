@@ -39,8 +39,8 @@ const initialState = {
         "https://gw.alipayobjects.com/zos/rmsportal/cTTayShKtEIdQVEMuiWt.png",
     },
   ],
-  notifyPending: false,
-  notifyError: null,
+  postDraftPending: false,
+  postDraftError: null,
   publishDraftPending: false,
   publishDraftError: null,
 };

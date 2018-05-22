@@ -28,8 +28,26 @@ export default class Draft extends Component {
   };
 
   onRequestedChange = e => {
-    this.setState({ requested: e.target.value });
+    this.setState({ requestedResident: e.target.value });
   };
+
+  publishDraft() {
+    const { type } = this.state;
+    const { message } = this.state;
+    const { amount } = this.state;
+    const { requestedResident } = this.state;
+
+    const draft = {
+      ...this.props.event,
+      type,
+      amount,
+      message,
+      requestedResident,
+      published: true,
+    };
+
+    this.props.publishDraft(draft);
+  }
 
   renderResidents() {
     return this.props.residents
@@ -128,7 +146,7 @@ export default class Draft extends Component {
                 inline="false"
                 type="primary"
                 onClick={() => {
-                  this.props.publishDraft();
+                  this.publishDraft();
                 }}>
                 Publish
               </Button>

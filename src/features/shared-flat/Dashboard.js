@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { LineChart, Line } from "recharts";
 import { pathOr, path } from "ramda";
 import { bindActionCreators } from "redux";
-import { StickyContainer, Sticky } from "react-sticky";
 import { WingBlank, WhiteSpace, Card, Tabs, Button } from "antd-mobile";
 import { connect } from "react-redux";
 import * as actions from "./redux/actions";
@@ -212,7 +211,7 @@ export class Dashboard extends Component {
         className="action-button"
         onClick={() => {
           this.props.actions.buildEvent();
-          this.props.actions.notify();
+          this.props.actions.postDraft();
         }}>
         Notify
       </Button>

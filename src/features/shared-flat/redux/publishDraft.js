@@ -1,3 +1,6 @@
+import axios from "axios";
+import { api } from "../../../common/env";
+import { path } from "ramda";
 import {
   SHARED_FLAT_PUBLISH_DRAFT_BEGIN,
   SHARED_FLAT_PUBLISH_DRAFT_SUCCESS,
@@ -5,31 +8,34 @@ import {
   SHARED_FLAT_PUBLISH_DRAFT_DISMISS_ERROR,
 } from "./constants";
 
-export function publishDraft(args = {}) {
-  return dispatch => {
+export function publishDraft(draft) {
+  return (dispatch, getState) => {
     dispatch({
       type: SHARED_FLAT_PUBLISH_DRAFT_BEGIN,
     });
+    const state = getState();
+    const id = path(["authentication", "user", "sharedFlatId"], state);
     const promise = new Promise((resolve, reject) => {
-      const doRequest = args.error
-        ? Promise.reject(new Error())
-        : Promise.resolve();
-      doRequest.then(
-        res => {
-          dispatch({
-            type: SHARED_FLAT_PUBLISH_DRAFT_SUCCESS,
-            data: res,
-          });
-          resolve(res);
-        },
-        err => {
-          dispatch({
-            type: SHARED_FLAT_PUBLISH_DRAFT_FAILURE,
-            data: { error: err },
-          });
-          reject(err);
-        },
-      );
+      axios
+        .post(`${api}api/shared-flat/${id}/event/${draft._id}/publish`, draft, {
+          withCredentials: true,
+        })
+        .then(
+          res => {
+            dispatch({
+              type: SHARED_FLAT_PUBLISH_DRAFT_SUCCESS,
+              data: res.data,
+            });
+            resolve(res);
+          },
+          err => {
+            dispatch({
+              type: SHARED_FLAT_PUBLISH_DRAFT_FAILURE,
+              data: { error: err },
+            });
+            reject(err);
+          },
+        );
     });
 
     return promise;

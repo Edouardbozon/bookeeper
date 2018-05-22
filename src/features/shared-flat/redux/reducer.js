@@ -10,7 +10,7 @@ import { reducer as getDetailReducer } from './getDetail';
 import { reducer as getEventsReducer } from './getEvents';
 import { reducer as getJoinRequestsReducer } from './getJoinRequests';
 import { reducer as toggleTabReducer } from './toggleTab';
-import { reducer as notifyReducer } from './notify';
+import { reducer as postDraftReducer } from './postDraft';
 import { reducer as buildEventReducer } from './buildEvent';
 import { reducer as publishDraftReducer } from './publishDraft';
 
@@ -26,7 +26,7 @@ const reducers = [
   getEventsReducer,
   getJoinRequestsReducer,
   toggleTabReducer,
-  notifyReducer,
+  postDraftReducer,
   buildEventReducer,
   publishDraftReducer,
 ];
