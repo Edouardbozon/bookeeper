@@ -109,7 +109,10 @@ export class Dashboard extends Component {
         <div key={event._id}>
           {i > 0 ? <WhiteSpace /> : null}
           {draftModeActivated && i === 0 ? (
-            <Draft event={event} residents={residents}>
+            <Draft
+              event={event}
+              residents={residents}
+              publishDraft={this.props.actions.publishDraft}>
               <Event event={event} />
             </Draft>
           ) : (

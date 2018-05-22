@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { WhiteSpace, Card } from "antd-mobile";
+import { WhiteSpace, Card, Button } from "antd-mobile";
 
 export default class Draft extends Component {
   static propTypes = {
+    publishDraft: PropTypes.func.isRequired,
     event: PropTypes.object.isRequired,
     residents: PropTypes.array.isRequired,
   };
@@ -15,10 +16,19 @@ export default class Draft extends Component {
   }
 
   onTypeChange = e => {
-    this.setState({
-      ...this.state,
-      type: e.currentTarget.value || "default",
-    });
+    this.setState({ type: e.currentTarget.value || "default" });
+  };
+
+  onMessageChange = e => {
+    this.setState({ message: e.target.value });
+  };
+
+  onExpenseChange = e => {
+    this.setState({ amount: e.target.value });
+  };
+
+  onRequestedChange = e => {
+    this.setState({ requested: e.target.value });
   };
 
   renderResidents() {
@@ -37,7 +47,7 @@ export default class Draft extends Component {
         <Card>
           {this.props.children}
           <Card.Body>
-            <form>
+            <form name="event-draft">
               <div className="type-radio">
                 <span>
                   <input
@@ -76,7 +86,11 @@ export default class Draft extends Component {
               <div>
                 <WhiteSpace />
                 <label htmlFor="message">Message</label>
-                <input id="message" placeholder="Ex: I bought toilet paper" />
+                <input
+                  id="message"
+                  placeholder="Ex: I bought toilet paper"
+                  onChange={this.onMessageChange}
+                />
               </div>
               {type === "expense" ? (
                 <div>
@@ -87,6 +101,7 @@ export default class Draft extends Component {
                     id="expense"
                     required
                     placeholder="30.00"
+                    onChange={this.onExpenseChange}
                   />
                 </div>
               ) : null}
@@ -94,13 +109,30 @@ export default class Draft extends Component {
                 <div>
                   <WhiteSpace />
                   <label htmlFor="requested">Requested*</label>
-                  <select id="requested">{this.renderResidents()}</select>
+                  <select id="requested" onChange={this.onRequestedChange}>
+                    {this.renderResidents()}
+                  </select>
                 </div>
               ) : null}
             </form>
-            {type === "default" ? null : (
-              <small className="required">*required</small>
-            )}
+            <div>
+              {type === "default" ? null : (
+                <small className="required">*required</small>
+              )}
+            </div>
+            <WhiteSpace />
+            <div>
+              <Button
+                className="publish"
+                size="sm"
+                inline="false"
+                type="primary"
+                onClick={() => {
+                  this.props.publishDraft();
+                }}>
+                Publish
+              </Button>
+            </div>
           </Card.Body>
         </Card>
       </div>
