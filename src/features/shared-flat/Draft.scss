@@ -4,3 +4,19 @@
   display: flex;
   justify-content: space-between;
 }
+
+.am-card-body {
+  div {
+    overflow: hidden;
+
+    input,
+    select {
+      float: right;
+    }
+  }
+
+  .required {
+    margin-top: 8px;
+    float: right;
+  }
+}

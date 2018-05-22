@@ -17,8 +17,8 @@ const initialState = {
   filteredList: undefined, // Filtered list of joinable Shared Flat
   activeTabIndex: 0, // Dashboard list tab
   data: null, // Shared flat details
-  searchQuery: undefined,
-  files: [],
+  searchQuery: undefined, // search query in shared flat list
+  files: [], // files uploaded for create shared flat page
   events: [], // Shared flat event list
   joinRequests: [], // Join requests list
   // actions displayed in the notify action tab

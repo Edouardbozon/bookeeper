@@ -94,6 +94,13 @@ export class Dashboard extends Component {
     const draftModeActivated = this.props.sharedFlat.draftMode === true;
     const { events } = this.props.sharedFlat;
 
+    // Loader
+    if (!this.props.sharedFlat.data || (events || []).length === 0) {
+      return "Loading";
+    }
+
+    const { residents } = this.props.sharedFlat.data;
+
     return events
       .sort((prev, next) => (prev.number > next.number ? -1 : 1))
       .filter(event => event.published || (draftModeActivated && event.last))
@@ -102,7 +109,7 @@ export class Dashboard extends Component {
         <div key={event._id}>
           {i > 0 ? <WhiteSpace /> : null}
           {draftModeActivated && i === 0 ? (
-            <Draft event={event}>
+            <Draft event={event} residents={residents}>
               <Event event={event} />
             </Draft>
           ) : (
