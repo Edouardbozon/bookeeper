@@ -10,3 +10,4 @@ export { toggleTab } from './toggleTab';
 export { postDraft, dismissPostDraftError } from './postDraft';
 export { buildEvent } from './buildEvent';
 export { publishDraft, dismissPublishDraftError } from './publishDraft';
+export { removeEvent, dismissRemoveEventError } from './removeEvent';

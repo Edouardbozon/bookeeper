@@ -13,6 +13,7 @@ import { reducer as toggleTabReducer } from './toggleTab';
 import { reducer as postDraftReducer } from './postDraft';
 import { reducer as buildEventReducer } from './buildEvent';
 import { reducer as publishDraftReducer } from './publishDraft';
+import { reducer as removeEventReducer } from './removeEvent';
 
 
 const reducers = [
@@ -29,6 +30,7 @@ const reducers = [
   postDraftReducer,
   buildEventReducer,
   publishDraftReducer,
+  removeEventReducer,
 ];
 
 export default function reducer(state = initialState, action) {

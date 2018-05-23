@@ -69,8 +69,8 @@ export default class Draft extends Component {
                     name="type"
                     type="radio"
                     id="type-default"
-                    value="default"
-                    checked={type === "default"}
+                    value="event"
+                    checked={type === "event"}
                     onChange={this.onTypeChange}
                   />
                   <label htmlFor="type-default">Default</label>

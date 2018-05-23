@@ -10,6 +10,16 @@ const Item = Popover.Item;
 export default class Event extends Component {
   static propTypes = {
     event: PropTypes.object.isRequired,
+    removeEvent: PropTypes.func.isRequired,
+    getEvent: PropTypes.func.isRequired,
+  };
+
+  remove = e => {
+    if (e.key === "remove") {
+      this.props
+        .removeEvent(this.props.event)
+        .then(() => this.props.getEvents());
+    }
   };
 
   render() {
@@ -31,7 +41,7 @@ export default class Event extends Component {
                   mask
                   visible={event.popoverVisible}
                   overlay={[
-                    <Item key="0" value="remove">
+                    <Item key="remove" value="remove">
                       <span>
                         <MdClear /> Remove
                       </span>
@@ -42,7 +52,7 @@ export default class Event extends Component {
                     offset: [-10, 0],
                   }}
                   onVisibleChange={this.handleVisibleChange}
-                  onSelect={this.onSelect}>
+                  onSelect={this.remove}>
                   <MdMoreHoriz />
                 </Popover>
               </div>

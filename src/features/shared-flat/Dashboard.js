@@ -100,27 +100,33 @@ export class Dashboard extends Component {
 
     const { residents } = this.props.sharedFlat.data;
 
-    return events
-      .filter(event => event.published || (draftModeActivated && event.last))
-      .map((event, i) => (
-        // eslint-disable-next-line no-underscore-dangle
-        <div key={event._id}>
-          {i > 0 ? <WhiteSpace /> : null}
-          {draftModeActivated && i === 0 ? (
-            <Draft
+    return events.map((event, i) => (
+      // eslint-disable-next-line no-underscore-dangle
+      <div key={event._id}>
+        {i > 0 ? <WhiteSpace /> : null}
+        {draftModeActivated && i === 0 ? (
+          <Draft
+            event={event}
+            residents={residents}
+            publishDraft={this.props.actions.publishDraft}
+            getEvents={this.props.actions.getEvents}>
+            <Event
               event={event}
-              residents={residents}
-              publishDraft={this.props.actions.publishDraft}
-              getEvents={this.props.actions.getEvents}>
-              <Event event={event} />
-            </Draft>
-          ) : (
-            <div className={draftModeActivated ? "opacify" : null}>
-              <Event event={event} />
-            </div>
-          )}
-        </div>
-      ));
+              removeEvent={this.props.actions.removeEvent}
+              getEvents={this.props.actions.getEvents}
+            />
+          </Draft>
+        ) : (
+          <div className={draftModeActivated ? "opacify" : null}>
+            <Event
+              event={event}
+              removeEvent={this.props.actions.removeEvent}
+              getEvents={this.props.actions.getEvents}
+            />
+          </div>
+        )}
+      </div>
+    ));
   }
 
   renderJoinRequests() {

@@ -43,6 +43,8 @@ const initialState = {
   postDraftError: null,
   publishDraftPending: false,
   publishDraftError: null,
+  removeEventPending: false,
+  removeEventError: null,
 };
 
 export default initialState;
