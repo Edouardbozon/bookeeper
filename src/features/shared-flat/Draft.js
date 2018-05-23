@@ -5,6 +5,7 @@ import { WhiteSpace, Card, Button } from "antd-mobile";
 export default class Draft extends Component {
   static propTypes = {
     publishDraft: PropTypes.func.isRequired,
+    getEvents: PropTypes.func.isRequired,
     event: PropTypes.object.isRequired,
     residents: PropTypes.array.isRequired,
   };
@@ -32,11 +33,7 @@ export default class Draft extends Component {
   };
 
   publishDraft() {
-    const { type } = this.state;
-    const { message } = this.state;
-    const { amount } = this.state;
-    const { requestedResident } = this.state;
-
+    const { type, message, amount, requestedResident } = this.state;
     const draft = {
       ...this.props.event,
       type,
@@ -46,7 +43,7 @@ export default class Draft extends Component {
       published: true,
     };
 
-    this.props.publishDraft(draft);
+    this.props.publishDraft(draft).then(() => this.props.getEvents());
   }
 
   renderResidents() {

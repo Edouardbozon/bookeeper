@@ -60,6 +60,7 @@ export function reducer(state, action) {
     case SHARED_FLAT_PUBLISH_DRAFT_SUCCESS:
       return {
         ...state,
+        draftMode: false, // Hide editor
         publishDraftPending: false,
         publishDraftError: null,
       };

@@ -61,11 +61,14 @@ export function reducer(state, action) {
       };
 
     case SHARED_FLAT_GET_EVENTS_SUCCESS:
+      console.log(state);
       return {
         ...state,
         getEventsPending: false,
         getEventsError: null,
-        events: action.data.map(event => ({ ...event, popoverVisible: false })),
+        events: action.data
+          .sort((a, b) => (a.number - b.number ? -1 : 1))
+          .map(event => ({ ...event, popoverVisible: false })),
       };
 
     case SHARED_FLAT_GET_EVENTS_FAILURE:

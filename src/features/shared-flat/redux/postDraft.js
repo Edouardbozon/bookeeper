@@ -1,7 +1,6 @@
 import axios from "axios";
 import { path } from "ramda";
 import { api } from "../../../common/env";
-import { getEvents } from "./getEvents";
 import {
   SHARED_FLAT_POST_DRAFT_BEGIN,
   SHARED_FLAT_POST_DRAFT_SUCCESS,
@@ -30,8 +29,6 @@ export function postDraft(
           res => {
             dispatch({ type: SHARED_FLAT_POST_DRAFT_SUCCESS });
             resolve(res);
-
-            return getEvents();
           },
           err => {
             dispatch({

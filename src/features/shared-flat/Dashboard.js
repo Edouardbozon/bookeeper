@@ -101,7 +101,6 @@ export class Dashboard extends Component {
     const { residents } = this.props.sharedFlat.data;
 
     return events
-      .sort((prev, next) => (prev.number > next.number ? -1 : 1))
       .filter(event => event.published || (draftModeActivated && event.last))
       .map((event, i) => (
         // eslint-disable-next-line no-underscore-dangle
@@ -111,7 +110,8 @@ export class Dashboard extends Component {
             <Draft
               event={event}
               residents={residents}
-              publishDraft={this.props.actions.publishDraft}>
+              publishDraft={this.props.actions.publishDraft}
+              getEvents={this.props.actions.getEvents}>
               <Event event={event} />
             </Draft>
           ) : (
@@ -211,7 +211,9 @@ export class Dashboard extends Component {
         className="action-button"
         onClick={() => {
           this.props.actions.buildEvent();
-          this.props.actions.postDraft();
+          this.props.actions
+            .postDraft()
+            .then(() => this.props.actions.getEvents());
         }}>
         Notify
       </Button>
