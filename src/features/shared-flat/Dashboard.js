@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { LineChart, Line } from "recharts";
 import { pathOr, path } from "ramda";
 import { bindActionCreators } from "redux";
-import { StickyContainer, Sticky } from "react-sticky";
 import { WingBlank, WhiteSpace, Card, Tabs, Button } from "antd-mobile";
 import { connect } from "react-redux";
 import * as actions from "./redux/actions";
@@ -94,24 +93,40 @@ export class Dashboard extends Component {
     const draftModeActivated = this.props.sharedFlat.draftMode === true;
     const { events } = this.props.sharedFlat;
 
-    return events
-      .sort((prev, next) => (prev.number > next.number ? -1 : 1))
-      .filter(event => event.published || (draftModeActivated && event.last))
-      .map((event, i) => (
-        // eslint-disable-next-line no-underscore-dangle
-        <div key={event._id}>
-          {i > 0 ? <WhiteSpace /> : null}
-          {draftModeActivated && i === 0 ? (
-            <Draft event={event}>
-              <Event event={event} />
-            </Draft>
-          ) : (
-            <div className={draftModeActivated ? "opacify" : null}>
-              <Event event={event} />
-            </div>
-          )}
-        </div>
-      ));
+    // Loader
+    if (!this.props.sharedFlat.data || (events || []).length === 0) {
+      return "Loading";
+    }
+
+    const { residents } = this.props.sharedFlat.data;
+
+    return events.map((event, i) => (
+      // eslint-disable-next-line no-underscore-dangle
+      <div key={event._id}>
+        {i > 0 ? <WhiteSpace /> : null}
+        {draftModeActivated && i === 0 ? (
+          <Draft
+            event={event}
+            residents={residents}
+            publishDraft={this.props.actions.publishDraft}
+            getEvents={this.props.actions.getEvents}>
+            <Event
+              event={event}
+              removeEvent={this.props.actions.removeEvent}
+              getEvents={this.props.actions.getEvents}
+            />
+          </Draft>
+        ) : (
+          <div className={draftModeActivated ? "opacify" : null}>
+            <Event
+              event={event}
+              removeEvent={this.props.actions.removeEvent}
+              getEvents={this.props.actions.getEvents}
+            />
+          </div>
+        )}
+      </div>
+    ));
   }
 
   renderJoinRequests() {
@@ -202,7 +217,9 @@ export class Dashboard extends Component {
         className="action-button"
         onClick={() => {
           this.props.actions.buildEvent();
-          this.props.actions.notify();
+          this.props.actions
+            .postDraft()
+            .then(() => this.props.actions.getEvents());
         }}>
         Notify
       </Button>

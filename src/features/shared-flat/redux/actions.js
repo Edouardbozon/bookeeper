@@ -7,6 +7,7 @@ export { getDetail, dismissGetDetailError } from './getDetail';
 export { getEvents, dismissGetEventsError } from './getEvents';
 export { getJoinRequests, dismissGetJoinRequestsError } from './getJoinRequests';
 export { toggleTab } from './toggleTab';
-export { notify, dismissNotifyError } from './notify';
+export { postDraft, dismissPostDraftError } from './postDraft';
 export { buildEvent } from './buildEvent';
 export { publishDraft, dismissPublishDraftError } from './publishDraft';
+export { removeEvent, dismissRemoveEventError } from './removeEvent';
