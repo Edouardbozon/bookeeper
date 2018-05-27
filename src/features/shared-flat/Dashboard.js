@@ -2,7 +2,7 @@ import moment from "moment";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { LineChart, Line } from "recharts";
-import { pathOr, path } from "ramda";
+import { pathOr, path, last } from "ramda";
 import { bindActionCreators } from "redux";
 import { WingBlank, WhiteSpace, Card, Tabs, Button } from "antd-mobile";
 import { connect } from "react-redux";
@@ -91,11 +91,21 @@ export class Dashboard extends Component {
 
   renderEvents() {
     const draftModeActivated = this.props.sharedFlat.draftMode === true;
-    const { events } = this.props.sharedFlat;
+    const {
+      events,
+      getDetailPending,
+      getEventsPending,
+      getJoinRequestsPending,
+    } = this.props.sharedFlat;
 
-    // Loader
-    if (!this.props.sharedFlat.data || (events || []).length === 0) {
-      return "Loading";
+    if (getDetailPending || getEventsPending || getJoinRequestsPending) {
+      return <div className="loader">Loading...</div>;
+    }
+
+    if (events.length === 0) {
+      return (
+        <div className="empty">There is no event, create the first one</div>
+      );
     }
 
     const { residents } = this.props.sharedFlat.data;
@@ -201,17 +211,26 @@ export class Dashboard extends Component {
     }
   }
 
+  cancelDraft() {
+    const { events } = this.props.sharedFlat;
+
+    this.props.actions
+      .removeEvent(last(events))
+      .then(() => this.props.actions.getEvents())
+      .then(() => this.props.actions.cancelDraft());
+  }
+
   renderActionButton() {
     const draftModeActivated = this.props.sharedFlat.draftMode === true;
 
     return draftModeActivated ? (
       <Button
-        type="ghost"
+        type="warning"
         className="action-button"
         onClick={() => {
-          this.props.actions.publishDraft();
+          this.cancelDraft();
         }}>
-        Publish
+        Cancel
       </Button>
     ) : (
       <Button

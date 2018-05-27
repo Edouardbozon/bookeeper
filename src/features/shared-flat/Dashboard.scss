@@ -6,6 +6,12 @@
   overflow-y: auto;
   background: #eee;
 
+  .loader,
+  .empty {
+    display: flex;
+    text-align: center;
+  }
+
   .shared-flat-header {
     padding: 10px 0;
     background: #131313;
