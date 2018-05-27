@@ -111,6 +111,7 @@ export class Dashboard extends Component {
             publishDraft={this.props.actions.publishDraft}
             getEvents={this.props.actions.getEvents}>
             <Event
+              currency={this.props.sharedFlat.currency}
               event={event}
               removeEvent={this.props.actions.removeEvent}
               getEvents={this.props.actions.getEvents}
@@ -119,6 +120,7 @@ export class Dashboard extends Component {
         ) : (
           <div className={draftModeActivated ? "opacify" : null}>
             <Event
+              currency={this.props.sharedFlat.currency}
               event={event}
               removeEvent={this.props.actions.removeEvent}
               getEvents={this.props.actions.getEvents}

@@ -5,15 +5,18 @@ import MdMoreHoriz from "react-icons/lib/md/more-horiz";
 import MdFiberNew from "react-icons/lib/md/fiber-new";
 import MdAssistantPhoto from "react-icons/lib/md/assistant-photo";
 import MdDetails from "react-icons/lib/md/details";
+import MdCreate from "react-icons/lib/md/create";
+import Money from "../../common/money";
 import MdClear from "react-icons/lib/md/clear";
 import MdAttachMoney from "react-icons/lib/md/attach-money";
-import { Card, Popover, WingBlank, WhiteSpace } from "antd-mobile";
+import { Card, Popover } from "antd-mobile";
 
 const Item = Popover.Item;
 
 export default class Event extends Component {
   static propTypes = {
     event: PropTypes.object.isRequired,
+    currency: PropTypes.string.isRequired,
     removeEvent: PropTypes.func.isRequired,
     getEvents: PropTypes.func.isRequired,
   };
@@ -35,7 +38,7 @@ export default class Event extends Component {
   getIcons() {
     const { event } = this.props;
     const icons = this.props.event.last ? (
-      <span>
+      <span className="icons">
         <span className="new">
           <MdFiberNew />
         </span>
@@ -45,7 +48,7 @@ export default class Event extends Component {
         </span>
       </span>
     ) : (
-      <span>
+      <span className="icons">
         {this.getIconType()}
         <span className="more">
           <MdMoreHoriz />
@@ -63,14 +66,19 @@ export default class Event extends Component {
               <MdClear /> Remove
             </span>
           </Item>,
+          <Item key="edit" value="edit">
+            <span>
+              <MdCreate /> Edit
+            </span>
+          </Item>,
         ]}
-        align={{
-          overflow: { adjustY: 0, adjustX: 0 },
-          offset: [-10, 0],
-        }}
+        align={{ overflow: { adjustY: 0, adjustX: 0 }, offset: [-10, 0] }}
         onVisibleChange={this.handleVisibleChange}
         onSelect={this.remove}>
-        {icons}
+        <span>
+          <small>{moment(event.createdAt).fromNow()}</small>
+          {icons}
+        </span>
       </Popover>
     );
   }
@@ -84,7 +92,7 @@ export default class Event extends Component {
   };
 
   render() {
-    const { event } = this.props;
+    const { event, currency } = this.props;
     const style = {
       width: "34px",
       height: "34px",
@@ -101,44 +109,13 @@ export default class Event extends Component {
           thumbStyle={style}
         />
         <Card.Body>
-          <WhiteSpace />
-          <section>{event.message ? <p>{event.message}</p> : null}</section>
+          <div className="amount">
+            {event.amount ? new Money(event.amount, currency).toString() : null}
+          </div>
+          <div>{event.message ? event.message : null}</div>
+          <div>{event.requestedResident ? event.requestedResident : null}</div>
         </Card.Body>
       </Card>
     );
   }
 }
-
-// <header className="event-header">
-//   <div>
-//     <img
-//       src={event.createdBy.picture}
-//       alt={`${event.createdBy.name} event`}
-//     />
-//   </div>
-//   <div>
-//     <div>
-//       <Popover
-//         mask
-//         visible={event.popoverVisible}
-//         overlay={[
-//           <Item key="remove" value="remove">
-//             <span>
-//               <MdClear /> Remove
-//                       </span>
-//           </Item>,
-//         ]}
-//         align={{
-//           overflow: { adjustY: 0, adjustX: 0 },
-//           offset: [-10, 0],
-//         }}
-//         onVisibleChange={this.handleVisibleChange}
-//         onSelect={this.remove}>
-//         <MdMoreHoriz />
-//       </Popover>
-//     </div>
-//     <span>n°&nbsp;{event.number}</span>
-//     <br />
-//     <small>{moment(event.createdAt).fromNow()}</small>
-//   </div>
-// </header>

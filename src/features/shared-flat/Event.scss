@@ -1,9 +1,14 @@
 @import "../../styles/mixins";
 
-.more {
+.more,
+.icons {
   margin-left: 10px;
 }
 
 .new svg {
   fill: forestgreen;
+}
+
+.amount {
+  font-size: 28px;
 }
