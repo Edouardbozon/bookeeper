@@ -39,3 +39,5 @@ $ yarn start
 ## Helpfull links
 
 * [Rekit](http://rekit.js.org/)
+* [Ant Design Mobile](https://mobile.ant.design/docs/react/introduce)
+* [React Icons](https://gorangajic.github.io/react-icons/md.html)
