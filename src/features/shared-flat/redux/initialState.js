@@ -21,30 +21,13 @@ const initialState = {
   files: [], // files uploaded for create shared flat page
   events: [], // Shared flat event list
   joinRequests: [], // Join requests list
-  // actions displayed in the notify action tab
-  actions: [
-    {
-      title: "create event",
-      img:
-        "https://gw.alipayobjects.com/zos/rmsportal/OpHiXAcYzmPQHcdlLFrc.png",
-    },
-    {
-      title: "create need event",
-      img:
-        "https://gw.alipayobjects.com/zos/rmsportal/wvEzCMiDZjthhAOcwTOu.png",
-    },
-    {
-      title: "create expense event",
-      img:
-        "https://gw.alipayobjects.com/zos/rmsportal/cTTayShKtEIdQVEMuiWt.png",
-    },
-  ],
   postDraftPending: false,
   postDraftError: null,
   publishDraftPending: false,
   publishDraftError: null,
   removeEventPending: false,
   removeEventError: null,
+  currency: "EUR",
 };
 
 export default initialState;
